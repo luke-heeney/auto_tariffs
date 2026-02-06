@@ -1,0 +1,37 @@
+{
+  "created_at": "20260204_131025",
+  "results_file": "/Users/lukeheeney/Documents/CEEPR/EV_IO/code/replication_repo/post_est/data/results/blp_results_20251229_162950_0111110110000011010_dbl.pkl",
+  "results_stem": "blp_results_20251229_162950_0111110110000011010_dbl",
+  "price_x2_index": 1,
+  "price_beta_index": 0,
+  "cs_gamma": 0.0,
+  "income_demo_index": 0,
+  "income_transform": "log_10k",
+  "cs_market_id": 2024,
+  "parts_tariff": 0.25,
+  "vehicle_tariff": 0.25,
+  "country_tariffs": {
+    "United Kingdom": 0.1,
+    "Japan": 0.15,
+    "South Korea": 0.15
+  },
+  "total_market_size": 22036000.0,
+  "price_scale_usd_per_unit": 100000.0,
+  "costs_prep_diag": {
+    "carry_forward_fills": 0,
+    "carry_forward_make_model_fills": 16,
+    "carry_forward_firm_fills": 159,
+    "filled_from_make_model": 0,
+    "filled_from_firm_mean": 0,
+    "remaining_missing_us_pcUSCA_pct": 0,
+    "fallback_country_mean_fills": 49
+  },
+  "scenarios": {
+    "tariffs_parts_vehicles_with_subsidy": "parts and vehicles tariff (with subsidy)",
+    "tariffs_vehicles_only_with_subsidy": "vehicles-only tariff (with subsidy)",
+    "tariffs_parts_vehicles_no_subsidy": "parts and vehicles tariff (no subsidy)",
+    "tariffs_vehicles_only_no_subsidy": "vehicles-only tariff (no subsidy)",
+    "no_tariff_with_subsidy": "no tariff (with subsidy)",
+    "no_tariff_no_subsidy": "no tariff (no subsidy)"
+  }
+}

@@ -1,0 +1,669 @@
+﻿Manufacturers,Makes,Carlines,year_make_model,check,,vehicle_type,pcUSCA_content,pcOth1_content,pcOth2_content,assembly1,assembly2,engine1,engine2,transmission1,transmission2,,allowed_names,
+Audi,Audi,e-tron GT,2024_audi_etrongtev,TRUE,OK,PC,1%,45% G,29% PL,G,,PL,,G,Battery: PL,,2024_acura_integra,TRUE
+Audi,Audi,RS e-tron GT,2024_audi_rsetrongtev,TRUE,OK,PC,1%,47% G,26% PL,G,,PL,,G,Battery: PL,,2024_acura_mdx,TRUE
+Audi,Audi,A3 40 FWD,2024_audi_a3,TRUE,OK,PC,0%,52% G,15% H,G,,H,,G,,,2024_acura_rdx,TRUE
+Audi,Audi,A3 45 AWD,2024_audi_a3,TRUE,OK,PC,0%,54% G,,G,,H,,G,,,2024_acura_tlx,TRUE
+Audi,Audi,A4 40,2024_audi_a4,TRUE,OK,PC,1%,52% G,,G,,H,,G,,,2024_acura_zdxev,TRUE
+Audi,Audi,A4 45,2024_audi_a4,TRUE,OK,PC,1%,48% G,,G,,H,,G,,,2024_alfaromeo_giulia,TRUE
+Audi,Audi,A4 allroad 45,2024_audi_a4allroad,TRUE,OK,MPV,1%,47% G,,G,,H,,G,,,2024_alfaromeo_stelvio,TRUE
+Audi,Audi,A5 Cabriolet 45,2024_audi_a5,TRUE,OK,PC,1%,60% G,,G,,H,,G,,,2024_alfaromeo_tonalehybrid,TRUE
+Audi,Audi,A5 Coupe S line 45,2024_audi_a5,TRUE,OK,PC,1%,50% G,,G,,H,,G,,,2024_astonmartin_db12,FALSE
+Audi,Audi,A5 Sportback 40,2024_audi_a5,TRUE,OK,PC,1%,47% G,15% H,G,,H,,G,,,2024_astonmartin_dbx,FALSE
+Audi,Audi,A5 Sportback S line 45,2024_audi_a5,TRUE,OK,PC,1%,50% G,,G,,H,,G,,,2024_astonmartin_valour,FALSE
+Audi,Audi,A6 45,2024_audi_a6,TRUE,OK,PC,1%,49% G,,G,,H,,G,,,2024_audi_a3,TRUE
+Audi,Audi,A6 55,2024_audi_a6,TRUE,OK,PC,1%,47% G,19% H,G,,H,,G,,,2024_audi_a4,TRUE
+Audi,Audi,A6 allroad,2024_audi_a6allroad,TRUE,OK,PC,1%,44% G,18% H,G,,H,,G,,,2024_audi_a4allroad,TRUE
+Audi,Audi,A7 55,2024_audi_a7,TRUE,OK,PC,1%,44% G,19% H,G,,H,,G,,,2024_audi_a5,TRUE
+Audi,Audi,A8L 55,2024_audi_a8,TRUE,OK,PC,1%,44% G,20% H,G,,H,,H,,,2024_audi_a6,TRUE
+Audi,Audi,Q3 40,2024_audi_q3,TRUE,OK,MPV,1%,28% H,28% G,H,,H,,JP,,,2024_audi_a6allroad,TRUE
+Audi,Audi,Q3 S line 45,2024_audi_q3,TRUE,OK,MPV,1%,46% H,24% G,H,,H,,JP,,,2024_audi_a7,TRUE
+Audi,Audi,Q4 e-tron 40 RWD,2024_audi_q4etronev,TRUE,OK,MPV,0%,93% G,,G,BE,G,,G,,,2024_audi_a8,TRUE
+Audi,Audi,Q4 e-tron 45,2024_audi_q4etronev,TRUE,OK,MPV,1%,86% G,,G,BE,G,,G,,,2024_audi_etrongtev,TRUE
+Audi,Audi,Q4 e-tron 50,2024_audi_q4etronev,TRUE,OK,MPV,0%,94% G,,G,BE,G,,G,,,2024_audi_q3,TRUE
+Audi,Audi,Q4 e-tron 55,2024_audi_q4etronev,TRUE,OK,MPV,1%,87% G,,G,BE,G,,G,,,2024_audi_q4etronev,TRUE
+Audi,Audi,Q4 e-tron Sportback 50,2024_audi_q4etronev,TRUE,OK,MPV,0%,95% G,,G,BE,G,,G,,,2024_audi_q5,TRUE
+Audi,Audi,Q4 e-tron Sportback 55,2024_audi_q4etronev,TRUE,OK,MPV,1%,88% G,,G,BE,G,,G,,,2024_audi_q5hybrid,TRUE
+Audi,Audi,Q5 40,2024_audi_q5,TRUE,OK,MPV,2%,70% M,20% G,M,,H,,G,,,2024_audi_q7,TRUE
+Audi,Audi,Q5 S line 45,2024_audi_q5,TRUE,OK,MPV,2%,78% M,20% G,M,,M,,G,,,2024_audi_q8,TRUE
+Audi,Audi,Q5 S line 55 e,2024_audi_q5,TRUE,OK,MPV,1%,51% M,42% G,M,,H,,G,,,2024_audi_q8etronev,TRUE
+Audi,Audi,Q5 Sportback S line 45,2024_audi_q5hybrid,TRUE,OK,MPV,2%,78% M,19% G,M,,M,,G,,,2024_audi_rs3,TRUE
+Audi,Audi,Q7 45,2024_audi_q7,TRUE,OK,MPV,1%,31% SL,22% H,SL,,H,,H,,,2024_audi_rs5,TRUE
+Audi,Audi,Q7 55,2024_audi_q7,TRUE,OK,MPV,1%,33% SL,23% G,SL,,H,,H,,,2024_audi_rs6,TRUE
+Audi,Audi,Q8 55,2024_audi_q8,TRUE,OK,MPV,1%,51% G,23% SL,SL,,G,,G,,,2024_audi_rs7,TRUE
+Audi,Audi,Q8 e-tron 55,2024_audi_q8,TRUE,OK,MPV,1%,53% H,16% G,BE,,H,,H,,,2024_audi_rsetrongtev,TRUE
+Audi,Audi,Q8 e-tron S line,2024_audi_q8etronev,TRUE,OK,MPV,1%,53% H,16% G,BE,,H,,H,,,2024_audi_rsq8,TRUE
+Audi,Audi,Q8 e-tron Sportback,2024_audi_q8etronev,TRUE,OK,MPV,1%,53% H,16% G,BE,,H,,H,,,2024_audi_s3,TRUE
+Audi,Audi,RS3,2024_audi_rs3,TRUE,OK,PC,1%,48% G,27% H,G,,H,,G,,,2024_audi_s4,TRUE
+Audi,Audi,RS5 Coupe,2024_audi_rs5,TRUE,OK,PC,1%,39% G,30% H,G,,H,,H,,,2024_audi_s5,TRUE
+Audi,Audi,RS5 Sportback,2024_audi_rs5,TRUE,OK,PC,1%,39% G,31% H,G,,H,,H,,,2024_audi_s6,TRUE
+Audi,Audi,RS6 Avant,2024_audi_rs6,TRUE,OK,PC,1%,60% G,,G,,G,,G,,,2024_audi_s7,TRUE
+Audi,Audi,RS7,2024_audi_rs7,TRUE,OK,PC,1%,56% G,,G,,G,,G,,,2024_audi_s8,TRUE
+Audi,Audi,RS Q8,2024_audi_rsq8,TRUE,OK,MPV,1%,49% G,26% SL,SL,,G,,G,,,2024_audi_sq5,TRUE
+Audi,Audi,S3,2024_audi_s3,TRUE,OK,PC,0%,56% G,,G,,H,,G,,,2024_audi_sq7,TRUE
+Audi,Audi,S4,2024_audi_s4,TRUE,OK,PC,1%,39% G,30% H,G,,H,,H,,,2024_audi_sq8,TRUE
+Audi,Audi,S5 Cabriolet,2024_audi_s5,TRUE,OK,PC,1%,48% G,25% H,G,,H,,H,,,2024_audi_sq8etronev,TRUE
+Audi,Audi,S5 Coupe,2024_audi_s5,TRUE,OK,PC,1%,39% G,30% H,G,,H,,H,,,2024_bentley_bentayga,TRUE
+Audi,Audi,S5 Sportback,2024_audi_s5,TRUE,OK,PC,1%,41% G,29% H,G,,H,,H,,,2024_bentley_bentaygahybrid,TRUE
+Audi,Audi,S6,2024_audi_s6,TRUE,OK,PC,1%,37% G,26% H,G,,H,,H,,,2024_bentley_continental,TRUE
+Audi,Audi,S7,2024_audi_s7,TRUE,OK,PC,1%,39% G,26% H,G,,H,,H,,,2024_bentley_flyingspur,TRUE
+Audi,Audi,S8L,2024_audi_s8,TRUE,OK,PC,1%,63% G,,G,,G,,G,,,2024_bentley_flyingspurhybrid,TRUE
+Audi,Audi,SQ5,2024_audi_sq5,TRUE,OK,MPV,2%,68% M,21% H,M,,H,,H,,,2024_bmw_2series,TRUE
+Audi,Audi,SQ5 Sportback,2024_audi_sq5,TRUE,OK,MPV,2%,68% M,20% H,M,,H,,H,,,2024_bmw_2seriesm,FALSE
+Audi,Audi,SQ7,2024_audi_sq7,TRUE,OK,MPV,1%,54% G,26% SL,SL,,G,,G,,,2024_bmw_3series,TRUE
+Audi,Audi,SQ8,2024_audi_sq8,TRUE,OK,MPV,1%,28% SL,25% H,SL,,H,,H,,,2024_bmw_3serieshybrid,FALSE
+Audi,Audi,SQ8 e-tron,2024_audi_sq8etronev,TRUE,OK,MPV,1%,53% H,16% G,BE,,H,,H,,,2024_bmw_3seriesm,FALSE
+Audi,Audi,SQ8 e-tron Sportback,2024_audi_sq8etronev,TRUE,OK,MPV,1%,53% H,16% G,BE,,H,,H,,,2024_bmw_4series,TRUE
+Bentley,Bentley,Bentayga V8,2024_bentley_bentayga,TRUE,OK,MPV,0%,65% G,,UK,,G,,G,,,2024_bmw_4seriesm,FALSE
+Bentley,Bentley,Bentayga EWB V8,2024_bentley_bentayga,TRUE,OK,MPV,0%,64% G,,UK,,G,,G,,,2024_bmw_5series,TRUE
+Bentley,Bentley,Bentayga Hybrid,2024_bentley_bentaygahybrid,TRUE,OK,MPV,0%,50% G,,UK,,G,,G,,,2024_bmw_7series,TRUE
+Bentley,Bentley,Continental GT V8,2024_bentley_continental,TRUE,OK,PC,0%,68% G,16% UK,UK,,G,,G,,,2024_bmw_7serieshybrid,FALSE
+Bentley,Bentley,Continental GT Convertible V8,2024_bentley_continental,TRUE,OK,PC,0%,65% G,15% UK,UK,,G,,G,,,2024_bmw_8series,TRUE
+Bentley,Bentley,Continental GT Speed,2024_bentley_continental,TRUE,OK,PC,0%,68% G,,UK,,G,,G,,,2024_bmw_8seriesm,FALSE
+Bentley,Bentley,Continental GT Convertible Speed,2024_bentley_continental,TRUE,OK,PC,0%,66% G,,UK,,G,,G,,,2024_bmw_i4ev,TRUE
+Bentley,Bentley,Flying Spur,2024_bentley_flyingspur,TRUE,OK,PC,0%,64% G,15% UK,UK,,G,,G,,,2024_bmw_i5ev,TRUE
+Bentley,Bentley,Flying Spur V8,2024_bentley_flyingspur,TRUE,OK,PC,0%,69% G,15% UK,UK,,G,,G,,,2024_bmw_i7ev,TRUE
+Bentley,Bentley,Flying Spur Hybrid,2024_bentley_flyingspurhybrid,TRUE,OK,PC,0%,59% G,15% UK,UK,,G,,G,,,2024_bmw_ixev,TRUE
+BMW AG,BMW,2 Series Coupe/Convertible,2024_bmw_2series,TRUE,OK,PC,8%,24% G,23% M,M,,A,,G,,,2024_bmw_m2,TRUE
+BMW AG,BMW,2 Series Gran Coupe,2024_bmw_2series,TRUE,OK,PC,0%,37% G,,G,,G,,J,,,2024_bmw_m3,TRUE
+BMW AG,BMW,3 Series Sedan,2024_bmw_3series,TRUE,OK,PC,9%,23% G,21% M,M,,A,,G,,,2024_bmw_m4,FALSE
+BMW AG,BMW,4 Series Coupe/Convertible,2024_bmw_4series,TRUE,OK,PC,0%,48% G,,G,,G,,G,,,2024_bmw_m8,TRUE
+BMW AG,BMW,4 Series  Gran Coupe,2024_bmw_4series,TRUE,OK,PC,0%,38% G,,G,,G,,G,,,2024_bmw_x1,TRUE
+BMW AG,BMW,5 Series,2024_bmw_5series,TRUE,OK,PC,0%,48% G,,G,,G,,G,,,2024_bmw_x2,TRUE
+BMW AG,BMW,7 Series,2024_bmw_7series,TRUE,OK,PC,0%,34% G,,G,,G,,G,,,2024_bmw_x3,TRUE
+BMW AG,BMW,i5,2024_bmw_i5ev,TRUE,OK,PC,0%,48% G,,G,,G,,G,,,2024_bmw_x4,TRUE
+BMW AG,BMW,i7,2024_bmw_i7ev,TRUE,OK,PC,0%,34% G,,G,,G,,G,,,2024_bmw_x5,TRUE
+BMW AG,BMW,8 Series Coupe/Convertible,2024_bmw_8series,TRUE,OK,PC,0%,35% G,16% OT,G,,G,,G,,,2024_bmw_x5hybrid,FALSE
+BMW AG,BMW,8 Series Gran Coupe,2024_bmw_8series,TRUE,OK,PC,0%,35% G,16% OT,G,,G,,G,,,2024_bmw_x6,TRUE
+BMW AG,BMW,Cooper Clubman,2024_mini_cooper,TRUE,OK,PC,0%,30% G,18% UK,UK,,G,,G,"J (JCW Auto, AWD)",,2024_bmw_x7,TRUE
+BMW AG,BMW,Cooper Convertible,2024_mini_cooper,TRUE,OK,PC,0%,22% G,16% PL,N,,UK,,G,,,2024_bmw_xmhybrid,TRUE
+BMW AG,BMW,Cooper Countryman,2024_mini_cooper,TRUE,OK,MPV,0%,25% G,11% PL,N,,UK,,J,,,2024_bmw_z4,TRUE
+BMW AG,BMW,Cooper Hard Top 2 Door,2024_mini_cooper,TRUE,OK,PC,0%,30% G,18% UK,UK,,G,,G,,,2024_buick_enclave,TRUE
+BMW AG,BMW,Cooper Hard Top 4 Door,2024_mini_cooper,TRUE,OK,PC,0%,30% G,18% UK,UK,,G,,G,,,2024_buick_encoregx,TRUE
+BMW AG,BMW,i4,2024_bmw_i4ev,TRUE,OK,PC,0%,34% G,18% UK,G,,G,,G,,,2024_buick_envision,FALSE
+BMW AG,BMW,iX,2024_bmw_ixev,TRUE,OK,MPV,1%,21% H,16% G,G,,G,,G,,,2024_buick_envista,TRUE
+BMW AG,BMW,M2 Coupe,2024_bmw_m2,TRUE,OK,PC,5%,29% G,16% M,M,,A,,G,,,2024_cadillac_ct4,TRUE
+BMW AG,BMW,M3 Sedan,2024_bmw_m3,TRUE,OK,PC,0%,38% G,,G,,G,,G,,,2024_cadillac_ct4v,FALSE
+BMW AG,BMW,M3 CS Sedan,2024_bmw_m3,TRUE,OK,PC,0%,48% G,,G,,G,,G,,,2024_cadillac_ct5,TRUE
+BMW AG,BMW,M8,2024_bmw_m8,TRUE,OK,PC,0%,52% G,,G,,G,,G,,,2024_cadillac_ct5v,FALSE
+BMW AG,BMW,X1,2024_bmw_x1,TRUE,OK,MPV,0%,34% G,16% UK,G,,G,,G,,,2024_cadillac_escalade,TRUE
+BMW AG,BMW,X2,2024_bmw_x2,TRUE,OK,MPV,0%,35% G,16% OT,G,,G,,G,,,2024_cadillac_escaladev,FALSE
+BMW AG,BMW,X3,2024_bmw_x3,TRUE,OK,MPV,23%,18% AF,16% G,AF,,A,,G,,,2024_cadillac_lyriqev,FALSE
+BMW AG,BMW,X3,2024_bmw_x3,TRUE,OK,MPV,27%,,,US,,"A (4.0, M)",UK (3.0),G,,,2024_cadillac_xt4,TRUE
+BMW AG,BMW,X4,2024_bmw_x4,TRUE,OK,MPV,32%,,,US,,"A (4.0, M)",UK (3.0),G,,,2024_cadillac_xt5,TRUE
+BMW AG,BMW,X5,2024_bmw_x5,TRUE,OK,MPV,28%,19% G,,US,,G (M),"A (4.0, 5.0e)",G,,,2024_cadillac_xt6,TRUE
+BMW AG,BMW,X6,2024_bmw_x6,TRUE,OK,MPV,30%,21% G,,US,,G (M),A (4.0),G,,,2024_chevrolet_blazer,TRUE
+BMW AG,BMW,X7,2024_bmw_x7,TRUE,OK,MPV,25%,23% G,,US,,G (M),A (4.0),G,,,2024_chevrolet_blazerev,TRUE
+BMW AG,BMW,XM,2024_bmw_xmhybrid,TRUE,OK,MPV,21%,26% G,,US,,G,,G,,,2024_chevrolet_camaro,TRUE
+BMW AG,BMW,Z4,2024_bmw_z4,TRUE,OK,PC,0%,30% G,23% A,A,,A,,G,,,2024_chevrolet_colorado,TRUE
+BMW AG,Toyota,Supra,2024_toyota_supra,TRUE,OK,PC,0%,30% G,26% A,A,,A,,G,,,2024_chevrolet_corvette,TRUE
+Bugatti Automobiles S.A.S.,Bugatti,Chiron Super Sport,2024_bugatti_chiron,FALSE,OK,PC,N/A,N/A,,F,,G,,UK,,,2024_chevrolet_corvettehybrid,FALSE
+Fiat Chrysler,Alfa Romeo,Giulia,2024_alfaromeo_giulia,TRUE,OK,PC,0%,69% I,,Cassino Italy,,I,,G,,,2024_chevrolet_equinox,TRUE
+Fiat Chrysler,Alfa Romeo,Stelvio,2024_alfaromeo_stelvio,TRUE,OK,MPV,0%,55% I,13% F,Cassino Italy,,I,,G,,,2024_chevrolet_express,TRUE
+Fiat Chrysler,Alfa Romeo,Tonale,2024_alfaromeo_tonalehybrid,TRUE,OK,MPV,0%,56% I,12% CH,Cassino Italy,,I,,G,,,2024_chevrolet_malibu,TRUE
+Fiat Chrysler,Chrysler,Pacifica,2024_chrysler_pacifica,TRUE,OK,MPV,66%,22% M,,Windsor ON Canada,,M,US,US,,,2024_chevrolet_silverado,TRUE
+Fiat Chrysler,Dodge,Charger BEV,2024_dodge_chargerev,TRUE,OK,PC,51%,28% M,17% H,"Brampton ON
+Canada",,US,,US,,,2024_chevrolet_silveradoev,TRUE
+Fiat Chrysler,Dodge,Durango,2024_dodge_durango,TRUE,OK,MPV,69%,22% M,,Detroit Ml USA,,US,M,US,G,,2024_chevrolet_suburban,FALSE
+Fiat Chrysler,Dodge,Hornet,2024_dodge_hornet,TRUE,OK,MPV,0%,56% I,12% P,Pomigliano Italy,,US,"I, P",US,I,,2024_chevrolet_tahoe,TRUE
+Fiat Chrysler,Fiat,500E,2024_fiat_500ev,FALSE,OK,MPV,0%,40% H,35% I,Torino Italy,,I,,I,,,2024_chevrolet_trailblazer,TRUE
+Fiat Chrysler,Jeep,Compass,2024_jeep_compass,TRUE,OK,MPV,21%,69% M,,Toluca Mexico,,US,I,US,,,2024_chevrolet_traverse,TRUE
+Fiat Chrysler,Jeep,Gladiator,2024_jeep_gladiator,TRUE,OK,Truck,68%,21% M,,Toledo OH USA,,US,M,US,J,,2024_chevrolet_traverselimited,FALSE
+Fiat Chrysler,Jeep,Grand Cherokee,2024_jeep_grandcherokee,TRUE,OK,MPV,59%,23% M,,Detroit Ml USA,,US,"I, M",US,G,,2024_chevrolet_trax,TRUE
+Fiat Chrysler,Jeep,Grand Cherokee L,2024_jeep_grandcherokee,TRUE,OK,MPV,59%,23% M,,Detroit Ml USA,,US,"I, M",US,G,,2024_chrysler_pacifica,TRUE
+Fiat Chrysler,Jeep,Grand Wagoneer,2024_jeep_grandwagoneer,TRUE,OK,MPV,59%,35% M,,Warren MI USA,,M,,US,,,2024_chrysler_pacificahybrid,FALSE
+Fiat Chrysler,Jeep,Wagoneer,2024_jeep_wagoneer,TRUE,OK,MPV,59%,35% M,,Warren MI USA,,M,,US,,,2024_chrysler_voyager,FALSE
+Fiat Chrysler,Jeep,Wagoneer S,2024_jeep_wagoneersev,TRUE,OK,MPV,24%,48% M,23% H,Toluca Mexico,,US,,US,,,2024_dodge_chargerev,TRUE
+Fiat Chrysler,Jeep,"Wrangler  2d, 4d",2024_jeep_wrangler,TRUE,OK,MPV,64%,18% M,,Toledo OH USA,,US,"I, M",US,"J, G",,2024_dodge_durango,TRUE
+Fiat Chrysler,RAM,Ram 1500,2024_ram_1500,TRUE,OK,Truck,61%,32% M,,Sterling Heights MI USA,,US,M,US,G,,2024_dodge_hornet,TRUE
+Fiat Chrysler,RAM,Ram 1500 CLASSIC,2024_ram_1500classic,TRUE,OK,Truck,67%,27% M,,Warren MI USA,,US,M,US,G,,2024_dodge_hornethybrid,FALSE
+Ford Motor Company,Ford,Bronco,2024_ford_bronco,TRUE,OK,MPV,18%,,,US,,M (2.3L),"US (2.7L, 3.0L)",US,,,2024_ferrari_296gtbhybrid,FALSE
+Ford Motor Company,Ford,Bronco Sport,2024_ford_broncosport,TRUE,OK,MPV,20%,64% M,,M,,ESP (2.0L),M (1.5L),US,,,2024_ferrari_812competizione,FALSE
+Ford Motor Company,Ford,Edge,2024_ford_edge,TRUE,OK,MPV,28%,18% M,,CN,,ESP (2.0L),M (2.7L),US,,,2024_ferrari_daytonasp3,FALSE
+Ford Motor Company,Ford,Escape,2024_ford_escape,TRUE,OK,MPV,32%,25% M,,US,,M (1.5L),US (2.0L),US,,,2024_ferrari_purosangue,FALSE
+Ford Motor Company,Ford,Escape PHEV,2024_ford_escapehybrid,TRUE,OK,MPV,32%,25% M,,US,,MX (2.5L),,US,,,2024_ferrari_roma,FALSE
+Ford Motor Company,Ford,Expedition,2024_ford_expedition,TRUE,OK,MPV,25%,15% M,,US,,M,,US,,,2024_ferrari_romaspider,FALSE
+Ford Motor Company,Ford,Explorer,2024_ford_explorer,TRUE,OK,MPV,27%,,,US,,"US (2.3L, 3.3L)",M (3.0L),US,,,2024_ferrari_sf90spiderhybrid,FALSE
+Ford Motor Company,Ford,F150 EV,2024_ford_f150ev,TRUE,OK,Truck,24%,,,US,,US,,US,,,2024_ferrari_sf90stradalehybrid,FALSE
+Ford Motor Company,Ford,F150,2024_ford_f150,TRUE,OK,Truck,32%,,,US,,"US (2.7L, 5.0L)",M (3.5L),US,,,2024_ferrari_sf90xxspiderhybrid,FALSE
+Ford Motor Company,Ford,F150,2024_ford_f150,TRUE,OK,Truck,32%,,,US,,M (3.5L),"US (2.7L, 5.0L, 5.2L)",US,,,2024_ferrari_sf90xxstradalehybrid,FALSE
+Ford Motor Company,Ford,Maverick,2024_ford_maverick,TRUE,OK,MPV,20%,55% M,,M,,M (2.5L),US (2.0L),US,,,2024_ford_bronco,TRUE
+Ford Motor Company,Ford,Mustang,2024_ford_mustang,TRUE,OK,PC,60%,17% M,,US,,US (5.0L),M (2.3L),"US (10 SPD), CH (6 SPD)",M (6 SPD),,2024_ford_broncosport,TRUE
+Ford Motor Company,Ford,Mustang Mach-E,2024_ford_mustangmacheev,TRUE,OK,MPV,26%,51% CH,18% M,M,,M,CH,J,,,2024_ford_edge,TRUE
+Ford Motor Company,Ford,Ranger,2024_ford_ranger,TRUE,OK,MPV,8%,,,US,,"US (2.3L, 2.7L, 3.0L)",,US,,,2024_ford_escape,TRUE
+Ford Motor Company,Lincoln,Aviator,2024_lincoln_aviator,TRUE,OK,MPV,27%,,,US,,US,,US,,,2024_ford_escapehybrid,TRUE
+Ford Motor Company,Lincoln,Corsair,2024_lincoln_corsair,TRUE,OK,PC,47%,25% M,,US,,US,,US,,,2024_ford_eseries,FALSE
+Ford Motor Company,Lincoln,Corsair PHEV,2024_lincoln_corsairhybrid,TRUE,OK,PC,47%,25% M,,US,,M,,US,,,2024_ford_expedition,TRUE
+Ford Motor Company,Lincoln,Nautilus,2024_lincoln_nautilus,TRUE,OK,MPV,13%,86% CH,,CH,,CH (2.0L),,CH,,,2024_ford_explorer,TRUE
+Ford Motor Company,Lincoln,Navigator,2024_lincoln_navigator,TRUE,OK,MPV,23%,,,US,,M,,US,,,2024_ford_f150,TRUE
+GM LLC,Buick,Enclave,2024_buick_enclave,TRUE,OK,MPV,31%,35% M,,US,,M,,US,M,,2024_ford_f150ev,TRUE
+GM LLC,Buick,Encore GX,2024_buick_encoregx,TRUE,OK,MPV,2%,50% K,18% CH,K,,M,K,M,,,2024_ford_f150hybrid,FALSE
+GM LLC,Buick,Envista,2024_buick_envista,TRUE,OK,MPV,3%,55% K,21% M,K,,M,,M,,,2024_ford_f250,FALSE
+GM LLC,Cadillac,CT4,2024_cadillac_ct4,TRUE,OK,PC,38%,21% M,15% CH,US,,US,,US,,,2024_ford_maverick,TRUE
+GM LLC,Cadillac,CT5,2024_cadillac_ct5,TRUE,OK,PC,38%,21% M,15% CH,US,,US,,US,,,2024_ford_maverickhybrid,FALSE
+GM LLC,Cadillac,Escalade,2024_cadillac_escalade,TRUE,OK,MPV,37%,36% M,,US,,US,,US,,,2024_ford_mustang,TRUE
+GM LLC,Cadillac,XT4,2024_cadillac_xt4,TRUE,OK,MPV,39%,17% M,15% CH,US,,US,,US,,,2024_ford_mustangmacheev,TRUE
+GM LLC,Cadillac,XT5,2024_cadillac_xt5,TRUE,OK,MPV,31%,35% M,,US,,US,,US,,,2024_ford_ranger,TRUE
+GM LLC,Cadillac,XT6,2024_cadillac_xt6,TRUE,OK,MPV,31%,35% M,,US,,US,,US,,,2024_ford_transit,FALSE
+GM LLC,Chevrolet,Blazer,2024_chevrolet_blazer,TRUE,OK,MPV,31%,35% M,,M,,US,,US,M,,2024_genesis_g70,FALSE
+GM LLC,Chevrolet,Blazer EV,2024_chevrolet_blazerev,TRUE,OK,PC,62%,18% CH,,M,,,,,,,2024_genesis_g80,TRUE
+GM LLC,Chevrolet,Bolt,2024_chevrolet_boltev,FALSE,OK,PC,28%,28% T,21% CH,US,,,,K,,,2024_genesis_g90,TRUE
+GM LLC,Chevrolet,Bolt EUV,2024_chevrolet_bolteuv,FALSE,OK,PC,28%,28% T,21% CH,US,,,,K,,,2024_genesis_gv60ev,TRUE
+GM LLC,Chevrolet,Brightdrop,2024_chevrolet_brightdrop,FALSE,OK,MPV,77%,,,US,,,,,,,2024_genesis_gv70,TRUE
+GM LLC,Chevrolet,Camaro,2024_chevrolet_camaro,TRUE,OK,PC,45%,18% M,,US,,US,,US,M,,2024_genesis_gv80,TRUE
+GM LLC,Chevrolet,Colorado,2024_chevrolet_colorado,TRUE,OK,Truck,51%,19% M,,US,,US,,US,,,2024_gmc_acadia,TRUE
+GM LLC,Chevrolet,Corvette,2024_chevrolet_corvette,TRUE,OK,PC,40%,31% M,,US,,US,,US,,,2024_gmc_canyon,TRUE
+GM LLC,Chevrolet,Equinox,2024_chevrolet_equinox,TRUE,OK,MPV,20%,42% M,,M,CH,M,AR,M,CN,,2024_gmc_savana,TRUE
+GM LLC,Chevrolet,Equinox EV,2024_chevrolet_equinoxev,FALSE,OK,PC,62%,18% CH,,M,,CH,,,,,2024_gmc_sierra,TRUE
+GM LLC,Chevrolet,Express,2024_chevrolet_express,TRUE,OK,MPV,54%,22% M,,US,US,US,,US,US,,2024_gmc_sierraev,FALSE
+GM LLC,Chevrolet,Lyric,2024_chevrolet_lyricev,FALSE,OK,PC,62%,18% CH,,US,,CH,,,,,2024_gmc_terrain,TRUE
+GM LLC,Chevrolet,Malibu,2024_chevrolet_malibu,TRUE,OK,PC,39%,17% M,15% CH,US,,US,,US,,,2024_gmc_yukon,TRUE
+GM LLC,Chevrolet,Origin AV,2024_chevrolet_origin,FALSE,OK,MPV,28%,28% TW,21% CH,US,,,,,,,2024_gmc_yukonxl,FALSE
+GM LLC,Chevrolet,Silverado,2024_chevrolet_silverado,TRUE,OK,Truck,37%,36% M,,US,M / CN,US,M,US,,,2024_honda_accord,TRUE
+GM LLC,Chevrolet,Silverado/Sierra EV,2024_chevrolet_silveradoev,TRUE,OK,Truck,36%,33% K,,US,,,,,,,2024_honda_accordhybrid,FALSE
+GM LLC,Chevrolet,Suburban/Tahoe,2024_chevrolet_tahoe,TRUE,OK,MPV,37%,36% M,,US,,US,M,US,,,2024_honda_civic,TRUE
+GM LLC,Chevrolet,Trailblazer,2024_chevrolet_trailblazer,TRUE,OK,MPV,3%,55% K,21% M,K,,M,K,M,,,2024_honda_crv,TRUE
+GM LLC,Chevrolet,Traverse,2024_chevrolet_traverse,TRUE,OK,MPV,31%,35% M,,US,,M,US,US,M,,2024_honda_crvhybrid,FALSE
+GM LLC,Chevrolet,Traverse,2024_chevrolet_traverse,TRUE,OK,MPV,35%,27% M,,US,,,,,,,2024_honda_hrv,TRUE
+GM LLC,Buick,Trax,2024_chevrolet_trax,TRUE,OK,MPV,2%,50% K,18% CH,K,,M,,M,,,2024_honda_odyssey,TRUE
+GM LLC,GMC,Acadia,2024_gmc_acadia,TRUE,OK,MPV,31%,35% M,,US,,US,,US,,,2024_honda_passport,TRUE
+GM LLC,GMC,Canyon,2024_gmc_canyon,TRUE,OK,Truck,51%,19% M,,US,,US,,US,,,2024_honda_pilot,TRUE
+GM LLC,GMC,Hummer,2024_gmc_hummer,FALSE,OK,T/MPV,36%,33% K,,US,,,,,,,2024_honda_prologueev,TRUE
+GM LLC,GMC,Savanna,2024_gmc_savana,TRUE,OK,MPV,54%,22% M,,US,US,US,,US,,,2024_honda_ridgeline,TRUE
+GM LLC,GMC,Sierra,2024_gmc_sierra,TRUE,OK,Truck,37%,36% M,,US,M,US,M,US,,,2024_hyundai_elantra,TRUE
+GM LLC,GMC,Terrain,2024_gmc_terrain,TRUE,OK,MPV,20%,42% M,,M,,M,,US,,,2024_hyundai_elantrahybrid,TRUE
+GM LLC,GMC,Yukon,2024_gmc_yukon,TRUE,OK,MPV,37%,36% M,,US,,US,M,US,,,2024_hyundai_elantran,TRUE
+GM LLC,Honda,Prologue,2024_honda_prologueev,TRUE,OK,MPV,38%,22% K,16% M,M,,,,,,,2024_hyundai_ioniq5ev,TRUE
+GM LLC,Acura,ZDX,2024_acura_zdxev,TRUE,OK,MPV,63%,19% M,16% CH,US,,,,,,,2024_hyundai_ioniq6ev,TRUE
+"Honda Motor Co., Ltd.",Acura,Integra,2024_acura_integra,TRUE,OK,PC,60%,15% J,,US,,US,,US,,,2024_hyundai_kona,TRUE
+"Honda Motor Co., Ltd.",Acura,Integra,2024_acura_integra,TRUE,OK,PC,60%,15% J,,US,,US,,J,,,2024_hyundai_konaev,TRUE
+"Honda Motor Co., Ltd.",Acura,Integra A-Spec,2024_acura_integra,TRUE,OK,PC,65%,,,US,,US,,US,,,2024_hyundai_palisade,TRUE
+"Honda Motor Co., Ltd.",Acura,Integra A-Spec,2024_acura_integra,TRUE,OK,PC,65%,,,US,,US,,IND,,,2024_hyundai_santacruz,TRUE
+"Honda Motor Co., Ltd.",Acura,MDX FWD,2024_acura_mdx,TRUE,OK,MPV,65%,,,US,,US,,US,,,2024_hyundai_santafe,TRUE
+"Honda Motor Co., Ltd.",Acura,MDX AWD,2024_acura_mdx,TRUE,OK,MPV,65%,,,US,,US,,MX,,,2024_hyundai_santafehybrid,TRUE
+"Honda Motor Co., Ltd.",Acura,MDX AWD Type S,2024_acura_mdx,TRUE,OK,MPV,55%,,,US,,J,,US,,,2024_hyundai_sonata,TRUE
+"Honda Motor Co., Ltd.",Acura,RDX AWD  A- Spec,2024_acura_rdx,TRUE,OK,MPV,65%,,,US,,US,,US,,,2024_hyundai_sonatahybrid,TRUE
+"Honda Motor Co., Ltd.",Acura,RDX AWD,2024_acura_rdx,TRUE,OK,MPV,65%,,,US,,US,,US,,,2024_hyundai_tucson,TRUE
+"Honda Motor Co., Ltd.",Acura,TLX  AWD A-Spec,2024_acura_tlx,TRUE,OK,PC,65%,,,US,,US,,US,,,2024_hyundai_tucsonhybrid,TRUE
+"Honda Motor Co., Ltd.",Acura,TLX  FWD,2024_acura_tlx,TRUE,OK,PC,65%,,,US,,US,,US,,,2024_hyundai_venue,TRUE
+"Honda Motor Co., Ltd.",Acura,TLX  Type-S,2024_acura_tlx,TRUE,OK,PC,55%,15% J,,US,,J,,US,,,2024_infiniti_q50,TRUE
+"Honda Motor Co., Ltd.",Honda,Accord,2024_honda_accord,TRUE,OK,PC,65%,,,US,,US,,US,,,2024_infiniti_qx50,TRUE
+"Honda Motor Co., Ltd.",Honda,Accord,2024_honda_accord,TRUE,OK,PC,65%,,,US,,J,,US,,,2024_infiniti_qx55,TRUE
+"Honda Motor Co., Ltd.",Honda,Accord Sport/Touring,2024_honda_accord,TRUE,OK,PC,50%,25% J,,US,,J,,US,,,2024_infiniti_qx60,TRUE
+"Honda Motor Co., Ltd.",Honda,Civic  5Dr,2024_honda_civic,TRUE,OK,PC,60%,,,J,,US,,J,,,2024_infiniti_qx80,TRUE
+"Honda Motor Co., Ltd.",Honda,Civic  5Dr,2024_honda_civic,TRUE,OK,PC,60%,,,US,,US,,Ind,,,2024_jaguar_epace,TRUE
+"Honda Motor Co., Ltd.",Honda,Civic  5Dr,2024_honda_civic,TRUE,OK,PC,60%,,,US,,US,,M,,,2024_jaguar_fpace,TRUE
+"Honda Motor Co., Ltd.",Honda,Civic  5Dr,2024_honda_civic,TRUE,OK,PC,60%,,,US,,US,,US,,,2024_jaguar_ftype,TRUE
+"Honda Motor Co., Ltd.",Honda,Civic 4D,2024_honda_civic,TRUE,OK,PC,65%,,,CN,,US,,Ind,,,2024_jaguar_ipaceev,TRUE
+"Honda Motor Co., Ltd.",Honda,Civic 4D,2024_honda_civic,TRUE,OK,PC,65%,,,CN,,US,,US,,,2024_jaguar_xf,TRUE
+"Honda Motor Co., Ltd.",Honda,Civic 4D,2024_honda_civic,TRUE,OK,PC,65%,,,CN,,US,,M,,,2024_jeep_compass,TRUE
+"Honda Motor Co., Ltd.",Honda,CR-V FWD,2024_honda_crv,TRUE,OK,MPV,60%,,,CN,,US,,US,,,2024_jeep_gladiator,TRUE
+"Honda Motor Co., Ltd.",Honda,CR-V FWD,2024_honda_crv,TRUE,OK,MPV,60%,,,US,,US,,US,,,2024_jeep_grandcherokee,TRUE
+"Honda Motor Co., Ltd.",Honda,CR-V FWD,2024_honda_crv,TRUE,OK,MPV,60%,,,US,,J,,US,,,2024_jeep_grandcherokeehybrid,FALSE
+"Honda Motor Co., Ltd.",Honda,CR-V FWD,2024_honda_crv,TRUE,OK,MPV,60%,,,US,,US,,US,,,2024_jeep_grandwagoneer,TRUE
+"Honda Motor Co., Ltd.",Honda,CR-V FWD,2024_honda_crv,TRUE,OK,MPV,60%,,,US,,J,,US,,,2024_jeep_wagoneer,TRUE
+"Honda Motor Co., Ltd.",Honda,CR-V AWD,2024_honda_crv,TRUE,OK,MPV,60%,15% J,,CN,,US,,US,,,2024_jeep_wagoneersev,TRUE
+"Honda Motor Co., Ltd.",Honda,CR-V AWD,2024_honda_crv,TRUE,OK,MPV,60%,15% J,,CN,,J,,J,,,2024_jeep_wrangler,TRUE
+"Honda Motor Co., Ltd.",Honda,CR-V AWD,2024_honda_crv,TRUE,OK,MPV,60%,15% J,,US,,US,,US,,,2024_jeep_wranglerhybrid,FALSE
+"Honda Motor Co., Ltd.",Honda,CR-V AWD,2024_honda_crv,TRUE,OK,MPV,60%,15% J,,US,,J,,J,,,2024_kia_carnival,TRUE
+"Honda Motor Co., Ltd.",Honda,CR-V AWD,2024_honda_crv,TRUE,OK,MPV,60%,15% J,,US,,US,,US,,,2024_kia_ev6ev,TRUE
+"Honda Motor Co., Ltd.",Honda,CR-V AWD,2024_honda_crv,TRUE,OK,MPV,60%,15% J,,US,,J,,J,,,2024_kia_ev9ev,TRUE
+"Honda Motor Co., Ltd.",Honda,HR-V FWD,2024_honda_hrv,TRUE,OK,MPV,30%,40% M,,M,,US,,M,,,2024_kia_forte,TRUE
+"Honda Motor Co., Ltd.",Honda,HR-V AWD,2024_honda_hrv,TRUE,OK,MPV,30%,40% M,,M,,US,,M,,,2024_kia_k5,TRUE
+"Honda Motor Co., Ltd.",Honda,Odyssey,2024_honda_odyssey,TRUE,OK,MPV,70%,,,US,,US,,US,,,2024_kia_niroev,TRUE
+"Honda Motor Co., Ltd.",Honda,Passport AWD,2024_honda_passport,TRUE,OK,MPV,75%,,,US,,US,,US,,,2024_kia_nirohybrid,TRUE
+"Honda Motor Co., Ltd.",Honda,Pilot AWD,2024_honda_pilot,TRUE,OK,MPV,70%,,,US,,US,,US,,,2024_kia_seltos,TRUE
+"Honda Motor Co., Ltd.",Honda,Pilot AWD Touring/Elite/Black,2024_honda_pilot,TRUE,OK,MPV,70%,,,US,,US,,US,,,2024_kia_sorento,TRUE
+"Honda Motor Co., Ltd.",Honda,Pilot AWD TrailSport,2024_honda_pilot,TRUE,OK,MPV,70%,,,US,,US,,US,,,2024_kia_sorentohybrid,TRUE
+"Honda Motor Co., Ltd.",Honda,Pilot FWD,2024_honda_pilot,TRUE,OK,MPV,70%,,,US,,US,,M,,,2024_kia_soul,TRUE
+"Honda Motor Co., Ltd.",Honda,Ridgeline  AWD,2024_honda_ridgeline,TRUE,OK,Truck,70%,,,US,,US,,US,,,2024_kia_sportage,TRUE
+"Honda Motor Co., Ltd.",Honda,Ridgeline  AWD TrailSport,2024_honda_ridgeline,TRUE,OK,Truck,70%,,,US,,US,,US,,,2024_kia_sportagehybrid,TRUE
+Hyundai Motor Company,Genesis,G80,2024_genesis_g80,TRUE,OK,PC,2%,80% K,,K,,K,,K,,,2024_kia_telluride,TRUE
+Hyundai Motor Company,Genesis,G80 EV,2024_genesis_g80ev,FALSE,OK,PC,2%,65% K,30% CH,K,,K,,K,,,2024_lamborghini_huracan,TRUE
+Hyundai Motor Company,Genesis,G90,2024_genesis_g90,TRUE,OK,PC,3%,80% K,,K,,K,,K,,,2024_lamborghini_revueltohybrid,FALSE
+Hyundai Motor Company,Genesis,GV60 EV,2024_genesis_gv60ev,TRUE,OK,MPV,1%,90% K,,K,,K,,K,,,2024_lamborghini_urus,TRUE
+Hyundai Motor Company,Genesis,GV70,2024_genesis_gv70,TRUE,OK,MPV,25%,70% K,,US,,K,,K,,,2024_landrover_defender,TRUE
+Hyundai Motor Company,Genesis,GV70,2024_genesis_gv70,TRUE,OK,MPV,2%,80% K,,K,,K,,K,,,2024_landrover_discovery,TRUE
+Hyundai Motor Company,Genesis,GV70 EV,2024_genesis_gv70ev,FALSE,OK,MPV,17%,80% K,,US,,K,,K,,,2024_landrover_discoverysport,TRUE
+Hyundai Motor Company,Genesis,GV80,2024_genesis_gv80,TRUE,OK,MPV,3%,80% K,,K,,K,,K,,,2024_landrover_rangerover,TRUE
+Hyundai Motor Company,Hyundai,Elantra,2024_hyundai_elantra,TRUE,OK,PC,1%,95% K,,K,,K,,K,,,2024_landrover_rangeroverevoque,TRUE
+Hyundai Motor Company,Hyundai,Elantra HEV,2024_hyundai_elantrahybrid,TRUE,OK,PC,0%,85% K,,K,,K,,K,,,2024_landrover_rangeroverhybrid,FALSE
+Hyundai Motor Company,Hyundai,Elantra N,2024_hyundai_elantran,TRUE,OK,PC,0%,80% K,,K,,K,,K,,,2024_landrover_rangeroversport,TRUE
+Hyundai Motor Company,Hyundai,Ioniq 5,2024_hyundai_ioniq5ev,TRUE,OK,PC,1%,95% K,,K,,K,,K,,,2024_landrover_rangeroversporthybrid,TRUE
+Hyundai Motor Company,Hyundai,Ioniq 5,2024_hyundai_ioniq5ev,TRUE,OK,PC,20%,35% H,20% K,SI,,K,,K,,,2024_landrover_rangerovervelar,TRUE
+Hyundai Motor Company,Hyundai,Ioniq 6,2024_hyundai_ioniq6ev,TRUE,OK,PC,0%,95% K,,K,,K,,K,,,2024_lexus_es,TRUE
+Hyundai Motor Company,Hyundai,Kona,2024_hyundai_kona,TRUE,OK,MPV,3%,90% K,,K,,K,,K,,,2024_lexus_eshybrid,TRUE
+Hyundai Motor Company,Hyundai,Kona EV,2024_hyundai_konaev,TRUE,OK,MPV,0%,60% K,40% CH,K,,K,,K,,,2024_lexus_gx,TRUE
+Hyundai Motor Company,Hyundai,Nexo,2024_hyundai_nexo,FALSE,OK,MPV,1%,80% K,,K,,K,,K,,,2024_lexus_is,TRUE
+Hyundai Motor Company,Hyundai,Palisade,2024_hyundai_palisade,TRUE,OK,MPV,2%,80% K,,K,,K,,K,,,2024_lexus_lc,TRUE
+Hyundai Motor Company,Hyundai,Santa Cruz,2024_hyundai_santacruz,TRUE,OK,MPV,55%,35% K,,US,,US,,US,K,,2024_lexus_lchybrid,TRUE
+Hyundai Motor Company,Hyundai,Santa Fe,2024_hyundai_santafe,TRUE,OK,MPV,50%,30% K,,US,,US,,K,,,2024_lexus_ls,TRUE
+Hyundai Motor Company,Hyundai,Santa Fe HEV,2024_hyundai_santafehybrid,TRUE,OK,MPV,40%,45% K,,US,,K,,K,,,2024_lexus_lshybrid,TRUE
+Hyundai Motor Company,Hyundai,Sonata,2024_hyundai_sonata,TRUE,OK,PC,1%,95% K,,K,,K,,K,,,2024_lexus_lx,TRUE
+Hyundai Motor Company,Hyundai,Sonata HEV,2024_hyundai_sonatahybrid,TRUE,OK,PC,1%,85% K,,K,,K,,K,,,2024_lexus_nx,TRUE
+Hyundai Motor Company,Hyundai,Tucson,2024_hyundai_tucson,TRUE,OK,MPV,1%,85% K,,K,,K,,K,,,2024_lexus_nxhybrid,TRUE
+Hyundai Motor Company,Hyundai,Tucson HEV,2024_hyundai_tucsonhybrid,TRUE,OK,MPV,0%,80%K,,K,,K,,K,,,2024_lexus_rc,TRUE
+Hyundai Motor Company,Hyundai,Tucson PHEV,2024_hyundai_tucsonhybrid,TRUE,OK,MPV,0%,85% K,,K,,K,,K,,,2024_lexus_rcf,TRUE
+Hyundai Motor Company,Hyundai,Venue,2024_hyundai_venue,TRUE,OK,MPV,1%,90% K,,K,,K,,K,,,2024_lexus_rx,TRUE
+"Jaguar Land Rover
+Limited",Jaguar,E-Pace (I4 - 246HP),2024_jaguar_epace,TRUE,OK,MPV,14%,62% G,21% UK,AU,,UK,,US,,,2024_lexus_rxhybrid,TRUE
+"Jaguar Land Rover
+Limited",Jaguar,F-Pace (2.0L I4 Turbocharged),2024_jaguar_fpace,TRUE,OK,MPV,0%,61% UK,15% G,UK,,UK,,G,,,2024_lexus_rzev,TRUE
+"Jaguar Land Rover
+Limited",Jaguar,F-Pace (3.0L I6 Turbocharged),2024_jaguar_fpace,TRUE,OK,MPV,0%,61% UK,15% G,UK,,UK,,G,,,2024_lexus_tx,TRUE
+"Jaguar Land Rover
+Limited",Jaguar,F-Pace SVR (5.0L V8 Supercharged),2024_jaguar_fpace,TRUE,OK,MPV,0%,66% UK,11% G,UK,,UK,,G,,,2024_lexus_txhybrid,TRUE
+"Jaguar Land Rover
+Limited",Jaguar,F-TYPE Coupe RWD (V8),2024_jaguar_ftype,TRUE,OK,PC,8%,50% G,41% UK,UK,,UK,,G,,,2024_lexus_uxhybrid,TRUE
+"Jaguar Land Rover
+Limited",Jaguar,F-TYPE Coupe AWD (V8),2024_jaguar_ftype,TRUE,OK,PC,8%,50% G,41% UK,UK,,UK,,G,,,2024_lincoln_aviator,TRUE
+"Jaguar Land Rover
+Limited",Jaguar,F-TYPE Convertible RWD (V8),2024_jaguar_ftype,TRUE,OK,PC,8%,50% G,41% UK,UK,,UK,,G,,,2024_lincoln_corsair,TRUE
+"Jaguar Land Rover
+Limited",Jaguar,F-TYPE Convertible AWD (V8),2024_jaguar_ftype,TRUE,OK,PC,8%,50% G,41% UK,UK,,UK,,G,,,2024_lincoln_corsairhybrid,TRUE
+"Jaguar Land Rover
+Limited",Jaguar,"I-PACE EV400 Waymo
+(394hp Electric Motors/90kWh Battery)",2024_jaguar_ipaceev,TRUE,OK,MPV,0%,74% Poland,,AU,,P,,P,,,2024_lincoln_nautilus,TRUE
+"Jaguar Land Rover
+Limited",Jaguar,"I-PACE EV400 HSE
+(394hp Electric Motors/90kWh Battery)",2024_jaguar_ipaceev,TRUE,OK,MPV,0%,74% Poland,,AU,,P,,P,,,2024_lincoln_nautilushybrid,FALSE
+"Jaguar Land Rover
+Limited",Jaguar,XF - RWD,2024_jaguar_xf,TRUE,OK,PC,4%,50% UK,43% G,UK,,UK,,G,,,2024_lincoln_navigator,TRUE
+"Jaguar Land Rover
+Limited",Jaguar,XF - AWD,2024_jaguar_xf,TRUE,OK,PC,4%,48% G,46% UK,UK,,UK,,G,,,2024_lotus_emira,TRUE
+"Jaguar Land Rover
+Limited",Land Rover,Defender - 90,2024_landrover_defender,TRUE,OK,MPV,1%,31% UK,19% G,SL,,UK,,G,,,2024_lucidmotors_airev,FALSE
+"Jaguar Land Rover
+Limited",Land Rover,Defender - 110,2024_landrover_defender,TRUE,OK,MPV,1%,31% UK,19% G,SL,,UK,,G,,,2024_maserati_ghibli,FALSE
+"Jaguar Land Rover
+Limited",Land Rover,Defender - 130,2024_landrover_defender,TRUE,OK,MPV,1%,31% UK,19% G,SL,,UK,,G,,,2024_maserati_grancabrio,FALSE
+"Jaguar Land Rover
+Limited",Land Rover,Discovery 2.0L Turbocharged,2024_landrover_discovery,TRUE,OK,MPV,0%,72% UK,12% G,SL,,UK,,G,,,2024_maserati_granturismo,FALSE
+"Jaguar Land Rover
+Limited",Land Rover,Discovery 3.0L Turbocharged,2024_landrover_discovery,TRUE,OK,MPV,0%,72% UK,12% G,SL,,UK,,G,,,2024_maserati_grecale,FALSE
+"Jaguar Land Rover
+Limited",Land Rover,Discovery Sport,2024_landrover_discoverysport,TRUE,OK,MPV,7%,50% UK,,UK,,UK,,US,,,2024_maserati_levante,FALSE
+"Jaguar Land Rover
+Limited",Land Rover,"Range Rover 3.0L  Turbocharged
+(Gasoline)    Long Wheelbase",2024_landrover_rangerover,TRUE,OK,MPV,5%,54% UK,15% G,UK,,UK,,G,,,2024_maserati_mc20,FALSE
+"Jaguar Land Rover
+Limited",Land Rover,"Range Rover 3.0L  Turbocharged
+(Gasoline)    Long Wheelbase",2024_landrover_rangerover,TRUE,OK,MPV,5%,60% UK,8% G,UK,,UK,,G,,,2024_maserati_quattroporte,FALSE
+"Jaguar Land Rover
+Limited",Land Rover,"Range Rover 4.4L Turbocharged
+(Gasoline)  Long Wheelbase",2024_landrover_rangerover,TRUE,OK,MPV,5%,50% UK,18% G,UK,,G,,G,,,2024_mazda_3,TRUE
+"Jaguar Land Rover
+Limited",Land Rover,"Range Rover 3.0L  Turbocharged
+(Gasoline)    Standard Wheelbase",2024_landrover_rangerover,TRUE,OK,MPV,5%,54% UK,15% G,UK,,UK,,G,,,2024_mazda_cx30,FALSE
+"Jaguar Land Rover
+Limited",Land Rover,"Range Rover 3.0L  Turbocharged
+(Gasoline)    Standard Wheelbase",2024_landrover_rangerover,TRUE,OK,MPV,5%,60% UK,8% G,UK,,UK,,G,,,2024_mazda_cx5,TRUE
+"Jaguar Land Rover
+Limited",Land Rover,"Range Rover 4.4L V8 Turbocharged
+(Gasoline)  Standard Wheelbase",2024_landrover_rangerover,TRUE,OK,MPV,5%,50% UK,18% G,UK,,G,,G,,,2024_mazda_cx50,TRUE
+"Jaguar Land Rover
+Limited",Land Rover,Range Rover Evoque,2024_landrover_rangeroverevoque,TRUE,OK,MPV,9%,54% UK,15% G,UK,,UK,,US,,,2024_mazda_cx90,FALSE
+"Jaguar Land Rover
+Limited",Land Rover,"Range Rover Sport 3.0L Turbocharged
+PHEV (Gasoline)",2024_landrover_rangeroversporthybrid,TRUE,OK,MPV,5%,54% UK,15% G,UK,,UK,,G,,,2024_mazda_cx90hybrid,TRUE
+"Jaguar Land Rover
+Limited",Land Rover,"Range Rover Sport 3.0L Turbocharged
+(Gasoline)",2024_landrover_rangeroversport,TRUE,OK,MPV,5%,60% UK,8% G,UK,,UK,,G,,,2024_mazda_mx5miata,TRUE
+"Jaguar Land Rover
+Limited",Land Rover,"Range Rover Sport 4.4L Turbocharged
+(Gasoline)",2024_landrover_rangeroversport,TRUE,OK,MPV,5%,50% UK,18% G,UK,,G,,G,,,2024_mercedesbenz_amggt,TRUE
+"Jaguar Land Rover
+Limited",Land Rover,"Range Rover Velar
+(2.0L I4 Gasoline Turbocharged)",2024_landrover_rangerovervelar,TRUE,OK,MPV,8%,60% UK,,UK,,UK,,G,,,2024_mercedesbenz_c,TRUE
+"Jaguar Land Rover
+Limited",Land Rover,"Range Rover Velar
+(3.0L I6 Gasoline Turbocharged)",2024_landrover_rangerovervelar,TRUE,OK,MPV,8%,60% UK,,UK,,UK,,G,,,2024_mercedesbenz_chybrid,FALSE
+Kia Motors,Kia,Carnival,2024_kia_carnival,TRUE,OK,MPV,1%,95% K,,K,,K,,K,,,2024_mercedesbenz_cla,TRUE
+Kia Motors,Kia,EV6 Electric,2024_kia_ev6ev,TRUE,OK,MPV,0%,95% K,,K,,K,,K,,,2024_mercedesbenz_cle,FALSE
+Kia Motors,Kia,EV9 Electric,2024_kia_ev9ev,TRUE,OK,MPV,1%,95% K,,K,,K,,K,,,2024_mercedesbenz_e,FALSE
+Kia Motors,Kia,Forte,2024_kia_forte,TRUE,OK,PC,10%,35% K,50% M,M,,M,,M,K,,2024_mercedesbenz_eqbev,TRUE
+Kia Motors,Kia,K5,2024_kia_k5,TRUE,OK,PC,60%,30% K,,US,,US,,US,,,2024_mercedesbenz_eqesedanev,TRUE
+Kia Motors,Kia,Niro Electric,2024_kia_niroev,TRUE,OK,MPV,1%,60% K,30% CH,K,,K,,K,,,2024_mercedesbenz_eqesuvev,TRUE
+Kia Motors,Kia,Niro Hybrid,2024_kia_nirohybrid,TRUE,OK,MPV,1%,90% K,,K,,K,,K,,,2024_mercedesbenz_eqssedanev,TRUE
+Kia Motors,Kia,Niro Plug-In Hybrid,2024_kia_nirohybrid,TRUE,OK,MPV,1%,90% K,,K,,K,,K,,,2024_mercedesbenz_eqssuvev,TRUE
+Kia Motors,Kia,Seltos,2024_kia_seltos,TRUE,OK,MPV,4%,85% K,,K,,K,,K,K,,2024_mercedesbenz_g,TRUE
+Kia Motors,Kia,Sorento,2024_kia_sorento,TRUE,OK,MPV,60%,30% K,,US,,US,,US,K,,2024_mercedesbenz_gla,TRUE
+Kia Motors,Kia,Sorento Hybrid,2024_kia_sorentohybrid,TRUE,OK,MPV,1%,90% K,,K,,K,,K,,,2024_mercedesbenz_glb,TRUE
+Kia Motors,Kia,Sorento PHEV,2024_kia_sorentohybrid,TRUE,OK,MPV,1%,90% K,,K,,K,,K,,,2024_mercedesbenz_glc,TRUE
+Kia Motors,Kia,Soul,2024_kia_soul,TRUE,OK,MPV,1%,85% K,,K,,K,,K,,,2024_mercedesbenz_gle,TRUE
+Kia Motors,Kia,Sportage,2024_kia_sportage,TRUE,OK,MPV,55%,30% K,,US,,US,,US,,,2024_mercedesbenz_glehybrid,TRUE
+Kia Motors,Kia,Sportage,2024_kia_sportage,TRUE,OK,MPV,0%,90% K,,K,,K,,K,,,2024_mercedesbenz_gls,TRUE
+Kia Motors,Kia,Sportage Hybrid,2024_kia_sportagehybrid,TRUE,OK,MPV,1%,90% K,,K,,K,,K,,,2024_mercedesbenz_s,TRUE
+Kia Motors,Kia,Sportage PHEV,2024_kia_sportagehybrid,TRUE,OK,MPV,0%,90% K,,K,,K,,K,,,2024_mercedesbenz_shybrid,TRUE
+Kia Motors,Kia,Telluride,2024_kia_telluride,TRUE,OK,MPV,60%,30% K,,US,,K,,US,,,2024_mercedesbenz_sl,TRUE
+Lamborghini,Lamborghini,Huracan EVO,2024_lamborghini_huracan,TRUE,OK,PC,0%,61% G,15% I,I,,H,,G,,,2024_mini_cooper,TRUE
+Lamborghini,Lamborghini,Huracan Sterrato,2024_lamborghini_huracan,TRUE,OK,PC,0%,61% G,17% I,I,,H,,G,,,2024_mini_cooperev,FALSE
+Lamborghini,Lamborghini,Huracan STO,2024_lamborghini_huracan,TRUE,OK,PC,0%,43% I,40% G,I,,H,,G,,,2024_mitsubishi_eclipsecross,TRUE
+Lamborghini,Lamborghini,Huracan Tecnica,2024_lamborghini_huracan,TRUE,OK,PC,0%,62% G,15% H,I,,H,,G,,,2024_mitsubishi_mirage,TRUE
+Lamborghini,Lamborghini,Revuelto,2024_lamborghini_revuelto,FALSE,OK,PC,0%,48% I,26% G,I,,I,,I,,,2024_mitsubishi_outlander,TRUE
+Lamborghini,Lamborghini,URUS Performante,2024_lamborghini_urus,TRUE,OK,MPV,0%,56% G,18% I,I,,G,,G,,,2024_mitsubishi_outlandersport,TRUE
+Lamborghini,Lamborghini,URUS S,2024_lamborghini_urus,TRUE,OK,MPV,0%,61% G,,I,,G,,G,,,2024_nissan_altima,TRUE
+Lotus Cars Ltd.,Lotus,Emira,2024_lotus_emira,TRUE,OK,PC,10%,35% UK,,UK,,J,,J,,,2024_nissan_ariyaev,FALSE
+Mazda Motor Corporation,Mazda,CX-5,2024_mazda_cx5,TRUE,OK,MPV,5%,90% J,,J,,J,,J,,,2024_nissan_armada,TRUE
+Mazda Motor Corporation,Mazda,CX-50,2024_mazda_cx50,TRUE,OK,MPV,50%,30% M,15% J,US,,M,J,J,,,2024_nissan_frontier,TRUE
+Mazda Motor Corporation,Mazda,CX-70 PHEV,2024_mazda_cx70hybrid,FALSE,OK,MPV,0%,95% J,,J,,J,,J,,,2024_nissan_gtr,TRUE
+Mazda Motor Corporation,Mazda,CX-70 MHEV,2024_mazda_cx70hybrid,FALSE,OK,MPV,0%,95% J,,J,,J,,J,,,2024_nissan_kicks,TRUE
+Mazda Motor Corporation,Mazda,CX-90 PHEV,2024_mazda_cx90hybrid,TRUE,OK,MPV,0%,90% J,,J,,J,,J,,,2024_nissan_leafev,TRUE
+Mazda Motor Corporation,Mazda,CX-90 MHEV,2024_mazda_cx90hybrid,TRUE,OK,MPV,0%,90% J,,J,,J,,J,,,2024_nissan_murano,TRUE
+Mazda Motor Corporation,Mazda,Mazda3,2024_mazda_3,TRUE,OK,PC,0%,85% J,,J,,J,,J,,,2024_nissan_pathfinder,TRUE
+Mazda Motor Corporation,Mazda,Mazda3,2024_mazda_3,TRUE,OK,PC,10%,70% M,15% J,M,,M,J,TH,J,,2024_nissan_rogue,TRUE
+Mazda Motor Corporation,Mazda,MX-5  Miata,2024_mazda_mx5miata,TRUE,OK,PC,0%,85% J,,J,,J,,J,,,2024_nissan_sentra,TRUE
+Mercedes-Benz USA,Mercedes-Benz,AMG GT 4-dr Coupe (AMG GT43 / AMG GT53),2024_mercedesbenz_amggt,TRUE,OK,PC,0%,50% G,,G,,G,,G,,,2024_nissan_titan,TRUE
+Mercedes-Benz USA,Mercedes-Benz,AMG GT 4-dr Coupe (AMG GT63/ AMG GT63Se),2024_mercedesbenz_amggthybrid,FALSE,OK,PC,0%,50% G,,G,,G,,G,,,2024_nissan_titanxd,FALSE
+Mercedes-Benz USA,Mercedes-Benz,C-Class Sedan (C300/C300-4M/C43/C63),2024_mercedesbenz_c,TRUE,OK,PC,0%,20% G,10% SA,SA,,G,P,G,R,,2024_nissan_versa,TRUE
+Mercedes-Benz USA,Mercedes-Benz,CLA Coupe (CLA250/CLA250-4M),2024_mercedesbenz_cla,TRUE,OK,PC,0%,25% G,10% H,H,,G,,G,,,2024_nissan_z,TRUE
+Mercedes-Benz USA,Mercedes-Benz,CLA Coupe (CLA45 AMG),2024_mercedesbenz_cla,TRUE,OK,PC,0%,25% G,10% H,H,,G,,R,,,2024_polestar_2ev,TRUE
+Mercedes-Benz USA,Mercedes-Benz,CLA Coupe (CLA35 AMG),2024_mercedesbenz_cla,TRUE,OK,PC,0%,25% G,10% H,H,,G,,G,,,2024_porsche_911,TRUE
+Mercedes-Benz USA,Mercedes-Benz,EQB-Class (EQB 250+/EQB 300-4M/EQB 350-4M),2024_mercedesbenz_eqbev,TRUE,OK,MPV,0%,15% G,10% H,H,,G,,G,,,2024_porsche_boxster,TRUE
+Mercedes-Benz USA,Mercedes-Benz,EQE Sedan (EQE 350+/EQE 350-4M/EQE 500-4M/AMG EQE 4M),2024_mercedesbenz_eqesedanev,TRUE,OK,PC,0%,35% G,,G,,H,,H,,,2024_porsche_cayenne,TRUE
+Mercedes-Benz USA,Mercedes-Benz,EQE SUV (EQE 350+/EQE 350-4M/EQE 500-4M),2024_mercedesbenz_eqesuvev,TRUE,OK,PC,10%,10% G,,US,,G,,G,,,2024_porsche_cayennehybrid,TRUE
+Mercedes-Benz USA,Mercedes-Benz,EQS Sedan (EQS 450+/EQS 450-4M/EQS 580-4M/AMG EQS),2024_mercedesbenz_eqssedanev,TRUE,OK,PC,0%,35% G,,G,,G,,G,,,2024_porsche_cayman,TRUE
+Mercedes-Benz USA,Mercedes-Benz,"EQS SUV (EQS450+/EQS450-4M/EQS580
+4M/EQS680 Maybach)",2024_mercedesbenz_eqssuvev,TRUE,OK,MPV,10%,15% G,,US,,G,,G,,,2024_porsche_macan,TRUE
+Mercedes-Benz USA,Mercedes-Benz,G-Class SUV (G550/G63/G63 4x4),2024_mercedesbenz_g,TRUE,OK,MPV,0%,25% G,15% AT,AT,,G,,G,,,2024_porsche_macanev,FALSE
+Mercedes-Benz USA,Mercedes-Benz,GLA SUV (GLA250/GLA250-4M),2024_mercedesbenz_gla,TRUE,OK,MPV,0%,35% G,,G,,G,,R,,,2024_porsche_panamera,FALSE
+Mercedes-Benz USA,Mercedes-Benz,GLA SUV (AMG GLA35 / AMG GLA45),2024_mercedesbenz_gla,TRUE,OK,MPV,0%,35% G,,G,,G,,R,,,2024_porsche_taycanev,TRUE
+Mercedes-Benz USA,Mercedes-Benz,GLB SUV (GLB250/ GLB250-4M),2024_mercedesbenz_glb,TRUE,OK,MPV,0%,15% G,10% M,M,,G,,R,,,2024_ram_1500,TRUE
+Mercedes-Benz USA,Mercedes-Benz,GLC SUV  (GLC300/GLC300-4M),2024_mercedesbenz_glc,TRUE,OK,MPV,0%,30% G,,G,,P,,G,R,,2024_ram_1500classic,TRUE
+Mercedes-Benz USA,Mercedes-Benz,GLC SUV  (GLC43-4M),2024_mercedesbenz_glc,TRUE,OK,MPV,0%,30% G,,G,,G,,G,,,2024_ram_promaster,FALSE
+Mercedes-Benz USA,Mercedes-Benz,GLE SUV (GLE350-4M/GLE350),2024_mercedesbenz_gle,TRUE,OK,MPV,10%,25% G,,US,,US,,G,,,2024_rivian_r1sev,FALSE
+Mercedes-Benz USA,Mercedes-Benz,GLE SUV (GLE450-4M),2024_mercedesbenz_gle,TRUE,OK,MPV,10%,25% G,,US,,G,,G,,,2024_rivian_r1tev,FALSE
+Mercedes-Benz USA,Mercedes-Benz,GLE SUV (GLE450e-4M),2024_mercedesbenz_glehybrid,TRUE,OK,MPV,10%,25% G,,US,,G,,G,,,2024_rollsroyce_cullinan,TRUE
+Mercedes-Benz USA,Mercedes-Benz,GLE SUV (GLE580-4M),2024_mercedesbenz_gle,TRUE,OK,MPV,10%,25% G,,US,,G,,G,,,2024_rollsroyce_ghost,TRUE
+Mercedes-Benz USA,Mercedes-Benz,GLE SUV (GLE63 S),2024_mercedesbenz_gle,TRUE,OK,PC,10%,25% G,,US,,G,,G,,,2024_rollsroyce_phantom,TRUE
+Mercedes-Benz USA,Mercedes-Benz,GLE SUV (GLE53-4M),2024_mercedesbenz_gle,TRUE,OK,PC,10%,25% G,,US,,G,,G,,,2024_rollsroyce_spectreev,TRUE
+Mercedes-Benz USA,Mercedes-Benz,GLE Coupe (GLE53-4M),2024_mercedesbenz_gle,TRUE,OK,PC,10%,25% G,,US,,G,,G,,,2024_subaru_ascent,TRUE
+Mercedes-Benz USA,Mercedes-Benz,GLE Coupe (GLE63S),2024_mercedesbenz_gle,TRUE,OK,PC,10%,25% G,,US,,G,,G,,,2024_subaru_brz,TRUE
+Mercedes-Benz USA,Mercedes-Benz,GLS SUV (GLS450-4M),2024_mercedesbenz_gls,TRUE,OK,MPV,10%,25% G,,US,,G,,G,,,2024_subaru_crosstrek,TRUE
+Mercedes-Benz USA,Mercedes-Benz,GLS SUV (GLS580-4M),2024_mercedesbenz_gls,TRUE,OK,MPV,10%,25% G,,US,,G,,G,,,2024_subaru_forester,TRUE
+Mercedes-Benz USA,Mercedes-Benz,GLS SUV (GLS63),2024_mercedesbenz_gls,TRUE,OK,MPV,10%,25% G,,US,,G,,G,,,2024_subaru_impreza,TRUE
+Mercedes-Benz USA,Mercedes-Benz,GLS SUV (GLS600 Maybach),2024_mercedesbenz_gls,TRUE,OK,MPV,10%,25% G,,US,,G,,G,,,2024_subaru_legacy,TRUE
+Mercedes-Benz USA,Mercedes-Benz,S-Class Sedan (S500-4M),2024_mercedesbenz_s,TRUE,OK,PC,0%,40% G,,G,,G,,G,,,2024_subaru_outback,TRUE
+Mercedes-Benz USA,Mercedes-Benz,S-Class Sedan (S580-4M),2024_mercedesbenz_s,TRUE,OK,PC,0%,40% G,,G,,G,,G,,,2024_subaru_solterraev,FALSE
+Mercedes-Benz USA,Mercedes-Benz,S-Class Sedan (S580e-4M),2024_mercedesbenz_shybrid,TRUE,OK,PC,0%,40% G,,G,,G,,G,,,2024_subaru_wrx,TRUE
+Mercedes-Benz USA,Mercedes-Benz,S-Class Maybach (S580-4M/S680-4M),2024_mercedesbenz_s,TRUE,OK,PC,0%,35% G,,G,,G,,G,,,2024_tesla_model3ev,TRUE
+Mercedes-Benz USA,Mercedes-Benz,SL-Class  (SL55/SL63/SL43),2024_mercedesbenz_sl,TRUE,OK,PC,0%,50% G,,G,,G,,G,,,2024_tesla_modelsev,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Eclipse Cross Black Edition AWD,2024_mitsubishi_eclipsecross,TRUE,OK,MPV,0%,100% J,,J,,J,,J,,,2024_tesla_modelxev,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Eclipse Cross ES AWD,2024_mitsubishi_eclipsecross,TRUE,OK,MPV,0%,100% J,,J,,J,,J,,,2024_tesla_modelyev,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Eclipse Cross LE AWD,2024_mitsubishi_eclipsecross,TRUE,OK,MPV,0%,100% J,,J,,J,,J,,,2024_toyota_4runner,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Eclipse Cross RalliArt AWD,2024_mitsubishi_eclipsecross,TRUE,OK,MPV,0%,100% J,,J,,J,,J,,,2024_toyota_bz4xev,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Eclipse Cross SE AWD,2024_mitsubishi_eclipsecross,TRUE,OK,MPV,0%,100% J,,J,,J,,J,,,2024_toyota_camry,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Eclipse Cross SEL AWD,2024_mitsubishi_eclipsecross,TRUE,OK,MPV,0%,100% J,,J,,J,,J,,,2024_toyota_camryhybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Mirage BE,2024_mitsubishi_mirage,TRUE,OK,PC,0%,91% TH,,TH,,TH,,TH,,,2024_toyota_corolla,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Mirage ES,2024_mitsubishi_mirage,TRUE,OK,PC,0%,91% TH,,TH,,TH,,TH,,,2024_toyota_corollacross,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Mirage LE,2024_mitsubishi_mirage,TRUE,OK,PC,0%,91% TH,,TH,,TH,,TH,,,2024_toyota_corollacrosshybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Mirage SE,2024_mitsubishi_mirage,TRUE,OK,PC,0%,91% TH,,TH,,TH,,TH,,,2024_toyota_corollahybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Mirage G4  BE,2024_mitsubishi_mirage,TRUE,OK,PC,0%,91% TH,,TH,,TH,,TH,,,2024_toyota_crownhybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Mirage G4  ES,2024_mitsubishi_mirage,TRUE,OK,PC,0%,91% TH,,TH,,TH,,TH,,,2024_toyota_gr86,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Mirage G4  LE,2024_mitsubishi_mirage,TRUE,OK,PC,0%,91% TH,,TH,,TH,,TH,,,2024_toyota_grandhighlander,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Mirage G4  SE,2024_mitsubishi_mirage,TRUE,OK,PC,0%,90% TH,,TH,,TH,,TH,,,2024_toyota_grandhighlanderhybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Mirage Ralliart,2024_mitsubishi_mirage,TRUE,OK,PC,0%,90% TH,,TH,,TH,,TH,,,2024_toyota_grcorolla,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander Black Edition 2WD,2024_mitsubishi_outlander,TRUE,OK,MPV,4%,85% J,,J,,J,,J,,,2024_toyota_highlander,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander Black Edition 4WD,2024_mitsubishi_outlander,TRUE,OK,MPV,4%,84% J,,J,,J,,J,,,2024_toyota_highlanderhybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander ES 2WD,2024_mitsubishi_outlander,TRUE,OK,MPV,5%,82% J,,J,,J,,J,,,2024_toyota_landcruiserhybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander ES 4WD,2024_mitsubishi_outlander,TRUE,OK,MPV,5%,83% J,,J,,J,,J,,,2024_toyota_miraihybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander PHEV Commercial Fleet,2024_mitsubishi_outlanderhybrid,FALSE,OK,MPV,0%,94% J,,J,,J,,J,,,2024_toyota_priushybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander PHEV ES,2024_mitsubishi_outlanderhybrid,FALSE,OK,MPV,0%,94% J,,J,,J,,J,,,2024_toyota_priusprimehybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander PHEV Platinum Edition,2024_mitsubishi_outlanderhybrid,FALSE,OK,MPV,0%,95% J,,J,,J,,J,,,2024_toyota_rav4,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander PHEV Ralliart,2024_mitsubishi_outlanderhybrid,FALSE,OK,MPV,0%,95% J,,J,,J,,J,,,2024_toyota_rav4hybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander PHEV SE,2024_mitsubishi_outlanderhybrid,FALSE,OK,MPV,0%,95% J,,J,,J,,J,,,2024_toyota_rav4primehybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander PHEV SEL,2024_mitsubishi_outlanderhybrid,FALSE,OK,MPV,0%,95% J,,J,,J,,J,,,2024_toyota_sequoiahybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander PHEV SEL Black Edition,2024_mitsubishi_outlanderhybrid,FALSE,OK,MPV,0%,95% J,,J,,J,,J,,,2024_toyota_siennahybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander SE 2WD,2024_mitsubishi_outlander,TRUE,OK,MPV,4%,85% J,,J,,J,,J,,,2024_toyota_supra,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander SE 4WD,2024_mitsubishi_outlander,TRUE,OK,MPV,4%,82% J,,J,,J,,J,,,2024_toyota_tacoma,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander SE Black Edition 2WD,2024_mitsubishi_outlander,TRUE,OK,MPV,4%,87% J,,J,,J,,J,,,2024_toyota_tundra,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander SE Black Edition 4WD,2024_mitsubishi_outlander,TRUE,OK,MPV,4%,86% J,,J,,J,,J,,,2024_toyota_tundrahybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander SEL 2WD,2024_mitsubishi_outlander,TRUE,OK,MPV,4%,85% J,,J,,J,,J,,,2024_toyota_venzahybrid,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander SEL 4WD,2024_mitsubishi_outlander,TRUE,OK,MPV,4%,82% J,,J,,J,,J,,,2024_volkswagen_atlas,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander Sport ES,2024_mitsubishi_outlandersport,TRUE,OK,MPV,0%,93% J,,J,,J,,J,,,2024_volkswagen_atlascrosssport,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander Sport LE,2024_mitsubishi_outlandersport,TRUE,OK,MPV,0%,95% J,,J,,J,,J,,,2024_volkswagen_golfr,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander Sport Ralliart,2024_mitsubishi_outlandersport,TRUE,OK,MPV,0%,95% J,,J,,J,,J,,,2024_volkswagen_gti,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander Sport S,2024_mitsubishi_outlandersport,TRUE,OK,MPV,0%,95% J,,J,,J,,J,,,2024_volkswagen_id4ev,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander Sport SE,2024_mitsubishi_outlandersport,TRUE,OK,MPV,0%,92% J,,J,,J,,J,,,2024_volkswagen_jetta,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander Sport SEL,2024_mitsubishi_outlandersport,TRUE,OK,MPV,1%,92% J,,J,,J,,J,,,2024_volkswagen_taos,TRUE
+"Mitsubishi Motors
+Corporation",Mitsubishi,Outlander Sport Trail Edition,2024_mitsubishi_outlandersport,TRUE,OK,MPV,0%,95% J,,J,,J,,J,,,2024_volkswagen_tiguan,TRUE
+"Nissan North America, Inc",Infiniti,Q50,2024_infiniti_q50,TRUE,OK,PC,0%,90% J,,J,,J,,J,,,2024_volvo_s60,TRUE
+"Nissan North America, Inc",Infiniti,QX50,2024_infiniti_qx50,TRUE,OK,MPV,15%,45% M,25% J,M,,J,,M,,,2024_volvo_s60hybrid,TRUE
+"Nissan North America, Inc",Infiniti,QX55,2024_infiniti_qx55,TRUE,OK,MPV,10%,55% M,20% J,M,,J,,M,,,2024_volvo_s90,TRUE
+"Nissan North America, Inc",Infiniti,QX 60,2024_infiniti_qx60,TRUE,OK,MPV,45%,,,US,,US,,US,,,2024_volvo_s90hybrid,TRUE
+"Nissan North America, Inc",Infiniti,QX80,2024_infiniti_qx80,TRUE,OK,MPV,5%,90% J,,J,,J,,J,,,2024_volvo_v60crosscountry,TRUE
+"Nissan North America, Inc",Nissan,Altima 4CYL,2024_nissan_altima,TRUE,OK,PC,50%,15% M,,US,,US,,M,,,2024_volvo_v60hybrid,TRUE
+"Nissan North America, Inc",Nissan,Altima 4CYL Turbo,2024_nissan_altima,TRUE,OK,PC,50%,15% M,,US,,J,,M,,,2024_volvo_v90crosscountry,TRUE
+"Nissan North America, Inc",Nissan,Armada,2024_nissan_armada,TRUE,OK,MPV,5%,90% J,,J,,J,,J,,,2024_volvo_xc40,TRUE
+"Nissan North America, Inc",Nissan,Frontier,2024_nissan_frontier,TRUE,OK,Truck,40%,20% J,,US,,US,,J,,,2024_volvo_xc60,TRUE
+"Nissan North America, Inc",Nissan,GT-R,2024_nissan_gtr,TRUE,OK,PC,0%,95% J,,J,,J,,J,,,2024_volvo_xc60hybrid,TRUE
+"Nissan North America, Inc",Nissan,Kicks,2024_nissan_kicks,TRUE,OK,PC,15%,65% M,,M,,M,,M,,,2024_volvo_xc90,TRUE
+"Nissan North America, Inc",Nissan,Leaf,2024_nissan_leafev,TRUE,OK,PC,30%,45% J,,US,,J,,J,,,2024_volvo_xc90hybrid,TRUE
+"Nissan North America, Inc",Nissan,Murano,2024_nissan_murano,TRUE,OK,MPV,55%,,,US,,US,,M,,,,
+"Nissan North America, Inc",Nissan,Pathfinder,2024_nissan_pathfinder,TRUE,OK,MPV,50%,,,US,,US,,US,,,,
+"Nissan North America, Inc",Nissan,Rogue,2024_nissan_rogue,TRUE,OK,MPV,25%,45% J,,US,,J,,M,,,,
+"Nissan North America, Inc",Nissan,Rogue,2024_nissan_rogue,TRUE,OK,MPV,25%,45% J,,J,,J,,J,,,,
+"Nissan North America, Inc",Nissan,Sentra,2024_nissan_sentra,TRUE,OK,PC,15%,65% M,,M,,M,,M,,,,
+"Nissan North America, Inc",Nissan,Titan,2024_nissan_titan,TRUE,OK,Truck,45%,15% J,,US,,US,,J,,,,
+"Nissan North America, Inc",Nissan,Versa Sedan,2024_nissan_versa,TRUE,OK,PC,15%,70% M,,M,,M,,M,,,,
+"Nissan North America, Inc",Nissan,Versa Sedan,2024_nissan_versa,TRUE,OK,PC,15%,70% M,,M,,M,,ESP,,,,
+"Nissan North America, Inc",Nissan,Z,2024_nissan_z,TRUE,OK,PC,0%,90% J,,J,,J,,J,,,,
+Polestar,Polestar,Polestar 2 AWD (Dual Motor),2024_polestar_2ev,TRUE,OK,PC,0%,95% CH,,CH,,CH,,CH,,,,
+Polestar,Polestar,Polestar 2 RWD (Single Motor),2024_polestar_2ev,TRUE,OK,PC,0%,95% CH,,CH,,CH,,CH,,,,
+Porsche AG,Porsche,718 Boxster,2024_porsche_boxster,TRUE,OK,PC,0%,75% G,,G,,G,,G,,,,
+Porsche AG,Porsche,718 Boxster GTS 4.0,2024_porsche_boxster,TRUE,OK,PC,0%,75% G,,G,,G,,G,,,,
+Porsche AG,Porsche,718 Boxster S,2024_porsche_boxster,TRUE,OK,PC,0%,75% G,,G,,G,,G,,,,
+Porsche AG,Porsche,718 Cayman,2024_porsche_cayman,TRUE,OK,PC,0%,75% G,,G,,G,,G,,,,
+Porsche AG,Porsche,718 Cayman GT4 RS,2024_porsche_cayman,TRUE,OK,PC,0%,70% G,,G,,G,,G,,,,
+Porsche AG,Porsche,718 Cayman GTS 4.0,2024_porsche_cayman,TRUE,OK,PC,0%,70% G,,G,,G,,G,,,,
+Porsche AG,Porsche,718 Cayman S,2024_porsche_cayman,TRUE,OK,PC,0%,75% G,,G,,G,,G,,,,
+Porsche AG,Porsche,"911 Carrera, S, GTS, 4, 4S, 4 GTS",2024_porsche_911,TRUE,OK,PC,0%,75% G,,G,,G,,G,,,,
+Porsche AG,Porsche,"911 Carrera Cabriolet, S Cab, GTS Cab,",2024_porsche_911,TRUE,OK,PC,0%,75% G,,G,,G,,G,,,,
+Porsche AG,Porsche,911 Dakar,2024_porsche_911,TRUE,OK,PC,0%,65% G,,G,,G,,G,,,,
+Porsche AG,Porsche,911 GT3,2024_porsche_911,TRUE,OK,PC,0%,60% G,,G,,G,,G,,,,
+Porsche AG,Porsche,911 GT3 RS,2024_porsche_911,TRUE,OK,PC,0%,75% G,,G,,G,,G,,,,
+Porsche AG,Porsche,911 GT3 Touring,2024_porsche_911,TRUE,OK,PC,0%,65% G,,G,,G,,G,,,,
+Porsche AG,Porsche,911 Carrera T,2024_porsche_911,TRUE,OK,PC,0%,70% G,,G,,G,,G,,,,
+Porsche AG,Porsche,"911 Targa 4, 4S, 4 GTS",2024_porsche_911,TRUE,OK,PC,0%,70% G,,G,,G,,G,,,,
+Porsche AG,Porsche,"911 Turbo, Turbo S, Turbo Cab, Turbo S",2024_porsche_911,TRUE,OK,PC,0%,75% G,,G,,G,,G,,,,
+Porsche AG,Porsche,Cayenne,2024_porsche_cayenne,TRUE,OK,MPV,0%,25% G,30% SL,SL,,H,,G,,,,
+Porsche AG,Porsche,Cayenne Coupe,2024_porsche_cayenne,TRUE,OK,MPV,0%,25% G,30% SL,SL,,H,,H,,,,
+Porsche AG,Porsche,Cayenne E-Hybrid,2024_porsche_cayennehybrid,TRUE,OK,MPV,0%,30% G,25% SL,SL,,H,,G,,,,
+Porsche AG,Porsche,Cayenne E-Hybrid Coupe,2024_porsche_cayennehybrid,TRUE,OK,MPV,0%,35% G,25% SL,SL,,H,,G,,,,
+Porsche AG,Porsche,Cayenne S,2024_porsche_cayenne,TRUE,OK,MPV,0%,45% G,30% SL,SL,,G,,H,,,,
+Porsche AG,Porsche,Cayenne S Coupe,2024_porsche_cayenne,TRUE,OK,MPV,0%,45% G,25% SL,SL,,G,,H,,,,
+Porsche AG,Porsche,Cayenne Turbo GT,2024_porsche_cayenne,TRUE,OK,MPV,0%,50% G,25% SL,SL,,G,,G,,,,
+Porsche AG,Porsche,"Macan, T",2024_porsche_macan,TRUE,OK,MPV,0%,60% G,,G,,H,,G,,,,
+Porsche AG,Porsche,Macan S,2024_porsche_macan,TRUE,OK,MPV,0%,60% G,15% H,G,,H,,G,,,,
+Porsche AG,Porsche,Macan GTS,2024_porsche_macan,TRUE,OK,MPV,0%,65% G,15% H,G,,H,,G,,,,
+Porsche AG,Porsche,"Taycan, 4S, GTS, Turbo",2024_porsche_taycanev,TRUE,OK,PC,0%,40% G,30% P,G,,G,,G,,,,
+Porsche AG,Porsche,"Taycan 4 Cross Turismo, 4S Cross",2024_porsche_taycanev,TRUE,OK,PC,0%,40% G,30% P,G,,G,,G,,,,
+Porsche AG,Porsche,Taycan Turbo S,2024_porsche_taycanev,TRUE,OK,PC,0%,45% G,30% P,G,,G,,G,,,,
+Porsche AG,Porsche,Taycan Turbo S Cross Turismo,2024_porsche_taycanev,TRUE,OK,PC,0%,45% G,30% P,G,,G,,G,,,,
+Rolls-Royce Motor,Rolls-Royce,Cullinan,2024_rollsroyce_cullinan,TRUE,OK,MPV,1%,29% G,,UK,,G,,G,,,,
+Rolls-Royce Motor,Rolls-Royce,Ghost,2024_rollsroyce_ghost,TRUE,OK,PC,1%,29% G,,UK,,G,,G,,,,
+Rolls-Royce Motor,Rolls-Royce,Phantom,2024_rollsroyce_phantom,TRUE,OK,PC,1%,29% G,,UK,,G,,G,,,,
+Rolls-Royce Motor,Rolls-Royce,Spectre,2024_rollsroyce_spectreev,TRUE,OK,PC,1%,53% G,,UK,,G,,G,,,,
+Subaru,Subaru,Ascent,2024_subaru_ascent,TRUE,OK,MPV,50%,30% J,,US,,J,,J,,,,
+Subaru,Subaru,BRZ,2024_subaru_brz,TRUE,OK,PC,0%,85% J,,J,,J,,J,,,,
+Subaru,Subaru,Crosstrek,2024_subaru_crosstrek,TRUE,OK,MPV,5%,85% J,,J,,J,,J,,,,
+Subaru,Subaru,Crosstrek,2024_subaru_crosstrek,TRUE,OK,MPV,45%,35% J,,US,,J,,J,,,,
+Subaru,Subaru,Forester,2024_subaru_forester,TRUE,OK,MPV,0%,80% J,,J,,J,,J,,,,
+Subaru,Subaru,Impreza,2024_subaru_impreza,TRUE,OK,PC,5%,80% J,,J,,J,,J,,,,
+Subaru,Subaru,Legacy,2024_subaru_legacy,TRUE,OK,PC,50%,30% J,,US,,J,,J,,,,
+Subaru,Subaru,Outback,2024_subaru_outback,TRUE,OK,MPV,50%,30% J,,US,,J,,J,,,,
+Subaru,Subaru,WRX,2024_subaru_wrx,TRUE,OK,PC,0%,85% J,,J,,J,,J,,,,
+Subaru,Toyota,GR86,2024_toyota_gr86,TRUE,OK,PC,0%,85% J,,J,,J,,J,,,,
+Tesla Inc.,Tesla,Cybertruck,2024_tesla_cybertruckev,FALSE,OK,Truck,65%,25% M,,US,,USA,,USA,,,,
+Tesla Inc.,Tesla,Model 3 Long Range,2024_tesla_model3ev,TRUE,OK,PC,35%,20% M,40% CH,US,,USA,,USA,,,,
+Tesla Inc.,Tesla,Model 3 Performance,2024_tesla_model3ev,TRUE,OK,PC,75%,20% MX,,"Fremont, CA",,USA,,USA,,,,
+Tesla Inc.,Tesla,Model 3 RWD,2024_tesla_model3ev,TRUE,OK,PC,40%,20% M,35% CH,US,,USA,,USA,,,,
+Tesla Inc.,Tesla,Model S,2024_tesla_modelsev,TRUE,OK,PC,65%,15% M,,US,,USA,,USA,,,,
+Tesla Inc.,Tesla,Model X,2024_tesla_modelxev,TRUE,OK,MPV,60%,20% M,,US,,USA,,USA,,,,
+Tesla Inc.,Tesla,Model Y Long Range,2024_tesla_modelyev,TRUE,OK,MPV,70%,20% M,,US,,USA,,USA,,,,
+Tesla Inc.,Tesla,Model Y Long Range,2024_tesla_modelyev,TRUE,OK,MPV,70%,20% M,,US,,USA,,USA,,,,
+Tesla Inc.,Tesla,Model Y Performance,2024_tesla_modelyev,TRUE,OK,MPV,70%,20% M,,US,,USA,,USA,,,,
+Toyota,Lexus,ES 250/350,2024_lexus_es,TRUE,OK,PC,50%,35% J,,US,,US,J,US,J,,,
+Toyota,Lexus,ES 300h,2024_lexus_eshybrid,TRUE,OK,PC,45%,40% J,,US,,US,,J,,,,
+Toyota,Lexus,GX550,2024_lexus_gx,TRUE,OK,MPV,0%,100% J,,J,,J,,J,,,,
+Toyota,Lexus,IS 300/350,2024_lexus_is,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Toyota,Lexus,LC 500,2024_lexus_lc,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Toyota,Lexus,LC Convertible,2024_lexus_lc,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Toyota,Lexus,LC 500h,2024_lexus_lchybrid,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Toyota,Lexus,LS 500,2024_lexus_ls,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Toyota,Lexus,LS 500h,2024_lexus_lshybrid,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Toyota,Lexus,LX 600,2024_lexus_lx,TRUE,OK,MPV,0%,100% J,,J,,J,,J,,,,
+Toyota,Lexus,NX 250/350,2024_lexus_nx,TRUE,OK,MPV,40%,45% J,,J,CAN,J,US,J,,,,
+Toyota,Lexus,NX 350h,2024_lexus_nx,TRUE,OK,MPV,40%,55% J,,J,CAN,J,US,J,US,,,
+Toyota,Lexus,NX 450h+,2024_lexus_nxhybrid,TRUE,OK,MPV,0%,100% J,,J,,J,,J,,,,
+Toyota,Lexus,RC 300/350,2024_lexus_rc,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Toyota,Lexus,RC F,2024_lexus_rcf,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Toyota,Lexus,RX 350,2024_lexus_rx,TRUE,OK,MPV,55%,30% J,,CN,J,US,J,US,J,,,
+Toyota,Lexus,RX 450h+,2024_lexus_rx,TRUE,OK,MPV,0%,100% J,,J,,J,,J,,,,
+Toyota,Lexus,RX 350h/500h,2024_lexus_rxhybrid,TRUE,OK,MPV,40%,45% J,,CN,,US,,J,,,,
+Toyota,Lexus,RZ 300e/450e,2024_lexus_rzev,TRUE,OK,MPV,0%,100% J,,J,,J,,J,,,,
+Toyota,Lexus,TX 350,2024_lexus_tx,TRUE,OK,MPV,65%,20% J,,US,,US,J,US,,,,
+Toyota,Lexus,TX 500h,2024_lexus_tx,TRUE,OK,MPV,50%,35% J,,US,,J,,J,,,,
+Toyota,Lexus,TX 550h+,2024_lexus_txhybrid,TRUE,OK,MPV,30%,60% J,,US,,J,,J,,,,
+Toyota,Lexus,UX 250h,2024_lexus_uxhybrid,TRUE,OK,MPV,0%,100% J,,J,,J,,J,,,,
+Toyota,Toyota,bZ4x,2024_toyota_bz4xev,TRUE,OK,MPV,0%,80% J,20% CH,J,,J,,J,,,,
+Toyota,Toyota,Corolla Cross,2024_toyota_corollacross,TRUE,OK,MPV,60%,25% J,,US,,US,B,J,,,,
+Toyota,Toyota,Corolla Cross Hybrid,2024_toyota_corollacrosshybrid,TRUE,OK,MPV,45%,40% J,,US,,US,,J,,,,
+Toyota,Toyota,4Runner,2024_toyota_4runner,TRUE,OK,MPV,0%,100% J,,J,,J,,J,,,,
+Toyota,Toyota,Camry,2024_toyota_camry,TRUE,OK,PC,70%,10% J,,US,,J,US,J,US,,,
+Toyota,Toyota,Camry Hybrid,2024_toyota_camryhybrid,TRUE,OK,PC,50%,30% J,,US,,US,,J,,,,
+Toyota,Toyota,Corolla Hatchback,2024_toyota_corolla,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Toyota,Toyota,Corolla Hybrid,2024_toyota_corollahybrid,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Toyota,Toyota,Corolla,2024_toyota_corolla,TRUE,OK,PC,55%,30% J,,US,J,US,J,J,,,,
+Toyota,Toyota,Crown,2024_toyota_crownhybrid,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Toyota,Toyota,GR86,2024_toyota_gr86,TRUE,OK,PC,0%,85% J,,J,,J,,J,,,,
+Toyota,Toyota,GR Corolla,2024_toyota_grcorolla,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Toyota,Toyota,Grand Highlander,2024_toyota_grandhighlander,TRUE,OK,MPV,60%,25% J,,US,,US,J,J,US,,,
+Toyota,Toyota,Grand Highlander Hybrid,2024_toyota_grandhighlanderhybrid,TRUE,OK,MPV,50%,35% J,,US,,US,J,J,,,,
+Toyota,Toyota,Highlander,2024_toyota_highlander,TRUE,OK,MPV,65%,20% J,,US,,US,J,J,US,,,
+Toyota,Toyota,Highlander Hybrid,2024_toyota_highlanderhybrid,TRUE,OK,MPV,55%,30% J,,US,,US,J,J,,,,
+Toyota,Toyota,Land Cruiser,2024_toyota_landcruiserhybrid,TRUE,OK,MPV,0%,100% J,,J,,J,,J,,,,
+Toyota,Toyota,Mirai,2024_toyota_miraihybrid,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Toyota,Toyota,Prius,2024_toyota_priushybrid,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Toyota,Toyota,Prius Prime,2024_toyota_priusprimehybrid,TRUE,OK,PC,0%,95% J,5% CH,J,,J,,J,,,,
+Toyota,Toyota,Rav4,2024_toyota_rav4,TRUE,OK,MPV,70%,15% J,,CN,J,US,J,US,J,,,
+Toyota,Toyota,Rav4 Hybrid,2024_toyota_rav4hybrid,TRUE,OK,MPV,45%,45% J,,CN,US    J,US,J,J,,,,
+Toyota,Toyota,Rav4 Prime,2024_toyota_rav4primehybrid,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Toyota,Toyota,Sienna HV,2024_toyota_siennahybrid,TRUE,OK,MPV,60%,30% J,,US,,US,,J,,,,
+Toyota,Toyota,Sequoia Hybrid,2024_toyota_sequoiahybrid,TRUE,OK,MPV,50%,20% J,15% MX,US,,US,,US,,,,
+Toyota,Toyota,Tacoma,2024_toyota_tacoma,TRUE,OK,Truck,35%,20% J,30% M,M,M,US,,J,TH,,,
+Toyota,Toyota,Tacoma Hybrid,2024_toyota_tacomahybrid,FALSE,OK,Truck,25%,40% J,20% M,M,M,US,,J,TH,,,
+Toyota,Toyota,Tundra,2024_toyota_tundra,TRUE,OK,Truck,55%,15% J,15% MX,US,,US,,US,,,,
+Toyota,Toyota,Tundra Hybrid,2024_toyota_tundrahybrid,TRUE,OK,Truck,50%,20% J,15% MX,US,,US,,US,,,,
+Toyota,Toyota,Venza,2024_toyota_venzahybrid,TRUE,OK,PC,0%,100% J,,J,,J,,J,,,,
+Volkswagen,Volkswagen,Atlas 2.0 (FWD),2024_volkswagen_atlas,TRUE,OK,MPV,50%,32% M,,US,,M,,J,,,,
+Volkswagen,Volkswagen,Atlas 2.0 (AWD),2024_volkswagen_atlas,TRUE,OK,MPV,49%,33% M,,US,,M,,J,,,,
+Volkswagen,Volkswagen,Atlas Cross Sport 2.0 (FWD),2024_volkswagen_atlascrosssport,TRUE,OK,MPV,48%,34% M,,US,,M,,J,,,,
+Volkswagen,Volkswagen,Atlas Cross Sport 2.0 (AWD),2024_volkswagen_atlascrosssport,TRUE,OK,MPV,50%,32% M,,US,,M,,J,,,,
+Volkswagen,Volkswagen,Golf GTI (manual),2024_volkswagen_gti,TRUE,OK,PC,1%,41% G,25% H,G,,H,,G,,,,
+Volkswagen,Volkswagen,Golf GTI (automatic),2024_volkswagen_gti,TRUE,OK,PC,1%,44% G,23% H,G,,H,,G,,,,
+Volkswagen,Volkswagen,Golf R (manual),2024_volkswagen_golfr,TRUE,OK,PC,1%,38% G,19% H,G,,H,,G,,,,
+Volkswagen,Volkswagen,Golf R (automatic),2024_volkswagen_golfr,TRUE,OK,PC,1%,39% G,19% H,G,,H,,G,,,,
+Volkswagen,Volkswagen,ID.4 AWD 82kWh,2024_volkswagen_id4ev,TRUE,OK,MPV,73%,,,US,,,US,US,,,,
+Volkswagen,Volkswagen,ID.4 RWD 62kWh,2024_volkswagen_id4ev,TRUE,OK,MPV,71%,16% M,,US,,,US,US,,,,
+Volkswagen,Volkswagen,ID.4 RWD 82kWh,2024_volkswagen_id4ev,TRUE,OK,MPV,70%,,,US,,,US,US,,,,
+Volkswagen,Volkswagen,Jetta (manual),2024_volkswagen_jetta,TRUE,OK,PC,5%,47% M,15% G,M,,M,,JP,,,,
+Volkswagen,Volkswagen,Jetta (automatic),2024_volkswagen_jetta,TRUE,OK,PC,4%,47% M,,M,,M,,JP,,,,
+Volkswagen,Volkswagen,Jetta (automatic),2024_volkswagen_jetta,TRUE,OK,PC,19%,36% M,,M,,M,,US,,,,
+Volkswagen,Volkswagen,Jetta GLI (manual),2024_volkswagen_jetta,TRUE,OK,PC,4%,47% M,15% G,M,,M,,G,,,,
+Volkswagen,Volkswagen,Jetta GLI (automatic),2024_volkswagen_jetta,TRUE,OK,PC,4%,33% M,18% G,M,,M,,G,,,,
+Volkswagen,Volkswagen,Taos (FWD),2024_volkswagen_taos,TRUE,OK,MPV,4%,36% M,,M,,M,,JP,,,,
+Volkswagen,Volkswagen,Taos (AWD),2024_volkswagen_taos,TRUE,OK,MPV,4%,34% M,15% G,M,,M,,G,,,,
+Volkswagen,Volkswagen,Tiguan (FWD),2024_volkswagen_tiguan,TRUE,OK,MPV,4%,47% M,,M,,M,,JP,,,,
+Volkswagen,Volkswagen,Tiguan (AWD),2024_volkswagen_tiguan,TRUE,OK,MPV,4%,47% M,,M,,M,,JP,,,,
+Volvo,Volvo,C40 Recharge RWD,2024_volvo_c40hybrid,FALSE,OK,MPV,0%,50% CH,,BE,,SW,,SW,,,,
+Volvo,Volvo,C40 Recharge Twin AWD,2024_volvo_c40hybrid,FALSE,OK,MPV,0%,45% PL,15% CH,BE,,SW (RR Motor),CH (FR Motor),SW (RR Motor),CH (FR Motor),,,
+Volvo,Volvo,S60 B5,2024_volvo_s60,TRUE,OK,PC,30%,15% SW,,USA,,SW,,J,,,,
+Volvo,Volvo,S60 Recharge,2024_volvo_s60hybrid,TRUE,OK,PC,20%,20% FN,15% SW,USA,,SW,,J,,,,
+Volvo,Volvo,S90 B6,2024_volvo_s90,TRUE,OK,PC,0%,80% CH,,CH,,CH,,J,,,,
+Volvo,Volvo,S90 Recharge,2024_volvo_s90hybrid,TRUE,OK,PC,0%,75% CH,,CH,,SW,,J,,,,
+Volvo,Volvo,V60 Cross Country B5,2024_volvo_v60crosscountry,TRUE,OK,MPV,0%,40% SW,10% PL,SW,,SW,,J,,,,
+Volvo,Volvo,V60 Recharge,2024_volvo_v60hybrid,TRUE,OK,PC,0%,30% SW,20% FN,SW,,SW,,J,,,,
+Volvo,Volvo,V90 Cross Country B6,2024_volvo_v90crosscountry,TRUE,OK,MPV,0%,45% SW,,SW,,SW,,J,,,,
+Volvo,Volvo,XC40 B5,2024_volvo_xc40,TRUE,OK,MPV,0%,20% SW,,BE,,SW,,J,,,,
+Volvo,Volvo,XC40 Recharge RWD,2024_volvo_xc40hybrid,FALSE,OK,MPV,0%,50% CH,,BE,,SW,,SW,,,,
+Volvo,Volvo,XC40 Recharge Twin AWD,2024_volvo_xc40hybrid,FALSE,OK,MPV,0%,45% PL,15% CH,BE,,SW (RR Motor),CH (FR Motor),SW (RR Motor),CH (FR Motor),,,
+Volvo,Volvo,XC60 B5,2024_volvo_xc60,TRUE,OK,MPV,0%,40% SW,,SW,,SW,,J,,,,
+Volvo,Volvo,XC60 Recharge,2024_volvo_xc60hybrid,TRUE,OK,MPV,0%,30% SW,20% FN,SW,,SW,,J,,,,
+Volvo,Volvo,XC90 B5,2024_volvo_xc90,TRUE,OK,MPV,0%,50% SW,,SW,,SW,,J,,,,
+Volvo,Volvo,XC90 B6,2024_volvo_xc90,TRUE,OK,MPV,0%,45% SW,,SW,,SW,,J,,,,
+Volvo,Volvo,XC90 Recharge,2024_volvo_xc90hybrid,TRUE,OK,MPV,0%,35% SW,20% FN,SW,,SW,,J,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,AU,Australia,,,,,,,
+,,,,,,,,,,AT,Austria,,,,,,,
+,,,,,,,,,,BE,Belgium,,,,,,,
+,,,,,,,,,,BR,Brazil,,,,,,,
+,,,,,,,,,,CH,China,,,,,,,
+,,,,,,,,,,CU,Cuba,,,,,,,
+,,,,,,,,,,CN,Canada,,,,,,,
+,,,,,,,,,,CZ,"Czech
+Republic",,,,,,,
+,,,,,,,,,,DE,Denmark,,,,,,,
+,,,,,,,,,,F,France,,,,,,,
+,,,,,,,,,,FN,Finland,,,,,,,
+,,,,,,,,,,G,Germany,,,,,,,
+,,,,,,,,,,H,Hungary,,,,,,,
+,,,,,,,,,,I,Italy,,,,,,,
+,,,,,,,,,,ID,Indonesia,,,,,,,
+,,,,,,,,,,IN,India,,,,,,,
+,,,,,,,,,,J,Japan,,,,,,,
+,,,,,,,,,,K,Korea,,,,,,,
+,,,,,,,,,,M,Mexico,,,,,,,
+,,,,,,,,,,N,Netherlands,,,,,,,
+,,,,,,,,,,OT,Other,,,,,,,
+,,,,,,,,,,P,Philippines,,,,,,,
+,,,,,,,,,,PL,Poland,,,,,,,
+,,,,,,,,,,PO,Portugal,,,,,,,
+,,,,,,,,,,RO,Romania,,,,,,,
+,,,,,,,,,,RU,Russia,,,,,,,
+,,,,,,,,,,SI,Singapore,,,,,,,
+,,,,,,,,,,SL,Slovakia,,,,,,,
+,,,,,,,,,,SP,Spain,,,,,,,
+,,,,,,,,,,SW,Sweden,,,,,,,
+,,,,,,,,,,T,Turkey,,,,,,,
+,,,,,,,,,,TH,Thailand,,,,,,,
+,,,,,,,,,,UK,Great Britain,,,,,,,
+,,,,,,,,,,US,United States,,,,,,,

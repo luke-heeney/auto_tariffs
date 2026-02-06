@@ -1,0 +1,7 @@
+{
+  "results_file": "data/results/blp_results_20260202_060248_0111110110000011010_45W_dbl.pkl",
+  "product_data_45W": "data/raw/product_data_45W.csv",
+  "product_data_subsidy": "data/raw/product_data_subsidy.csv",
+  "agent_data_45W": "data/raw/agent_data_45W.csv",
+  "agent_data_subsidy": "data/raw/agent_data.csv"
+}
