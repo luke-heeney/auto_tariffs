@@ -19,6 +19,7 @@ from helpers.counterfactual_helpers import (
     plot_origin_percent_metrics_bw,
     build_costs_vector_from_vehicle_costs,
 )
+from helpers.ownership import load_owner_map
 from helpers.counterfactual_reporting import (
     build_profit_change_artifacts,
     build_state_units_table,
@@ -245,6 +246,19 @@ def main() -> None:
     if not results_path.is_absolute():
         results_path = (cfg_path.parent / results_path).resolve()
 
+    ownership_mode = cfg.get("ownership_mode", "firm")
+    owner_mapping_path = cfg.get("owner_mapping_path")
+    allow_unmapped_brands = bool(cfg.get("allow_unmapped_brands", False))
+    owner_map = None
+    owner_map_path = None
+    if ownership_mode == "owner":
+        if not owner_mapping_path:
+            raise ValueError("ownership_mode='owner' requires owner_mapping_path in results_config.json")
+        owner_map_path = Path(owner_mapping_path)
+        if not owner_map_path.is_absolute():
+            owner_map_path = (cfg_path.parent / owner_map_path).resolve()
+        owner_map = load_owner_map(owner_map_path)
+
     # load inputs
     results_name = results_path.name
     if "45W" in results_name:
@@ -277,6 +291,19 @@ def main() -> None:
     out_root = Path("saved_outputs")
     out_root.mkdir(exist_ok=True)
     existing_dir = _find_existing_output_dir(out_root, results_path)
+    if existing_dir is not None:
+        meta_path = existing_dir / "metadata.json"
+        try:
+            meta = json.loads(meta_path.read_text())
+        except Exception:
+            meta = {}
+        meta_owner_mode = meta.get("ownership_mode", "firm")
+        meta_owner_path = meta.get("owner_mapping_path")
+        if meta_owner_mode != ownership_mode:
+            existing_dir = None
+        elif ownership_mode == "owner" and owner_map_path is not None:
+            if meta_owner_path != str(owner_map_path):
+                existing_dir = None
     reuse_outputs = False
     if existing_dir is not None and _existing_outputs_ok(existing_dir):
         out_dir = existing_dir
@@ -408,6 +435,12 @@ def main() -> None:
             year=2024,
         )
         vehicle_costs_df = pd.read_csv("data/derived/vehicle_costs_markups_chars.csv")
+        if ownership_mode == "owner":
+            if "owner_ids" not in vehicle_costs_df.columns:
+                raise ValueError(
+                    "ownership_mode='owner' requires owner_ids in vehicle_costs_markups_chars.csv. "
+                    "Regenerate costs via get_elas_div.ipynb."
+                )
         costs_full = build_costs_vector_from_vehicle_costs(results, vehicle_costs_df)
 
     # run counterfactuals (suppress verbose pyblp output)
@@ -424,6 +457,9 @@ def main() -> None:
             costs_df2,
             agent_data=agent_data,
             costs_full=costs_full,
+            ownership_mode=ownership_mode,
+            owner_map=owner_map,
+            allow_unmapped_brands=allow_unmapped_brands,
             year=2024,
             price_x2_index=PRICE_X2_INDEX,
             beta_price_index=PRICE_BETA_INDEX,
@@ -629,6 +665,9 @@ def main() -> None:
         "costs_prep_diag": diag,
         "baseline_subsidy_spend_billion_usd": baseline_subsidy_spend,
         "scenarios": {k: v["label"] for k, v in outs.items()},
+        "ownership_mode": ownership_mode,
+        "owner_mapping_path": str(owner_map_path) if owner_map_path is not None else None,
+        "allow_unmapped_brands": allow_unmapped_brands,
     }
     (out_dir / "metadata.json").write_text(json.dumps(metadata, indent=2))
 
@@ -650,7 +689,10 @@ def main() -> None:
         })
 
         # add provenance columns
-        for df_name in ["product_table", "firm_table", "market_surplus_table", "overall_surplus"]:
+        df_names = ["product_table", "firm_table", "market_surplus_table", "overall_surplus"]
+        if out.get("owner_table") is not None:
+            df_names.append("owner_table")
+        for df_name in df_names:
             df = out[df_name].copy()
             df["results_file"] = str(results_path)
             df["scenario_label"] = label
