@@ -14,7 +14,11 @@ from helpers.counterfactual_costs_prep import prepare_costs_df2_for_year
 from helpers.counterfactual_reporting import default_scenario_specs, run_scenario_outputs
 from helpers.consumer_surplus import cs_change_by_income_bins
 from helpers.ev_tariff_metrics import build_ev_and_tariff_table
-from helpers.counterfactual_helpers import origin_percent_metrics, plot_origin_percent_metrics_bw
+from helpers.counterfactual_helpers import (
+    origin_percent_metrics,
+    plot_origin_percent_metrics_bw,
+    build_costs_vector_from_vehicle_costs,
+)
 from helpers.counterfactual_reporting import (
     build_profit_change_artifacts,
     build_state_units_table,
@@ -403,6 +407,8 @@ def main() -> None:
             pc_panel_csv="data/raw/pc_data_panel.csv",
             year=2024,
         )
+        vehicle_costs_df = pd.read_csv("data/derived/vehicle_costs_markups_chars.csv")
+        costs_full = build_costs_vector_from_vehicle_costs(results, vehicle_costs_df)
 
     # run counterfactuals (suppress verbose pyblp output)
     specs = default_scenario_specs(
@@ -417,6 +423,7 @@ def main() -> None:
             product_data,
             costs_df2,
             agent_data=agent_data,
+            costs_full=costs_full,
             year=2024,
             price_x2_index=PRICE_X2_INDEX,
             beta_price_index=PRICE_BETA_INDEX,

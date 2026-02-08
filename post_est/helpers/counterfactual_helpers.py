@@ -105,6 +105,41 @@ def align_product_data_for_sim(
     return df
 
 
+def build_costs_vector_from_vehicle_costs(
+    results,
+    vehicle_costs_df: pd.DataFrame,
+    *,
+    id_col: str = "product_ids",
+    market_col: str = "market_ids",
+    cost_col: str = "costs",
+):
+    df = vehicle_costs_df.copy()
+    if id_col not in df.columns and "clustering_ids" in df.columns:
+        df[id_col] = df["clustering_ids"].astype(str)
+
+    order_df = pd.DataFrame({
+        id_col: _get_results_id_vector(results),
+        market_col: np.asarray(results.problem.products.market_ids).reshape(-1),
+    })
+
+    order_df[id_col] = order_df[id_col].astype(str)
+    order_df[market_col] = pd.to_numeric(order_df[market_col], errors="coerce")
+
+    df[id_col] = df[id_col].astype(str)
+    df[market_col] = pd.to_numeric(df[market_col], errors="coerce")
+    df = df[[id_col, market_col, cost_col]].drop_duplicates([id_col, market_col], keep="last")
+
+    merged = order_df.merge(df, on=[id_col, market_col], how="left", validate="one_to_one")
+    if merged[cost_col].isna().any():
+        missing = merged.loc[merged[cost_col].isna(), [id_col, market_col]].head(5)
+        raise ValueError(
+            "Missing costs for some products. Ensure vehicle_costs_markups_chars.csv "
+            f"matches the results file. Sample missing rows:\n{missing}"
+        )
+
+    return pd.to_numeric(merged[cost_col], errors="coerce").to_numpy(dtype=float)
+
+
 def build_noabs_formulations(results, *, firm_col: str = "firm_ids"):
     x1_formula = results.problem.product_formulations[0]._formula
     fe_term = f"C({firm_col})"
@@ -160,9 +195,8 @@ def run_simulation(
     )
 
     if costs is None:
-        costs = np.asarray(results.compute_costs()).reshape(-1)
-    else:
-        costs = np.asarray(costs).reshape(-1)
+        raise ValueError("costs must be provided (generate via get_elas_div and vehicle_costs_markups_chars.csv).")
+    costs = np.asarray(costs).reshape(-1)
 
     if fixed_prices is not None:
         fixed_prices = np.asarray(fixed_prices).reshape(-1)
@@ -189,6 +223,7 @@ def run_unified_counterfactual(
     costs_df2: pd.DataFrame,
     *,
     agent_data,
+    costs_full,
     year: int = 2024,
     market_col: str = "market_ids",
     id_col: str = "product_ids",
@@ -226,6 +261,11 @@ def run_unified_counterfactual(
     xi_full = np.asarray(results.xi).reshape(-1, 1)
 
     base_prices = aligned_base[price_col].to_numpy()
+    if costs_full is None:
+        raise ValueError("costs_full is required; generate via get_elas_div and load from vehicle_costs_markups_chars.csv.")
+    costs_full = np.asarray(costs_full).reshape(-1)
+    if costs_full.size != len(results.problem.products.market_ids):
+        raise ValueError("costs_full length does not match results products.")
     sim_base, aligned_base = run_simulation(
         results,
         product_data,
@@ -234,6 +274,7 @@ def run_unified_counterfactual(
         beta_full=beta_full,
         xi_full=xi_full,
         agent_data=agent_data,
+        costs=costs_full,
         fixed_prices=base_prices if baseline_fixed_prices else None,
         id_col=id_col,
         market_col=market_col,
@@ -253,7 +294,7 @@ def run_unified_counterfactual(
         market_col=market_col,
     )
 
-    costs_full = np.asarray(results.compute_costs()).reshape(-1)
+    costs_full = np.asarray(costs_full).reshape(-1)
     apply_tariff = bool(parts_tariff or vehicle_tariff or (country_tariffs is not None))
     if apply_tariff:
         cf_costs_df, cf_cost_col = build_counterfactual_costs(
@@ -435,6 +476,7 @@ def run_cf(
     product_data: pd.DataFrame,
     costs_df2: pd.DataFrame,
     *,
+    costs_full,
     year: int = 2024,
     market_col: str = "market_ids",
     id_col: str = "product_ids",
@@ -445,10 +487,16 @@ def run_cf(
     vehicle_pass_through: float = 0.682,
     iter_cfg=None,
 ):
+    if costs_full is None:
+        raise ValueError("costs_full is required; generate via get_elas_div and load from vehicle_costs_markups_chars.csv.")
+    costs_full = np.asarray(costs_full).reshape(-1)
+
     # Allow product_data to use clustering_ids instead of product_ids.
     if id_col not in product_data.columns and "clustering_ids" in product_data.columns:
         product_data = product_data.copy()
         product_data[id_col] = product_data["clustering_ids"].astype(str)
+
+    aligned_pd = align_product_data_for_sim(results, product_data, id_col=id_col, market_col=market_col)
 
     cf_costs_df, cf_cost_col = build_counterfactual_costs(
         costs_df2,
@@ -461,14 +509,15 @@ def run_cf(
     )
     cf_cost_map = cf_costs_df.set_index(id_col)[cf_cost_col]
 
-    year_markets = product_data.loc[product_data["market_year"] == year, market_col].unique()
+    year_markets = aligned_pd.loc[aligned_pd["market_year"] == year, market_col].unique()
 
     blocks = []
     for mid in year_markets:
-        m_idx = product_data[market_col].eq(mid)
-        ids_m = product_data.loc[m_idx, id_col].astype(str).to_numpy()
+        m_idx = aligned_pd[market_col].eq(mid)
+        ids_m = aligned_pd.loc[m_idx, id_col].astype(str).to_numpy()
 
-        c0 = np.asarray(results.compute_costs(market_id=mid), dtype=float).reshape(-1)
+        market_ids_full = np.asarray(results.problem.products.market_ids).reshape(-1)
+        c0 = costs_full[market_ids_full == mid]
 
         cf_m = pd.to_numeric(cf_cost_map.reindex(ids_m), errors="coerce").to_numpy(dtype=float)
         c_m = np.where(np.isfinite(cf_m), cf_m, c0)
@@ -490,6 +539,7 @@ def run_cf_and_summarize(
     product_data: pd.DataFrame,
     costs_df2: pd.DataFrame,
     *,
+    costs_full,
     year: int = 2024,
     market_col: str = "market_ids",
     id_col: str = "product_ids",
@@ -508,6 +558,10 @@ def run_cf_and_summarize(
     total_market_size: float = 132_000_000 / 6,
     price_scale_usd_per_unit: float = 100_000.0,
 ):
+    if costs_full is None:
+        raise ValueError("costs_full is required; generate via get_elas_div and load from vehicle_costs_markups_chars.csv.")
+    costs_full = np.asarray(costs_full).reshape(-1)
+
     # Allow product_data to use clustering_ids instead of product_ids.
     if id_col not in product_data.columns and "clustering_ids" in product_data.columns:
         product_data = product_data.copy()
@@ -518,6 +572,7 @@ def run_cf_and_summarize(
 
     cf_year, cf_costs_df, cf_cost_col = run_cf(
         results, product_data, costs_df2,
+        costs_full=costs_full,
         year=year, market_col=market_col, id_col=id_col,
         parts_tariff=parts_tariff, vehicle_tariff=vehicle_tariff,
         country_tariffs=country_tariffs,
@@ -528,17 +583,19 @@ def run_cf_and_summarize(
     cf_ps = cf_year.set_index([market_col, id_col])[["p_cf", "s_cf"]]
     cf_cost_map = cf_costs_df.set_index(id_col)[cf_cost_col]
 
-    year_markets = product_data.loc[product_data["market_year"] == year, market_col].unique()
+    aligned_pd = align_product_data_for_sim(results, product_data, id_col=id_col, market_col=market_col)
+    year_markets = aligned_pd.loc[aligned_pd["market_year"] == year, market_col].unique()
 
     prod_blocks = []
 
     for mid in year_markets:
-        m_idx = product_data[market_col].eq(mid)
-        ids_m = product_data.loc[m_idx, id_col].astype(str).to_numpy()
+        m_idx = aligned_pd[market_col].eq(mid)
+        ids_m = aligned_pd.loc[m_idx, id_col].astype(str).to_numpy()
 
-        p0 = pd.to_numeric(product_data.loc[m_idx, price_col], errors="coerce").to_numpy(dtype=float)
+        p0 = pd.to_numeric(aligned_pd.loc[m_idx, price_col], errors="coerce").to_numpy(dtype=float)
         s0 = np.asarray(results.compute_shares(market_id=mid), dtype=float).reshape(-1)
-        c0 = np.asarray(results.compute_costs(market_id=mid), dtype=float).reshape(-1)
+        market_ids_full = np.asarray(results.problem.products.market_ids).reshape(-1)
+        c0 = costs_full[market_ids_full == mid]
 
         cf_block = cf_ps.reindex(pd.MultiIndex.from_product([[mid], ids_m]))
         p_cf = pd.to_numeric(cf_block["p_cf"], errors="coerce").to_numpy(dtype=float)
@@ -552,7 +609,7 @@ def run_cf_and_summarize(
         pi0 = mu0 * s0
         pi_cf = mu_cf * s_cf
 
-        block = product_data.loc[m_idx, [market_col, id_col, firm_col, plant_col]].copy()
+        block = aligned_pd.loc[m_idx, [market_col, id_col, firm_col, plant_col]].copy()
         block[id_col] = block[id_col].astype(str)
 
         block["p0"] = p0
