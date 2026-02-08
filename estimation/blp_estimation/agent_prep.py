@@ -14,7 +14,7 @@ def load_agent_data(
     division_map: Dict[str, int],
     use_division: int = 0,
     use_halton: int = 1,
-    csv_path: str = "data/agent_incomes_400perdivision_updated.csv",
+    csv_path: str = "data/agent_incomes_400perdivision.csv",
 ) -> Tuple[pd.DataFrame, pd.DataFrame, float, float]:
     """
     Load and preprocess agent-level data with columns [year, division, income, weights].

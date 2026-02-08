@@ -12,7 +12,7 @@ import datetime
 
 from data_prep import build_product_data
 from agent_prep import load_agent_data
-from micromoments.division_moments2 import (
+from micromoments.division_moments import (
     DIVISION_NAME_TO_ID,
     build_division_micro_moments_pooled,
     build_division_micro_moments_yearly_range,
@@ -154,7 +154,7 @@ agent_data, product_data, INCOME_MEAN, INCOME_STD = load_agent_data(
     first_log=first_log,
     division_map=DIVISION_NAME_TO_ID,
     use_division=use_division,
-    csv_path="data/agent_incomes_400perdivision_updated.csv",
+    csv_path="data/agent_incomes_400perdivision.csv",
 )
 
 agent_data.to_csv(f"agent_data_{subsidy_tag}.csv")

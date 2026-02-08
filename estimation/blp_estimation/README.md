@@ -22,7 +22,7 @@ This directory contains the current BLP estimation pipeline and the minimum data
 Active inputs in `data/`:
 - `blp_with_subsidies.csv`: baseline product data with subsidies.
 - `blp_with_45W_subsidies_scale1p0.csv`: product data with 45W subsidies.
-- `agent_incomes_400perdivision_updated.csv`: agent microdata with division labels.
+- `agent_incomes_400perdivision.csv`: agent microdata with division labels.
 - `prob_purchase_given_division.csv`, `prob_EV_given_division.csv`, `prob_vehicle_type_given_division.csv`: division-level targets for micro moments.
 
 Archived inputs live in `data/archive/` (older versions or unused sources).
