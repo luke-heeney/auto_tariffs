@@ -177,6 +177,7 @@ def run_simulation(
     firm_col: str = "firm_ids",
     ownership_mode: str = "firm",
     owner_map: dict[str, str] | None = None,
+    pricer_map: dict[str, str] | None = None,
     allow_unmapped_brands: bool = False,
 ):
     df = align_product_data_for_sim(
@@ -186,17 +187,25 @@ def run_simulation(
         market_col=market_col,
     )
     if ownership_mode == "owner":
-        if owner_map is None:
-            raise ValueError("owner_map is required when ownership_mode='owner'.")
+        if pricer_map is None:
+            raise ValueError("pricer_map is required when ownership_mode='owner'.")
         df = add_owner_ids(
             df,
-            owner_map,
+            pricer_map,
             firm_col=firm_col,
-            owner_col="owner_ids",
+            owner_col="pricer_ids",
             allow_unmapped=allow_unmapped_brands,
         )
-        ownership = build_owner_ownership(df, owner_col="owner_ids", market_col=market_col)
+        ownership = build_owner_ownership(df, owner_col="pricer_ids", market_col=market_col)
         df = attach_ownership_columns(df, ownership)
+        if owner_map is not None:
+            df = add_owner_ids(
+                df,
+                owner_map,
+                firm_col=firm_col,
+                owner_col="owner_ids",
+                allow_unmapped=allow_unmapped_brands,
+            )
 
     sim = pyblp.Simulation(
         product_formulations=(X1_formulation_noabs, X2_formulation),
@@ -243,6 +252,7 @@ def run_unified_counterfactual(
     costs_full,
     ownership_mode: str = "firm",
     owner_map: dict[str, str] | None = None,
+    pricer_map: dict[str, str] | None = None,
     allow_unmapped_brands: bool = False,
     year: int = 2024,
     market_col: str = "market_ids",
@@ -301,6 +311,7 @@ def run_unified_counterfactual(
         firm_col=firm_col,
         ownership_mode=ownership_mode,
         owner_map=owner_map,
+        pricer_map=pricer_map,
         allow_unmapped_brands=allow_unmapped_brands,
     )
     p0_full = np.asarray(sim_base.product_data["prices"]).reshape(-1)
@@ -357,6 +368,7 @@ def run_unified_counterfactual(
         firm_col=firm_col,
         ownership_mode=ownership_mode,
         owner_map=owner_map,
+        pricer_map=pricer_map,
         allow_unmapped_brands=allow_unmapped_brands,
     )
 
@@ -525,6 +537,7 @@ def run_cf(
     iter_cfg=None,
     ownership_mode: str = "firm",
     owner_map: dict[str, str] | None = None,
+    pricer_map: dict[str, str] | None = None,
     allow_unmapped_brands: bool = False,
 ):
     if costs_full is None:
@@ -538,13 +551,13 @@ def run_cf(
 
     aligned_pd = align_product_data_for_sim(results, product_data, id_col=id_col, market_col=market_col)
     if ownership_mode == "owner":
-        if owner_map is None:
-            raise ValueError("owner_map is required when ownership_mode='owner'.")
+        if pricer_map is None:
+            raise ValueError("pricer_map is required when ownership_mode='owner'.")
         aligned_pd = add_owner_ids(
             aligned_pd,
-            owner_map,
+            pricer_map,
             firm_col=firm_col,
-            owner_col="owner_ids",
+            owner_col="pricer_ids",
             allow_unmapped=allow_unmapped_brands,
         )
 
@@ -574,8 +587,8 @@ def run_cf(
 
         ownership = None
         if ownership_mode == "owner":
-            m_owner = aligned_pd.loc[m_idx, [market_col, "owner_ids"]].copy()
-            m_owner = m_owner.rename(columns={"owner_ids": "firm_ids"})
+            m_owner = aligned_pd.loc[m_idx, [market_col, "pricer_ids"]].copy()
+            m_owner = m_owner.rename(columns={"pricer_ids": "firm_ids"})
             ownership = np.asarray(pyblp.build_ownership(m_owner), dtype=float)
 
         p_m = np.asarray(
@@ -615,6 +628,7 @@ def run_cf_and_summarize(
     price_scale_usd_per_unit: float = 100_000.0,
     ownership_mode: str = "firm",
     owner_map: dict[str, str] | None = None,
+    pricer_map: dict[str, str] | None = None,
     allow_unmapped_brands: bool = False,
 ):
     if costs_full is None:
@@ -640,6 +654,7 @@ def run_cf_and_summarize(
         firm_col=firm_col,
         ownership_mode=ownership_mode,
         owner_map=owner_map,
+        pricer_map=pricer_map,
         allow_unmapped_brands=allow_unmapped_brands,
     )
 
@@ -648,15 +663,23 @@ def run_cf_and_summarize(
 
     aligned_pd = align_product_data_for_sim(results, product_data, id_col=id_col, market_col=market_col)
     if ownership_mode == "owner":
-        if owner_map is None:
-            raise ValueError("owner_map is required when ownership_mode='owner'.")
+        if pricer_map is None:
+            raise ValueError("pricer_map is required when ownership_mode='owner'.")
         aligned_pd = add_owner_ids(
             aligned_pd,
-            owner_map,
+            pricer_map,
             firm_col=firm_col,
-            owner_col="owner_ids",
+            owner_col="pricer_ids",
             allow_unmapped=allow_unmapped_brands,
         )
+        if owner_map is not None:
+            aligned_pd = add_owner_ids(
+                aligned_pd,
+                owner_map,
+                firm_col=firm_col,
+                owner_col="owner_ids",
+                allow_unmapped=allow_unmapped_brands,
+            )
     year_markets = aligned_pd.loc[aligned_pd["market_year"] == year, market_col].unique()
 
     prod_blocks = []
@@ -682,7 +705,12 @@ def run_cf_and_summarize(
         pi0 = mu0 * s0
         pi_cf = mu_cf * s_cf
 
-        block = aligned_pd.loc[m_idx, [market_col, id_col, firm_col, plant_col]].copy()
+        base_cols = [market_col, id_col, firm_col, plant_col]
+        if "owner_ids" in aligned_pd.columns:
+            base_cols.append("owner_ids")
+        if "pricer_ids" in aligned_pd.columns:
+            base_cols.append("pricer_ids")
+        block = aligned_pd.loc[m_idx, base_cols].copy()
         block[id_col] = block[id_col].astype(str)
 
         block["p0"] = p0
@@ -727,43 +755,47 @@ def run_cf_and_summarize(
         id_col=id_col,
     )
 
-    # --- firm table (share-weighted means + profit totals) ---
-    rows = []
-    for firm, d in product_table.groupby(firm_col, dropna=False):
-        w0 = d["s0"].to_numpy(dtype=float)
-        wcf = d["s_cf"].to_numpy(dtype=float)
+    # --- firm/owner tables (share-weighted means + profit totals) ---
+    def _build_group_table(group_col: str) -> pd.DataFrame:
+        rows = []
+        for firm, d in product_table.groupby(group_col, dropna=False):
+            w0 = d["s0"].to_numpy(dtype=float)
+            wcf = d["s_cf"].to_numpy(dtype=float)
 
-        def wavg(x, w):
-            den = float(np.nansum(w))
-            return np.nan if den <= 0 else float(np.nansum(x.to_numpy(dtype=float) * w) / den)
+            def wavg(x, w):
+                den = float(np.nansum(w))
+                return np.nan if den <= 0 else float(np.nansum(x.to_numpy(dtype=float) * w) / den)
 
-        r = {
-            firm_col: firm,
-            "share0_total": float(np.nansum(w0)),
-            "share_cf_total": float(np.nansum(wcf)),
-            "p0_sw": wavg(d["p0"], w0),
-            "p_cf_sw": wavg(d["p_cf"], wcf),
-            "c0_sw": wavg(d["c0"], w0),
-            "c_cf_sw": wavg(d["c_cf"], wcf),
-            "mu0_sw": wavg(d["mu0"], w0),
-            "mu_cf_sw": wavg(d["mu_cf"], wcf),
-            "pi0_percap_total": float(np.nansum(d["pi0"].to_numpy(dtype=float))),
-            "pi_cf_percap_total": float(np.nansum(d["pi_cf"].to_numpy(dtype=float))),
-        }
-        r["dp_sw"] = r["p_cf_sw"] - r["p0_sw"]
-        r["dc_sw"] = r["c_cf_sw"] - r["c0_sw"]
-        r["dmu_sw"] = r["mu_cf_sw"] - r["mu0_sw"]
-        r["dpi_percap_total"] = r["pi_cf_percap_total"] - r["pi0_percap_total"]
-        rows.append(r)
+            r = {
+                group_col: firm,
+                "share0_total": float(np.nansum(w0)),
+                "share_cf_total": float(np.nansum(wcf)),
+                "p0_sw": wavg(d["p0"], w0),
+                "p_cf_sw": wavg(d["p_cf"], wcf),
+                "c0_sw": wavg(d["c0"], w0),
+                "c_cf_sw": wavg(d["c_cf"], wcf),
+                "mu0_sw": wavg(d["mu0"], w0),
+                "mu_cf_sw": wavg(d["mu_cf"], wcf),
+                "pi0_percap_total": float(np.nansum(d["pi0"].to_numpy(dtype=float))),
+                "pi_cf_percap_total": float(np.nansum(d["pi_cf"].to_numpy(dtype=float))),
+            }
+            r["dp_sw"] = r["p_cf_sw"] - r["p0_sw"]
+            r["dc_sw"] = r["c_cf_sw"] - r["c0_sw"]
+            r["dmu_sw"] = r["mu_cf_sw"] - r["mu0_sw"]
+            r["dpi_percap_total"] = r["pi_cf_percap_total"] - r["pi0_percap_total"]
+            rows.append(r)
+        tbl = pd.DataFrame(rows)
+        factor_musd = float(total_market_size) * (price_scale_usd_per_unit / 1_000_000.0)
+        tbl["pi0_millions_usd"] = tbl["pi0_percap_total"] * factor_musd
+        tbl["pi_cf_millions_usd"] = tbl["pi_cf_percap_total"] * factor_musd
+        tbl["dpi_millions_usd"] = tbl["dpi_percap_total"] * factor_musd
+        return tbl.sort_values("dpi_millions_usd", ascending=False).reset_index(drop=True)
 
-    firm_table = pd.DataFrame(rows)
+    firm_table = _build_group_table(firm_col)
+    owner_table = _build_group_table("owner_ids") if "owner_ids" in product_table.columns else None
 
     # --- dollars (millions) ---
     factor_musd = float(total_market_size) * (price_scale_usd_per_unit / 1_000_000.0)
-    firm_table["pi0_millions_usd"] = firm_table["pi0_percap_total"] * factor_musd
-    firm_table["pi_cf_millions_usd"] = firm_table["pi_cf_percap_total"] * factor_musd
-    firm_table["dpi_millions_usd"] = firm_table["dpi_percap_total"] * factor_musd
-    firm_table = firm_table.sort_values("dpi_millions_usd", ascending=False).reset_index(drop=True)
 
     market_table["CS0_millions_usd"] = market_table["CS0"] * factor_musd
     market_table["CS_cf_millions_usd"] = market_table["CS_cf"] * factor_musd
@@ -780,6 +812,7 @@ def run_cf_and_summarize(
     return {
         "product_table": product_table,
         "firm_table": firm_table,
+        "owner_table": owner_table,
         "market_surplus_table": market_table,
         "overall_surplus": overall,
         "cf_costs_df": cf_costs_df,

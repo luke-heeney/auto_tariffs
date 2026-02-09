@@ -10,16 +10,19 @@ def _norm(x) -> str:
     return str(x).strip().lower()
 
 
-def load_owner_map(path: str | Path, *, sheet: str = "brands") -> dict[str, str]:
+def load_owner_map(path: str | Path, *, sheet: str = "brands", owner_col: str = "owner") -> dict[str, str]:
     path = Path(path)
     if not path.exists():
         raise FileNotFoundError(f"Owner mapping file not found: {path}")
     df = pd.read_excel(path, sheet_name=sheet)
     cols = {c.strip().lower(): c for c in df.columns}
-    if "brand" not in cols or "owner" not in cols:
-        raise ValueError(f"Owner mapping must contain columns 'brand' and 'owner'. Found: {list(df.columns)}")
+    owner_key = owner_col.strip().lower()
+    if "brand" not in cols or owner_key not in cols:
+        raise ValueError(
+            f"Owner mapping must contain columns 'brand' and '{owner_col}'. Found: {list(df.columns)}"
+        )
     brand_col = cols["brand"]
-    owner_col = cols["owner"]
+    owner_col = cols[owner_key]
 
     df = df[[brand_col, owner_col]].dropna()
     df["brand_norm"] = df[brand_col].map(_norm)
@@ -31,6 +34,10 @@ def load_owner_map(path: str | Path, *, sheet: str = "brands") -> dict[str, str]
         raise ValueError(f"Duplicate brand mappings found: {dups[:10]}")
 
     return dict(zip(df["brand_norm"], df["owner_norm"]))
+
+
+def load_pricer_map(path: str | Path, *, sheet: str = "brands") -> dict[str, str]:
+    return load_owner_map(path, sheet=sheet, owner_col="pricer")
 
 
 def add_owner_ids(

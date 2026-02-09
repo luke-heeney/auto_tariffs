@@ -19,7 +19,7 @@ from helpers.counterfactual_helpers import (
     plot_origin_percent_metrics_bw,
     build_costs_vector_from_vehicle_costs,
 )
-from helpers.ownership import load_owner_map
+from helpers.ownership import load_owner_map, load_pricer_map
 from helpers.counterfactual_reporting import (
     build_profit_change_artifacts,
     build_state_units_table,
@@ -250,6 +250,7 @@ def main() -> None:
     owner_mapping_path = cfg.get("owner_mapping_path")
     allow_unmapped_brands = bool(cfg.get("allow_unmapped_brands", False))
     owner_map = None
+    pricer_map = None
     owner_map_path = None
     if ownership_mode == "owner":
         if not owner_mapping_path:
@@ -257,7 +258,8 @@ def main() -> None:
         owner_map_path = Path(owner_mapping_path)
         if not owner_map_path.is_absolute():
             owner_map_path = (cfg_path.parent / owner_map_path).resolve()
-        owner_map = load_owner_map(owner_map_path)
+        owner_map = load_owner_map(owner_map_path, owner_col="owner")
+        pricer_map = load_pricer_map(owner_map_path)
 
     # load inputs
     results_name = results_path.name
@@ -436,9 +438,10 @@ def main() -> None:
         )
         vehicle_costs_df = pd.read_csv("data/derived/vehicle_costs_markups_chars.csv")
         if ownership_mode == "owner":
-            if "owner_ids" not in vehicle_costs_df.columns:
+            missing_cols = [c for c in ["owner_ids", "pricer_ids"] if c not in vehicle_costs_df.columns]
+            if missing_cols:
                 raise ValueError(
-                    "ownership_mode='owner' requires owner_ids in vehicle_costs_markups_chars.csv. "
+                    "ownership_mode='owner' requires owner_ids and pricer_ids in vehicle_costs_markups_chars.csv. "
                     "Regenerate costs via get_elas_div.ipynb."
                 )
         costs_full = build_costs_vector_from_vehicle_costs(results, vehicle_costs_df)
@@ -459,6 +462,7 @@ def main() -> None:
             costs_full=costs_full,
             ownership_mode=ownership_mode,
             owner_map=owner_map,
+            pricer_map=pricer_map,
             allow_unmapped_brands=allow_unmapped_brands,
             year=2024,
             price_x2_index=PRICE_X2_INDEX,
@@ -667,6 +671,7 @@ def main() -> None:
         "scenarios": {k: v["label"] for k, v in outs.items()},
         "ownership_mode": ownership_mode,
         "owner_mapping_path": str(owner_map_path) if owner_map_path is not None else None,
+        "ownership_pricer_column": "pricer" if ownership_mode == "owner" else None,
         "allow_unmapped_brands": allow_unmapped_brands,
     }
     (out_dir / "metadata.json").write_text(json.dumps(metadata, indent=2))
