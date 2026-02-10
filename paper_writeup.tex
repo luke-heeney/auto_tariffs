@@ -1,0 +1,1807 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amsthm, graphicx, latexsym, amsfonts, amsbsy, pstricks, pst-node, pst-text, pst-3d, lscape, longtable, setspace, multirow, epstopdf, turnstile,tabularx, booktabs, verbatim, bm, framed,etoolbox,xcolor,soul, comment, threeparttable, adjustbox, geometry, afterpage, changepage, float, ragged2e, geometry, siunitx}
+\usepackage[longnamesfirst]{natbib}
+\bibliographystyle{jpe}
+% NOTE: need to use the following style to get rid of long citations (without et al.) after the first cite:
+%\bibliographystyle{apacite}
+\bibpunct{(}{)}{;}{a}{}{}
+\linespread{1.5}
+\newtheorem{prop}{Proposition}
+\newtheorem{cor}{Corollary}
+\newtheorem{assumption}{Assumption}
+\colorlet{shadecolor}{gray!15}
+\newenvironment{point}
+  {\begin{shaded}}
+  {\end{shaded}}
+
+% LOAD CAPTION PACKAGE
+\usepackage[centerlast,bf]{caption}
+
+% LOAD SUBFIGURE PACKAGE
+\usepackage{subfigure}
+
+% Hyperlink colors
+\usepackage{color}
+\usepackage{color}
+\definecolor{myr}{rgb}{0.6,0,0}
+\definecolor{myb}{rgb}{0,0,0.6}
+\definecolor{myg}{rgb}{0,0.4,0}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks,
+    citecolor=myb,
+    filecolor=myb,
+    linkcolor=myr,
+     urlcolor=myg}
+
+% DEFINE FIGURE INSERT, CAPTION, AND NOTE COMMANDS
+\newlength{\figwidth}
+\newcommand{\figinpt}[2]{
+    \settowidth{\figwidth}{\includegraphics[#1]{#2}}
+    \setcaptionwidth{\figwidth}
+    \centering
+    \includegraphics[#1]{#2}}
+
+\newcommand{\figcapt}[2][\linewidth]{
+    \setcaptionwidth{#1}
+    \centering
+    \caption{#2}}
+
+\DeclareTextFontCommand{\fignotefont}{\normalfont\footnotesize}
+\newcommand{\fignote}[2][\linewidth]{
+    \begin{minipage}[]{#1}
+        \vspace{12pt}
+        \fignotefont{#2}
+    \end{minipage}}
+
+\DeclareTextFontCommand{\tabnotefont}{\normalfont\footnotesize}
+\newcommand{\tabnote}[2][\linewidth]{
+    \begin{minipage}[]{#1}
+        \vspace{12pt}
+        \tabnotefont{#2}
+    \end{minipage}}
+
+% ADJUST PAGE MARGINS
+\oddsidemargin 0in
+\evensidemargin 0in
+\textwidth 6.25in
+\textheight 8.5in
+\topmargin -.5in
+
+\title{\textbf{U.S. Auto Production: A structural analysis of contemporary automotive policies}\vspace{20pt}}
+\vspace{20pt} \author{\normalsize Luke Heeney,$^{1}$ Christopher R. Knittel,$^{1,2, 3}$ Jasdeep Mandia$^{1}$ \thanks{∗We are grateful for helpful comments and suggestions from the participants at the MIT CEEPR Seminar 2025, Association for Public Policy Analysis and Management (APPAM) Conference 2025.
+\newline
+ \newline \noindent $^1$ Center for Energy and Environmental Policy Research (MIT). $^2$ Sloan School of Management and MIT Climate Policy Center, Massachusetts Institute of Technology. $^3$National Bureau of Economic Research.}}
+
+\begin{document}
+\date{\medskip{}
+January 2026}
+
+\maketitle
+
+\begin{abstract}
+
+%KNITTEL ALTERNATIVES
+\footnotesize
+\onespacing
+\setstretch{0.9}
+
+\noindent
+How does protection affect prices, profits, and welfare in markets where firms possess market power and rely on global value chains for intermediate inputs? This paper studies the incidence of tariffs in differentiated-products markets when domestically assembled goods depend on imported components. We develop a structural model of the U.S.\ automobile market that integrates random-coefficients demand with firm pricing and marginal costs that respond to shocks in foreign input prices. Rather than modeling sourcing decisions directly, we estimate the pass-through of foreign input cost shocks into marginal costs as a function of observed exposure to imported parts, allowing medium-run sourcing adjustment and upstream cost absorption to shape equilibrium outcomes. Using novel model-level data on parts sourcing for vehicles sold in the United States from 2015-2024, we quantify the effects of alternative tariff and subsidy regimes under Nash-Bertrand competition. We show that tariffs on imported final goods alone tend to reallocate demand toward domestically assembled vehicles, benefiting some domestic producers despite higher consumer prices. Extending tariffs to imported intermediate inputs fundamentally alters this incidence by raising marginal costs for domestic assemblers that rely on foreign parts, often reversing producer gains and amplifying consumer losses. Incomplete pass-through of foreign input cost shocks attenuates but does not eliminate these effects, implying that global value chains remain a central determinant of tariff incidence even in the presence of sourcing adjustment. We find that a combined tariff on vehicles and parts substantially increases prices and reduces consumer surplus, while generating tariff revenue that exceeds domestic surplus losses. Exempting intermediate inputs from tariffs roughly halves consumer welfare losses and delivers net gains for domestic producers. Policies that stack tariffs with the repeal of electric-vehicle purchase subsidies further reduce producer surplus and sharply contract electric-vehicle sales. Across scenarios, the incidence of protection varies widely across firms, consumers, and regions, reflecting heterogeneity in input exposure and product portfolios.
+
+\bigskip
+\noindent \textit{Keywords:} tariffs, global value chains, differentiated products, automobile industry
+
+\bigskip\noindent JEL: L13, F13, L62
+\end{abstract}
+
+\newpage
+
+\setcounter{page}{1}
+%\onehalfspacing
+%\setstretch{2}
+
+\section{Introduction}\label{Section:sec_introduction}
+
+A central question in the analysis of trade and industrial policy is how protection affects prices, profits, and welfare in markets characterized by market power and globalized production. In many modern industries, firms compete in differentiated-product markets while simultaneously relying on complex global value chains for intermediate inputs. In such settings, policy instruments that target trade in final goods---including tariffs, subsidies, and domestic content requirements---operate not only through consumer substitution and firm pricing, but also through firms’ cost structures and sourcing decisions. As a result, the incidence of protection is no longer determined solely by the location of final assembly or the elasticity of demand, but depends critically on the exposure of domestic producers to foreign intermediate inputs.
+
+This paper studies how intermediate-input exposure alters the incidence and welfare consequences of tariffs in oligopolistic differentiated-goods markets. We show that when domestically assembled products rely heavily on imported inputs, policies intended to protect domestic producers can instead raise their marginal costs, weaken their competitive position, and reduce producer surplus—even under standard Nash--Bertrand pricing. More broadly, our analysis highlights that the distinction between ``domestic'' and ``foreign'' goods becomes blurred once production is fragmented across borders, and that ignoring global value chains can lead to misleading conclusions about the effects of trade policy.
+
+We study these mechanisms in the context of the U.S.\ automobile market, a setting that is particularly well-suited to analyzing the interaction between market power and global production networks. Vehicles sold in the United States are highly differentiated products supplied by a small number of multiproduct firms with substantial pricing power. At the same time, production is deeply fragmented internationally: a large share of vehicles sold domestically is assembled abroad, and vehicles assembled in the United States incorporate a substantial fraction of imported parts. Consequently, tariffs on vehicles and automotive parts affect equilibrium outcomes through intertwined demand, pricing, and cost channels, rendering their net effects on prices and welfare theoretically ambiguous and ultimately an empirical question.
+
+To quantify these effects, we develop a structural model of the U.S.\ automobile market that integrates differentiated-products demand with firm pricing and global input sourcing. On the demand side, we estimate a random-coefficients discrete-choice model that captures realistic substitution patterns across hundreds of vehicle models and allows for rich heterogeneity in consumer price sensitivity and preferences for vehicle attributes, following \cite{nevo_measuring_2001}, \cite{berry_nonparametric_2024}, and \cite{grieco_evolution_2024}. These features are essential for evaluating how trade policy reshapes competitive interactions and reallocates demand across domestic and foreign producers.
+
+On the supply side, we depart from the common assumption that the marginal costs of domestically assembled products are insulated from shocks to foreign input prices. Instead, we allow changes in the cost of imported automotive parts---driven by tariffs or exchange-rate movements---to transmit imperfectly into manufacturers’ marginal costs. Rather than modeling the high-dimensional sourcing problem directly, we discipline the relevant cost channel using a reduced-form pass-through that serves as a sufficient statistic for medium-run sourcing adjustment, as discussed in Section~\ref{subsec:sourcing_scope}. This pass-through parameter serves as a sufficient statistic for the combined effect of upstream cost absorption by suppliers and medium-run adjustments in firms’ sourcing patterns. Exchange-rate variation provides identifying variation for this channel, allowing us to capture how global cost shocks propagate through domestic production without requiring a fully specified model of input sourcing. 
+
+
+Our analysis focuses on the medium run: we hold product offerings and assembly locations fixed while allowing firms to adjust prices, quantities, and sourcing in response to policy-induced cost changes. This horizon is particularly relevant in industries such as automobiles, where model lineups and production locations are determined years in advance, but pricing and input sourcing exhibit greater short-run flexibility. As a result, our counterfactuals are well-suited to evaluating the effects of proposed or threatened trade policies before large-scale relocation of production capacity occurs.
+
+Our counterfactual analysis yields three core results that clarify how global value chains reshape the incidence of protection in differentiated-products markets. First, tariffs on imported final goods alone tend to reallocate demand toward domestically assembled products, raising prices of foreign-assembled vehicles while lowering prices for some domestic models through intensified competition. In this case, domestic producers may benefit from protection despite higher overall prices. Second, extending tariffs to imported intermediate inputs fundamentally alters this logic: by raising marginal costs for domestic assemblers that rely on foreign parts, parts tariffs can erode or reverse these competitive gains, leading to higher prices and reductions in domestic producer surplus. Third, allowing for incomplete pass-through of foreign input cost shocks—reflecting upstream absorption and medium-run sourcing adjustments—attenuates but does not eliminate these effects. These effects are particularly pronounced for electric vehicles, which combine high exposure to imported intermediate inputs with policy-sensitive demand, illustrating how trade and subsidy policies can interact to amplify the incidence of protection in segments of the market most reliant on global value chains.
+As a result, even when firms partially shield themselves from foreign cost increases, tariffs on intermediate inputs remain a quantitatively important determinant of equilibrium prices and welfare. Taken together, these findings demonstrate that the incidence of protection cannot be inferred from final assembly locations alone and depends critically on firms’ exposure to imported inputs.
+
+An important theme of our analysis is heterogeneity in tariff incidence across firms, consumers, and regions. Differences in sourcing patterns and product portfolios generate large variation in how manufacturers are affected by alternative policy designs. Under vehicle-only tariffs, domestic manufacturers such as Ford and General Motors benefit from demand reallocation away from foreign-assembled models. When tariffs apply to both vehicles and parts, however, these gains are reversed, and firms with greater reliance on imported inputs experience substantial losses in producer surplus. At the regional level, welfare effects vary widely across U.S.\ states and commuting zones, reflecting differences in local demand, exposure to imported inputs, and the geographic distribution of assembly activity. Regions with significant domestic production are not necessarily insulated from tariff-induced cost increases, while regions with little assembly activity can experience sizable welfare changes through price and availability effects.
+
+The paper contributes to several literatures. First, it contributes to work using industrial organization tools to study trade policy in differentiated-products markets, extending classic analyses of the automobile industry \citep{berry_nonparametric_2024, grieco_evolution_2024} by explicitly incorporating global value chains. Second, it complements recent quantitative studies of automobile tariffs and subsidies, including \cite{grieco_evolution_2024} and \cite{allcott_effects_2024}, by focusing on how trade policy transmits through firms’ input sourcing decisions rather than through conduct or long-run capacity adjustment. Our analysis is most closely related to independent work by \cite{duarte_conduct_2025}, which emphasizes firm conduct and scale economies; in contrast, we take conduct as given and study how endogenous exposure to foreign inputs mediates the incidence of tariffs in the medium run.
+
+More broadly, our findings speak to the incidence of trade policy in the presence of firm heterogeneity and fragmented production. Even when tariffs are largely passed through to import prices, their downstream effects on consumers and domestic producers depend critically on market structure and input exposure. By embedding global sourcing within a differentiated-products equilibrium framework, we show that policies that appear protective when focusing on final goods trade can impose substantial costs once intermediate inputs and firm behavior are taken into account. While our empirical analysis focuses on automobiles, the mechanisms we document are likely to operate in other differentiated-products industries with global value chains, such as electronics, machinery, and clean energy technologies, where recent trade policies have targeted both final goods and key intermediate inputs.
+
+The remainder of the paper proceeds as follows. Section~\ref{sec:sec_data} describes the data, including novel information on model-level parts sourcing. Section~\ref{sec:sec_model} presents the demand model and supply-side framework. Section~\ref{sec:sec_estm} describes the estimation procedure, and Section~\ref{sec:sec_results} discusses the results. Section~\ref{sec:sec_counterfactuals} reports counterfactual tariff simulations and welfare implications. Section~\ref{sec:sec_conclusion} concludes.
+
+
+
+\section{Data and Summary Statistics}\label{sec:sec_data}
+
+\subsection{Data}
+We construct a vehicle dataset for 2015–2024 at the model-year level by matching information on sales, vehicle characteristics, and manufacturing. Our primary data sources are sales data from S\&P Polk, vehicle characteristics from DataOne, and manufacturing information from NHTSA. We also use data on EV subsidies, consumer demographics, and exchange rates. This section describes each data source in detail and explains the construction of the dataset and the matching procedures used.
+
+\subsubsection{Vehicle Sales Data}
+%S\&P Polk provides data on automotive registrations for 2015-2024. The data provides the total count of registered cars by trim (with the year of the model) at the zip-code level for each year. To construct a sales dataset we consider the change in registrations across years in each zip-code for model years of the same calendar year. We place this restriction on the model year to avoid capturing people who re-register their vehicle in a new zip code, however this over-constrains the data relative to true new car sales, which may include also include vehicles with 'old' model years \footnote{For example: we observe 11.27 million automotive sales for 2024 while actual new-vehicle sales were reported to be 15.85 million (\cite{wardsauto_most_2025})}. We define a product at the year-model level, and aggregate trim level sales to the model level by summing the sales across all trims attached to a given model. To convert sales to market share we define the market of potential new car buyers as the number of households in the US in the given year divided by 6 to reflect the average replacement rate of vehicles in the US, following \cite{cosar_what_2018} and \cite{allcott_effects_2024}.\footnote{We have tested using a denominator of 2.5, as suggested by \cite{grieco_evolution_2024} and \cite{sabal_product_2025}, and including a random coefficient on mean utility for the inside good. The results are qualitatively similar, however the smaller inside good share increases the number of agents and computation load required. For simplicity, we use a denominator of 6 (smaller market size) and omit the random coefficient on the mean inside-good utility.}
+
+S\&P Polk provides annual data on automotive registrations for 2015--2024. The dataset reports, for each year, the total number of registered vehicles by trim (and model year) at the ZIP-code level. We construct a proxy for new sales by computing the year-over-year change in registrations within each ZIP code, restricting attention to vehicles whose model year matches the calendar year. This restriction helps limit spurious ``sales'' driven by households re-registering an existing vehicle after moving to a different ZIP code. However, it likely understates true new-vehicle sales because new purchases may include vehicles from prior model years.\footnote{For example, we observe 11.27 million vehicle sales for 2024, while reported new-vehicle sales were 15.85 million (\cite{wardsauto_most_2025}).} 
+
+We define products at the model-year level and aggregate trim-level sales to the model level by summing sales across all trims associated with a given model. We aggregate zip-code-level data across the US \hl{Check!}. To convert sales into market shares, we define the market size as the number of U.S. households in a given year divided by 6, reflecting an average vehicle replacement cycle of six years, following \cite{cosar_what_2018} and \cite{allcott_effects_2024}.\footnote{We also test using a denominator of 2.5, as suggested by \cite{grieco_evolution_2024} and \cite{sabal_product_2025}, and allowing for a random coefficient on mean utility for the inside good. The results are qualitatively similar; however, the implied larger market size increases the number of agents and the computational burden. For simplicity, we use a denominator of 6 and omit the random coefficient on the mean inside-good utility.}
+
+
+\subsubsection{Vehicle Characteristics Data}
+%Vehicle characteristic data are acquired from DataOne, who provide vehicle characteristics at the vehicle trim level (such as price, horsepower, weight, length, engine type, manufacturing location, etc). To convert this trim-level data into model-level data, we take the median value of each characteristic across all trims in a given model. As model names are not always consistent across these two datasets. We match the vehicle characteristic data with the sales data 
+
+Vehicle characteristic data are obtained from DataOne, which provides trim-level information on a wide range of attributes, including price, horsepower, weight, length, engine type, and manufacturing location. We convert these trim-level data to the model level by taking the median of each characteristic across all trims within a given model. 
+%In order to construct the full dataset, we undertook extensive formulaic and manual matching to achieve a match rate of at least 97\% of sales in each year of data. Sales prices are deflated to USD 2015, as are all dollar figures throughout the paper. 
+
+\subsubsection{Vehicle Foreign Content Data}
+The American Automotive Labeling Act (AALA), implemented under Part 583 of the U.S. Code of Federal Regulations, requires manufacturers of consumer vehicles sold in the United States to report, among other information, the vehicle’s assembly location and the share of parts content (by value) originating from the United States and Canada.\footnote{The data do not distinguish between U.S. and Canadian parts.} We obtain these data for 2015--2024 from the National Highway Traffic Safety Administration (NHTSA), which compiles manufacturers’ reports on assembly locations and parts origins.
+
+%The American Automotive Labeling Act (AALA), implemented by Part 583 of the US Code of Federal Regulations, requires manufacturers of consumer vehicles sold in the United States to report, among other information, the vehicle's assembly location and the percentage of the vehicle's parts (by value) that are of US and Canadian origin \footnote{Note that US and Canadian parts are not separated in the data}. We acquire this data for 2015-2024 from the National Highway Traffic Safety Administration (NHTSA), which compiles reported data on assembly locations and the origins of parts. 
+
+\subsubsection{Electric Vehicle Subsidy Data}
+Federal EV purchase incentives in the United States changed substantially over the study period. The long‑standing Section 30D federal tax credit, which provided up to \$7{,}500 for eligible new plug‑in vehicles, featured manufacturer‑specific phase‑outs once cumulative U.S. sales exceeded 200{,}000 units. The Inflation Reduction Act (IRA), enacted in August 2022, fundamentally restructured the program by conditioning eligibility on final assembly in North America and, beginning in 2023, on additional battery sourcing requirements. Vehicles acquired after September 30, 2025, are no longer eligible for the credit (\cite{internal_revenue_service_clean_2025}).
+
+We construct a vehicle‑level EV subsidy series using data from the U.S. Department of Energy’s Tax Incentive Data Services (\cite{department_of_energy_tax_2025}). For each product, we assign the pre‑2023 statutory credit for model years up to 2022, a date‑weighted average of pre‑ and post‑2023 credits for model year 2023 (reflecting the mid‑April implementation of the new rules), and the post‑2023 credit for model year 2024. We then apply the statutory manufacturer phase‑out schedules during the 2019–2022 period and implement the IRA assembly eligibility rules: vehicles assembled outside the United States receive zero credit from 2023 onward, while credits for 2022 are prorated by the share of the year preceding the August 15, 2022 assembly requirement. Appendix Table \ref{tab:avg_ev_subsidy_by_producer} reports the average EV subsidy by manufacturer.
+
+
+%Federal EV purchase incentives in the US shifted sharply during the study period. The long‑standing Section 30D credit (up to \$7,500) applied to eligible new plug‑in vehicles, with manufacturer‑specific phase‑outs after 200,000 cumulative US sales (notably affecting Tesla and Ford). The Inflation Reduction Act, enacted in August 2022, restructured eligibility by tying credits to North American final assembly and, beginning in 2023, to additional sourcing criteria. Vehicles acquired after September 30, 2025, are no longer eligible for incentives (\cite{internal_revenue_service_clean_2025}). We constructed the EV subsidy series by extracting vehicle‑level federal tax credit amounts from the US Department of Energy “Tax Incentive Data Services” (\cite{department_of_energy_tax_2025}). For each product, we set the applicable credit as the pre‑2023 value for model years $\leq$ 2022, a date‑weighted average of early‑ and post‑2023 credits for model year 2023 (reflecting the mid‑April rule change), and the post‑2023 value for 2024. We then applied the statutory manufacturer phase‑out factors for Tesla and Ford in the 2019–2022 period and implemented the assembly eligibility adjustment consistent with the Inflation Reduction Act: non‑US assembly yields zero credit from 2023 onward, while 2022 credits are pro-rated by the fraction of the year before the Aug. 15, 2022 assembly requirement. Appendix Table \ref{tab:avg_ev_subsidy_by_producer} presents the average subsidy available for EVs from a given manufacturer.
+
+\subsubsection{Consumer Demographic Data}
+To incorporate geographic heterogeneity while keeping the model computationally tractable, we aggregate the nine U.S. Census divisions into six broader regions. Appendix Figure \ref{fig:div_map} maps our modified divisions and the states included in each.
+
+We obtain household demographic data from \cite{ruggles_ipums_2025}, including the number of households (nationally and by division-year), household income, and household location. We use these data to construct the demographic moments described later.
+
+%We consolidate the nine US Census divisions into six. This choice is made to reduce the computational burden of simulating sufficient agents from all nine divisions. Appendix Figure \ref{fig:div_map} shows the states included in our modified divisions. We collect US household demographic data from \cite{ruggles_ipums_2025}, including the number of total households in the US (and in each division) in each year, household incomes, and household location. We utilize this data to construct moments, explained later.
+
+\subsubsection{Vehicle Data Matching}
+We merge the three datasets—sales, vehicle characteristics, and manufacturing—by model name and model year. To match, we use a combination of formulaic and manual matching, achieving coverage of at least 97\% of annual sales in every year of the sample. Sales prices are deflated to constant 2015 U.S. dollars, \hl{CHECK (Should we use 2024 USD for reporting welfare numbers?) as are all monetary values reported throughout the paper}. This gives us year--model level data on sales, median vehicle characteristics, and manufacturing.
+
+
+\subsection{Summary Statistics}
+
+\subsubsection{Sales by Assembly Location and Vehicle Type}
+Our merged vehicle data indicate that roughly half of vehicles purchased in the United States are assembled domestically. Among imported vehicles, Figure \ref{fig:sales_sources} shows that in 2024, the largest source countries are Japan and Mexico. Over the sample period, Canada’s share declines substantially.
+
+\begin{figure}
+    \label{fig:sales_sources}
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/sales_weighted_sources_by_year.png}
+    \caption{Sources of vehicles sold in the United States}
+    \label{fig:sales_sources}
+    \captionsetup{font=footnotesize, justification=raggedright, singlelinecheck=false}
+    \caption*{\textit{Notes:} Share of sales is the sales weighted average share. Source indicates assembly location.}
+\end{figure}
+
+Figure \ref{fig:trends} plots the evolution of sales shares by vehicle type from 2015 to 2024. Two notable shifts occur over the sample period. First, electric vehicles (EVs) expand rapidly: in 2015 they account for a negligible share—less than 0.5\% of purchases—rising to 7.5\% by 2024. Second, SUVs become substantially more prevalent, increasing from 31\% of sales in 2015 to 49\% in 2024. Truck sales also gain share over this period, though the increase is more modest.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{Submission_draft/graphs/trends.png}
+    \caption{Trends in sales by car type}
+    \label{fig:trends}
+\end{figure}
+
+Table \ref{tab:summary_by_type} describes the matched data after the exclusion of vehicles priced above \$100,000 USD (in 2015 dollars) and vehicles with market share below 0.001\% \foornote{This trimming amounts to a loss of less than 1\% of the total market share of inside goods in any given year.}. Over the sample period, 75\% of cars are imported, while only 8\% of trucks are foreign-assembled.
+
+% --- Summary statistics by vehicle type ---
+\begin{table}[htbp]
+\centering
+\caption{Summary Statistics by Vehicle Type \hl{CHECK long table. Either shorten it or move to appendix}}
+\label{tab:summary_by_type}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{llllll}
+\toprule
+ &  & Cars, $N = 4178$ & Trucks, $N = 455$ & SUVs, $N = 3015$ & Vans, $N = 403$ \\
+\midrule
+\multirow{4}{*}{Sales} & Mean      & 15{,}686.39 & 57{,}234.20 & 22{,}869.48 & 19{,}917.94 \\
+                       & Std.\ dev.& 33{,}280.00 & 92{,}475.74 & 38{,}741.05 & 25{,}606.33 \\
+                       & Min       & 15.00       & 38.00       & 18.00       & 18.00 \\
+                       & Max       & 334{,}818.00& 529{,}238.00& 374{,}263.00& 130{,}780.00 \\
+\midrule
+\multirow{4}{*}{Price (2015 USD, \$100,000)} & Mean      & 0.36 & 0.35 & 0.43 & 0.31 \\
+                       & Std.\ dev.& 0.17 & 0.07 & 0.16 & 0.05 \\
+                       & Min       & 0.13 & 0.19 & 0.18 & 0.21 \\
+                       & Max       & 1.00 & 0.74 & 1.00 & 0.47 \\
+\midrule
+\multirow{4}{*}{Horsepower (100s)} & Mean       & 2.46 & 3.41 & 2.91 & 2.65 \\
+                            & Std.\ dev. & 1.04 & 0.97 & 0.89 & 0.64 \\
+                            & Min        & 0.70 & 1.91 & 1.38 & 1.31 \\
+                            & Max        & 8.45 & 8.35 & 8.35 & 4.01 \\
+\midrule
+\multirow{4}{*}{Footprint (square ft, 100s)} & Mean       & 0.97 & 1.31 & 1.06 & 1.27 \\
+                           & Std.\ dev. & 0.12 & 0.19 & 0.12 & 0.20 \\
+                           & Min        & 0.45 & 1.02 & 0.81 & 0.86 \\
+                           & Max        & 1.27 & 1.84 & 1.40 & 1.92 \\
+\midrule
+\multirow{4}{*}{Curb weight (pounds, 1000s)} & Mean       & 3.54 & 5.06 & 4.43 & 4.57 \\
+                             & Std.\ dev. & 0.57 & 0.87 & 0.76 & 0.64 \\
+                             & Min        & 1.81 & 3.52 & 3.02 & 3.25 \\
+                             & Max        & 5.92 & 9.10 & 6.92 & 5.99 \\
+\midrule
+\multirow{4}{*}{Imported (\%)} & Mean       & 0.75 & 0.08 & 0.55 & 0.59 \\
+                        & Std.\ dev. & 0.43 & 0.27 & 0.50 & 0.49 \\
+                        & Min        & 0.00 & 0.00 & 0.00 & 0.00 \\
+                        & Max        & 1.00 & 1.00 & 1.00 & 1.00 \\
+\midrule
+\multirow{4}{*}{Electric (\%)} & Mean       & 0.06 & 0.04 & 0.05 & 0.00 \\
+                          & Std.\ dev. & 0.23 & 0.18 & 0.21 & 0.05 \\
+                          & Min        & 0.00 & 0.00 & 0.00 & 0.00 \\
+                          & Max        & 1.00 & 1.00 & 1.00 & 1.00 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+\subsubsection{Foreign Content}
+%For vehicles assembled in the United States, the percentage of parts sourced from the United States and Canada has declined over the sample period, although the rate of decline has differed significantly by firms. Figure \ref{fig:dom_share} shows trends in percent of parts value sourced from the US or Canada for the 5 largest US automakers (defined by number of sales of domestically assembled vehicles), plus Tesla, which has been included to represent the EV segment. We note that the six firms included in Figure \ref{fig:dom_share} form a bimodal distribution in 2024. This fact indicates that firm-specific traits or strategies could influence the domestic-foreign parts sourcing decision. We do not explain this distribution in the model, however we leverage the variation in parts sourcing across firms and time as part of our strategy for estimating how foreign parts cost shocks affect product marginal costs.
+
+For vehicles assembled in the United States, the share of parts value sourced from the United States and Canada declines over the sample period, though the pace of decline varies substantially across firms. Figure \ref{fig:dom_share} plots trends in the domestic (U.S. and Canadian) parts share for the five largest U.S. automakers—defined by sales of domestically assembled vehicles—along with Tesla, which we include to represent the EV segment.
+
+By 2024, the firms shown in Figure~\ref{fig:dom_share} display a pronounced bimodal distribution in domestic parts sourcing. This pattern reflects persistent differences in firms' production architectures and supply-chain configurations, which generate substantial heterogeneity in exposure to foreign input cost shocks. We exploit this cross-firm and time-series variation in input exposure to identify how changes in the cost of imported parts transmit into product-level marginal costs. This variation provides the key empirical leverage for isolating the cost channel through which global value chains mediate the incidence of trade policy.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{Submission_draft/graphs/domestic_share.png}
+    \caption{Share of US/CA parts in domestically assembled vehicles (by value)}
+    \label{fig:dom_share}
+\end{figure}
+
+%In addition to the percentage of US and Canadian (henceforth 'domestic') parts, manufacturers are required to report the source and percentage of imported content from any country where the value of the parts sourced from that country exceeds 15\% of the total parts value. Of the observed sources of foreign parts, Japan and Mexico are by far the largest. Figure \ref{fig:sources} shows how this share has shifted over the course of our sample. We do not observe all foreign-sourced parts in the data; across the years in our data the source location of between 17.4\% (2016) and 26.5\% (2024) of parts by value are unobserved.  Finally, the data has imperfect coverage across models, so we must impute some values for the percent of parts sourced from domestic/foreign sources.\footnote{One firm, Rivian, does not appear in the data at all.} Some firms or models are missing observations for a subset of years. In these cases we impute values according to the following steps: first, if there is an observation for a given model in (a) neighboring year(s), we take the value (average) for that model from the closest available observation(s); second, if there is no available model observation, we take the average value for domestic parts percentage for vehicles of the same make, and if necessary fall back to the closest year(s) where this average is available; finally, if there are no observations for a given make we allocate the average domestic content percentage of all US vehicles (this only occurs in the case of Rivian).
+
+In addition to reporting the share of parts value originating in the United States and Canada (henceforth, ``domestic''), manufacturers must report the source country and associated share for any foreign country whose parts account for more than 15\% of total parts value. Among the reported foreign sources, Japan and Mexico account for the largest shares. Figure \ref{fig:sources} shows how the composition of reported foreign content evolves over our sample period. Because reporting is subject to the 15\% threshold, we do not observe the full set of foreign-sourced parts: depending on the year, the source country is unreported for between 17\% (2016) and 27\% (2024) of parts value. The AALA data also have incomplete coverage across models, requiring us to impute missing values for domestic and foreign parts shares.\footnote{One firm, Rivian, does not appear in the data at all.} When a firm or model is missing observations for a subset of years, we impute in three steps. First, if the model is observed in adjacent year(s), we assign the closest available value (or the average of the nearest observations on either side). Second, if the model is never observed, we use the make-level average domestic parts share, using the closest year(s) in which that make-level average is available. Finally, if a make is entirely unobserved, we assign the overall average domestic parts share among U.S.-assembled vehicles (this occurs only for Rivian).
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{Submission_draft/graphs/foreign_parts.png}
+    \caption{Observed foreign sources of vehicle parts}
+    \label{fig:sources}
+\end{figure}
+
+
+
+
+
+
+
+\section{Model}\label{sec:sec_model}
+\subsection{Demand}
+We model U.S. consumer demand for vehicles using a random-coefficients discrete choice framework following \cite{berry_automobile_1995} (BLP). A key advantage of this approach is that it allows consumers to have heterogeneous preferences over vehicle attributes---such as price, size, performance, and powertrain type (e.g., EV vs.\ ICE)---which generates flexible substitution patterns across products and heterogeneous willingness-to-pay. We estimate the demand-side parameters using observed market shares (and additional demographic moments described below) and match them to the shares implied by the model.
+
+\subsubsection{Consumer Choices and Market Shares}
+
+In each year \(t\), consumer \(i \in \mathcal{I}\) chooses among products \(j \in \mathcal{J}_t\) and purchases the product that delivers the highest utility. Consumers may also choose the \emph{outside good}—that is, make no vehicle purchase in year \(t\)—which we normalize to have utility zero and include in \(\mathcal{J}_t\) with index \(j=0\).
+
+We model consumer‑specific utility as follows. In each market (year) \(t\), consumer \(i\) derives utility from vehicle \(j\) given by:
+\begin{equation}\label{eq:BLP_util}
+    u_{ijt} = \phi_{it} + \beta_{i}' \mathbf{X}_{jt} + \alpha_{it}\bigl(p_{jt} - \tau_{jt}\bigr) + \xi_{jt} + \varepsilon_{ijt},
+\end{equation}
+where \(\phi_{it}\), \(\boldsymbol{\beta}_{i}\), and \(\alpha_{it}\) denote consumer‑specific preferences for the inside good, observed product characteristics \(\mathbf{X}_{jt}\), and price, respectively. The price faced by the consumer is the manufacturer’s suggested retail price (MSRP) \(p_{jt}\), set by the firm, net of any applicable subsidy for electric or hybrid vehicles \(\tau_{jt}\).\footnote{Following \cite{allcott_effects_2024}, we assume that all consumers are eligible for the maximum subsidy, reflecting that most new‑vehicle buyers satisfy the relevant income eligibility criteria.} The term \(\xi_{jt}\) captures an unobserved product‑year utility shock common across consumers, and \(\varepsilon_{ijt}\) is an idiosyncratic consumer–product‑specific utility shock assumed to follow a Type I extreme value distribution.
+
+The vector of observed characteristics \(\mathbf{X}_{jt}\) includes horsepower, vehicle footprint, miles per gallon, indicators for vehicle type (car, truck, SUV, van), and powertrain type (ICE, EV, hybrid), as well as brand fixed effects and indicators for luxury and European brands. We also include interactions between year and EV, SUV, and hybrid indicators to capture evolving consumer preferences for these vehicle types, as well as time‑varying quality changes—particularly for EVs and hybrids—arising from factors not fully captured by observed characteristics, such as improvements in charging infrastructure.
+
+To capture heterogeneity in consumer tastes, we allow both observed demographics and unobserved preference heterogeneity to affect preferences for vehicle characteristics. Specifically,
+\begin{align}
+    \phi_{it} &= \bar{\phi}_t + \phi \cdot \log(\text{income}_i), \\
+    \beta_{ik} &= \bar{\beta}_k + \sigma_k \nu_{ik} + \sum_d \pi_{kd} \mathbf{1}\{D_i = d\}, \\
+    \alpha_{it} &= \bar{\alpha} + \alpha \cdot \log(\text{income}_i),
+\end{align}
+where \(\nu_{ik}\) captures unobserved taste heterogeneity, \(D_i\) denotes consumer demographic group membership, and \(k\) indexes vehicle characteristics. The terms \(\nu_{ik}\) are i.i.d.\ consumer‑specific taste shocks drawn from a standard normal distribution. The variable \(D_i\) denotes the U.S.\ regional division in which consumer \(i\) resides, and \(\mathcal{T}\) denotes the subset of characteristics for which we allow region‑specific preference shifters (SUV, truck, and EV indicators). Not all characteristics are permitted to exhibit unobserved heterogeneity or demographic interactions; for characteristics without such variation, the corresponding parameters \(\sigma_k\) and/or \(\pi_{kd}\) are set to zero.\footnote{We divide the United States into six regional divisions: Northeast, North Central, South Pacific, South Central, Mountain, and Pacific.}
+
+\cite{berry_automobile_1995} shows that, under the Type I extreme value assumption on \(\varepsilon_{ijt}\), market shares are obtained by integrating the individual‑level logit choice probabilities over the distribution of consumer heterogeneity. Accordingly, the market share of product \(j\) in market \(t\) is given by
+\begin{align}\label{eq:blpshares}
+    s_{jt} = \int 
+    \frac{\exp\!\left(\phi_{it} + \beta_{i}'\mathbf{X}_{jt} + \alpha_{it}(p_{jt} - \tau_{jt}) + \xi_{jt}\right)}
+    {1 + \sum_{k \in \mathcal{J}_t \setminus \{0\}} 
+    \exp\!\left(\phi_{it} + \beta_{i}'\mathbf{X}_{kt} + \alpha_{it}(p_{kt} - \tau_{kt}) + \xi_{kt}\right)}
+    \, dF(i),
+\end{align}
+\noindent where \(F(i)\) denotes the joint distribution of consumer‑specific attributes. 
+
+\subsubsection{Firm Pricing and Marginal Costs}
+Under the assumption of static Nash--Bertrand pricing, the estimated demand system allows us to recover product-level marginal costs and markups, following \cite{berry_automobile_1995}.
+
+Equation \eqref{eq:blpshares} expresses market shares \(s_t(\mathbf{p}_t)\) as a function of the vector of prices set by firms in market \(t\). Let \(s_t(\mathbf{p}_t)\) denote the \(J_t \times 1\) vector of product market shares, and let \(\frac{\partial s_t}{\partial \mathbf{p}_t'}\) denote the \(J_t \times J_t\) Jacobian matrix of shares with respect to prices. This Jacobian is computed from the random-coefficients demand system and integrated over consumer heterogeneity. Firms are assumed to jointly maximize profits across all products in their portfolios.
+
+We define the ownership matrix \(\Omega_t\) as
+\[
+(\Omega_t)_{jk} =
+\begin{cases}
+1 & \text{if products } j \text{ and } k \text{ are owned by the same firm in market } t, \\
+0 & \text{otherwise.}
+\end{cases}
+\]
+
+For each market \(t\), the first-order condition for profit maximization is
+\begin{align}\label{eq:blp_mc}
+    s_t(\mathbf{p}_t)
+    \;+\;
+    \left[\Omega_t \odot \frac{\partial s_t(\mathbf{p}_t)}{\partial \mathbf{p}_t'}\right]
+    (\mathbf{p}_t - \mathbf{c}_t)
+    \;=\; \mathbf{0},
+\end{align}
+where \(\odot\) denotes the element-wise (Hadamard) product, and \(s_t\), \(\mathbf{p}_t\), and \(\mathbf{c}_t\) are \(J_t\)-dimensional vectors of market shares, prices, and marginal costs, respectively.
+
+In practice, the derivatives \(\partial s_t / \partial \mathbf{p}_t'\) are computed numerically using \texttt{PyBLP}, and marginal costs are recovered by inverting equation \eqref{eq:blp_mc}.
+
+\subsection{Supply}
+Having recovered product-level marginal costs from firms’ pricing behavior, we study how exposure to foreign intermediate inputs shapes the cost channel through which trade policy affects equilibrium outcomes. In markets with fragmented production, tariffs on intermediate inputs can raise the marginal costs of domestically assembled goods, altering firms’ competitive positions and the incidence of protection. Our objective in this section is to characterize how shocks to the cost of imported parts transmit into marginal costs for vehicles assembled in the United States, and how this transmission varies with firms’ reliance on foreign inputs.
+
+Because we are interested in estimating the effect of U.S. tariffs on vehicle costs, we design the supply-side analysis to identify how changes in the prices of foreign parts affect the marginal costs of vehicles assembled in the United States, allowing the effect to vary with each vehicle’s exposure to imported inputs. We model marginal costs only for domestically assembled vehicles. For these vehicles, we observe (i) the share of parts value sourced from the United States or Canada and (ii) the share of parts value imported from specific foreign countries when the value imported from a given country exceeds 15\% of total parts value.
+
+In this section, we define a product \(j\) as a make–model pair observed over multiple years (e.g., \emph{Ford Bronco}), while allowing product characteristics to vary over time. This definition is required for our empirical specification and implies that we drop products that do not appear—or cannot be reliably matched—across multiple years.
+
+Let \(\rho_{d,jt}\) denote the share of parts value sourced domestically and \(\rho_{f,jt}\) denote the share sourced from foreign suppliers. Since \(\rho_{d,jt} + \rho_{f,jt} = 1\), it is sufficient to characterize sourcing using \(\rho_{f,jt}\). We assume that firms choose their sourcing strategies to minimize the cost of producing a vehicle with a given set of characteristics. While we do not observe the inputs or prices that directly enter this decision, we do observe the resulting domestic and foreign sourcing shares. This sourcing choice is a function of many unobserved factors, including the relative prices of domestic and foreign parts. We denote the firm’s optimal sourcing decision as
+\[
+\rho_{jt}^* = \bigl(\rho_{d,jt}^*, \rho_{f,jt}^*\bigr).
+\]
+
+Estimating the supply side raises several challenges, including unobserved input prices and endogenous sourcing decisions. We discuss these challenges and our estimation strategy in the next section.
+
+\subsection{A stylized duopoly logit framework}
+\label{subsec:duopoly_theory}
+
+To clarify the mechanisms underlying our counterfactual results, we consider a stylized duopoly in which a domestic and a foreign firm sell differentiated vehicles to logit consumers. The framework admits vertical differentiation through product-specific utility shifters and delivers transparent expressions for how tariffs affect prices, quantities, and profits. The goal is not to introduce a competing structural model, but to isolate the economic forces that govern the incidence of tariffs on final goods versus intermediate inputs.
+
+Consumers choose between a domestic product $d$, a foreign product $f$, and an outside option. Utility is given by:
+\[
+u_{ij} = \tilde v_j - \alpha p_j + \varepsilon_{ij},
+\]
+where $\tilde v_j$ captures vertical differentiation, $\alpha>0$ is the price coefficient, and $\varepsilon_{ij}$ follows a Type-I extreme value distribution. Market shares follow the multinomial logit formula and quantities satisfy $q_j = M s_j$, where $M$ denotes market size.
+
+Firms compete in prices under Nash--Bertrand competition. For a single-product firm facing logit demand, the equilibrium markup satisfies:
+\[
+p_j - c_j = \frac{1}{\alpha(1-s_j)},
+\]
+where $s_j$ is the equilibrium market share. Because shares depend on the full price vector $(p_d,p_f)$, equilibrium prices are defined implicitly by the system of pricing first-order conditions.
+
+We study two tariff regimes. Under a vehicle-only tariff, an ad-valorem tax $\tau$ is applied to imported final vehicles. For the domestic firm, marginal cost is unchanged, while the foreign firm’s delivered cost increases. Applying the Implicit Function Theorem to the pricing system shows that this tariff raises the foreign price and, through strategic interaction, weakly raises the domestic price. The resulting demand reallocation toward the domestic product increases domestic profits. Importantly, this vehicle-only profit gain does not depend on the domestic firm’s imported-parts exposure.
+
+We then consider a combined vehicle-and-parts tariff, in which the same ad-valorem rate $\tau$ is applied both to imported final vehicles and to imported intermediate inputs. Domestic marginal cost increases by:
+\[
+\Delta c_d = \tau \cdot \rho_d \, c_{parts},
+\]
+where $\rho_d$ is the sales-weighted share of imported parts and $c_{parts}$ is the unit cost of foreign inputs. Using the Implicit Function Theorem, the resulting equilibrium price adjustments can be decomposed into responses to the foreign-vehicle cost increase and the domestic marginal-cost increase.
+
+The domestic firm’s profit change attributable to the parts component of the tariff takes the form:
+\[
+\Delta\Pi_d^{\text{parts}} = - \tau \cdot c_{parts} \cdot \rho_d \cdot B_d^{(P)},
+\]
+where $B_d^{(P)}>0$ aggregates market size, baseline shares, and demand curvature terms implied by logit demand. This expression shows that the parts-induced profit loss scales linearly with imported-input exposure $\rho_d$.
+
+Combining the vehicle-only gain and the parts-induced loss yields the net profit effect of the combined policy:
+\[
+\Delta\Pi_d^{\text{net}}
+= \tau\!\left( \bar c_f^{\,V} B_d^{(V)} - c_{parts}\,\rho_d\, B_d^{(P)} \right),
+\]
+where $\bar c_f^{\,V}$ denotes the foreign cost base subject to the vehicle tariff and $B_d^{(V)}$ captures the sensitivity of domestic profits to a marginal increase in the foreign firm’s delivered cost.
+
+Solving $\Delta\Pi_d^{\text{net}}=0$ yields a threshold imported-parts exposure:
+\[
+\rho_d^{\ast} = \frac{\bar c_f^{\,V} B_d^{(V)}}{c_{parts} B_d^{(P)}}.
+\]
+Domestic firms with $\rho_d>\rho_d^{\ast}$ are net harmed once intermediate inputs are taxed, even though they would benefit from a vehicle-only tariff. This threshold highlights why imported-parts exposure, rather than final assembly location alone, is the key sufficient statistic governing firm-level tariff incidence.
+
+Appendix~\ref{app:duopoly_derivations} provides the full derivations underlying these expressions.
+
+\subsection{Parameterization and threshold illustration}
+
+To illustrate the mechanism implied by the duopoly logit framework, we parameterize the model using plausible baseline values and examine how the domestic firm’s profit response varies with its imported-parts share $\rho$. We consider a 25\% ad-valorem tariff applied to imported vehicles and, in the combined policy, the same rate applied to imported intermediate inputs. All results are local comparative statics obtained by applying the Implicit Function Theorem to the Nash--Bertrand pricing system.
+
+Figure~\ref{fig:rho_threshold_us} plots the domestic firm’s profit change as a function of $\rho$, decomposed into the gain from a vehicle-only tariff, the loss from the parts component, and the net effect when both tariffs are applied. The vehicle-only gain is approximately constant in $\rho$, reflecting demand reallocation away from the foreign competitor. In contrast, the parts-induced loss is decreasing in $\rho$, because the marginal-cost increase applies to all units sold and scales with imported-input exposure.
+
+The intersection of these curves defines a threshold imported-parts share $\rho^\ast \approx 0.36$, above which the combined vehicle-and-parts tariff reduces domestic producer surplus. The figure also overlays illustrative values of $\rho$ for major U.S.\ manufacturers. Firms with relatively low imported-parts exposure, such as Tesla, lie well below the threshold and benefit from the combined policy in this calibration, while firms with higher exposure, including Ford, General Motors, and Stellantis (U.S.\ brands), lie near or above the threshold and experience net losses.
+
+Although the precise value of $\rho^\ast$ depends on demand elasticities and cost primitives, the exercise highlights a general implication of the model: modest differences in imported-parts exposure can determine whether a domestic manufacturer benefits or is harmed when tariffs are applied simultaneously to final goods and intermediate inputs.
+
+Needs to be redone. 
+\captionsetup{font=footnotesize, justification=raggedright, singlelinecheck=false}
+\caption*{\textit{Notes:} The figure reports local comparative statics from the stylized duopoly logit framework described in Section~\ref{subsec:duopoly_theory}. A domestic firm competes with a single foreign rival under Nash--Bertrand pricing with multinomial logit demand. The tariff rate is set to $\tau=25\%$ and is applied either to imported final vehicles only (vehicle-only effect) or simultaneously to imported final vehicles and imported intermediate inputs (combined effect). The calibration uses a baseline domestic market share of $s_d=0.25$ and a foreign market share of $s_f=0.20$, with the remaining share assigned to the outside option. The price coefficient $\alpha$ is chosen to imply a domestic own-price elasticity of approximately 8 at baseline prices. The unit cost base subject to the vehicle tariff is set to $\bar c_f^{V}=\$10{,}000$, while the unit cost of imported intermediate inputs is set to $c_{\text{parts}}=\$6{,}000$. Market size is normalized to 11.27 million vehicles. The horizontal axis plots the domestic firm’s sales-weighted imported-parts share $\rho$. The vehicle-only effect reflects demand reallocation away from the foreign competitor and is approximately invariant to $\rho$. The parts effect reflects the increase in domestic marginal cost induced by taxing imported inputs and scales linearly with $\rho$. The net combined effect is the sum of these two components. The vertical dashed line indicates the threshold $\rho^\ast$ at which the net profit effect switches sign. Markers indicate illustrative values of $\rho$ for U.S.\ manufacturers only and are shown for reference. All results are exact local comparative statics obtained by applying the Implicit Function Theorem to the Nash--Bertrand pricing equilibrium. The figure is intended as an illustrative diagnostic; quantitative policy conclusions are based on the full estimated model in Section~6.}
+
+
+
+\subsection{Input sourcing, identification, and modeling scope}
+\label{subsec:sourcing_scope}
+
+A natural extension of our framework would be to fully endogenize firms’ input sourcing decisions by explicitly modeling the choice between domestic and foreign parts. We do not pursue this approach for three related reasons concerning identification, data limitations, and the economic margin of interest.
+
+First, fully structural modeling of parts sourcing would require specifying firms’ optimization problems over a large number of heterogeneous intermediate inputs, each sourced from multiple potential locations under distinct contractual, technological, and logistical constraints. In the automobile industry, a single vehicle incorporates thousands of components, often governed by long-term supplier relationships, platform-specific compatibility, and regulatory requirements. Modeling these decisions explicitly would require detailed data on part-level prices, substitution elasticities, and contractual rigidities that are not observed, and would necessitate strong functional-form assumptions that are difficult to validate empirically. Introducing such structure risks substituting unverifiable modeling assumptions for transparent identification.
+
+Second, even with richer data, fully endogenizing sourcing would conflate short- and long-run adjustment margins that are conceptually distinct. In the short to medium run—the horizon relevant for our analysis—assembly locations, supplier relationships, and vehicle designs are largely predetermined, while pricing and limited sourcing adjustments occur within existing production architectures. A model that allows firms to freely reoptimize sourcing across all inputs would implicitly capture long-run technological and organizational adjustments that are unlikely to materialize over the policy horizon we study. Our objective is instead to quantify how existing exposure to foreign inputs mediates the incidence of tariffs before large-scale reconfiguration of production networks takes place.
+
+Third, and most importantly, fully modeling sourcing choices is not necessary to answer the core incidence question that motivates this paper. For the purpose of evaluating how tariffs affect equilibrium prices, profits, and welfare, what matters is not the detailed mechanics of sourcing decisions per se, but the extent to which shocks to foreign input costs are transmitted into firms’ marginal costs. We therefore summarize firms’ sourcing responses using a reduced-form pass-through parameter that maps foreign cost shocks into marginal costs as a function of observed input exposure. This parameter serves as a sufficient statistic for the combined effects of upstream cost absorption and medium-run sourcing adjustment within existing production structures.
+
+By estimating this pass-through using exchange-rate variation and lagged input exposure, our approach allows sourcing responses to influence equilibrium outcomes while avoiding the need to fully specify the high-dimensional sourcing problem. In this sense, we discipline the relevant cost channel directly, rather than imposing additional structure on firms’ sourcing decisions that would be weakly identified. This modeling choice allows us to remain agnostic about the precise mechanisms underlying sourcing adjustment while still capturing their equilibrium implications for tariff incidence.
+
+
+\section{Estimation}\label{sec:sec_estm}
+We estimate the demand parameters following \cite{berry_differentiated_2004} and \cite{petrin_quantifying_2002} using the generalized method of moments (GMM). Identification comes from matching simulated outcomes to their observed counterparts along three dimensions: (i) product-level market shares, (ii) demographic–characteristic micro moments, and (iii) second-choice micro moments.
+
+To implement this approach, we partition the vector of demand parameters, denoted by \(\theta\), into linear parameters that enter mean utility,
+\[ \theta_1 = (\bar{\phi}_t, \bar{\beta}_k, \bar{\alpha}), \]
+and nonlinear parameters that govern preference heterogeneity,
+\[ \theta_2 = (\phi, \alpha, \sigma_k, \pi_{kd}). \]
+We can rewrite equation \eqref{eq:BLP_util} as
+\begin{align}\label{eq:u_with_delta}
+    u_{ijt} = \delta_{jt} + \mu_{ijt}(\theta_2) + \varepsilon_{ijt},
+\end{align}
+where
+\[ \delta_{jt} = \bar{\phi}_t + \bar{\beta}'\mathbf{X}_{jt} + \bar{\alpha}(p_{jt} - \tau_{jt}) + \xi_{jt}, \]
+and \(\mu_{ijt}(\theta_2)\) captures the remaining nonlinear components of utility driven by consumer heterogeneity.
+
+Our estimation procedure proceeds as follows and is implemented using the \texttt{PyBLP} package developed by \cite{conlon_best_2020}, with micro-moment functionality described in \cite{conlon_incorporating_2025}. For any candidate value of the nonlinear parameter vector \(\theta_2\), we first invert observed market shares to recover mean utilities \(\delta(\theta_2)\) via contraction mapping. Conditional on \(\delta(\theta_2)\), the linear mean-utility parameters \(\theta_1\) are then concentrated out using an instrumental variables regression of \(\delta(\theta_2)\) on \(X_1\), with instruments \(Z\) used to address price endogeneity. The resulting implied demand shocks \(\xi(\theta_2)\) enter the GMM moment conditions, which are stacked together with the micro moments to form the full GMM objective function.
+
+
+\subsection{Simulated Shares and Mean Utility Inversion}
+For any candidate value of \(\theta_2\), the model implies a mapping from mean utilities to predicted market shares. We approximate predicted market shares using simulation. Specifically, we draw a set of agents
+\(\{(\nu_i, \text{income}_i, D_i)\}_{i=1}^I\)
+from the empirical distribution of consumer demographics and the assumed distribution of unobserved heterogeneity. Draws of \(\nu_i\) are generated using Halton sequences \citep{halton_efficiency_1960}, following \cite{nevo_measuring_2001}.
+
+Simulated market shares are computed as
+\begin{equation}
+\tilde{s}_{jt}(\delta, \theta_2) \;=\; \sum_{i=1}^I w_{it} \, P_{ijt}(\theta_2),
+\end{equation}
+where,
+\begin{equation}\label{eq:choice_prob}
+P_{ijt}(\theta_2)
+=
+\frac{\exp\!\left(\delta_{jt} + \mu_{ijt}(\theta_2)\right)}
+{\sum_{k \in \mathcal{J}_t} \exp\!\left(\delta_{kt} + \mu_{ikt}(\theta_2)\right)}
+\end{equation}
+is the probability that consumer \(i\) in year \(t\) chooses product \(j\). In each year, we draw 400 simulated consumers per regional division and weight each draw using \(w_{it}\) to match the empirical demographic distribution.
+
+Following \cite{berry_automobile_1995}, mean utilities \(\delta(\theta_2)\) are recovered via contraction mapping:
+\begin{equation}
+\delta_{jt}
+\leftarrow
+\delta_{jt} + \log s_{jt} - \log \tilde{s}_{jt}(\delta, \theta_2).
+\end{equation}
+The iteration proceeds until the norm of the update falls below \(10^{-13}\).
+
+
+\subsection{Mean utility projection, unobserved quality, and the price instrument}
+\paragraph{Mean utility.}
+With $\delta$ in hand, we can recover the mean utility parameters and the unobserved demand shock by projecting mean utility on observed product characteristics:
+\begin{equation}\label{eq:projection}
+\delta_{jt}(\theta_2) \;=\; \hat{\bar{\phi}}_t + \hat{\bar{\beta}} \mathbf{X}_{jt} + \hat{\bar{\alpha}}(p_{jt}-\tau_{jt}) + \xi_{jt}(\theta_2).
+\end{equation}
+However, we must account for price endogeneity. A product's price is likely correlated with its unobserved quality, as firms are likely to charge higher prices for better products. All other characteristics are assumed to be exogenous.
+\paragraph{Price instrument.}
+Our price instrument is the lagged real exchange rate (RER) between the United States and the country in which the vehicle was assembled. This choice follows the example of \cite{grieco_evolution_2024}, who argue that the real exchange rate, lagged to account for planning timelines, captures shifts in manufacturing costs and firm pricing decisions, making it a valid instrument for prices. To construct the series of real exchange rates between the US and each source country, we use data from the International Monetary Fund's International Financial Statistics database, collated by the World Bank (\cite{international_monetary_fund_international_2025}). 
+
+We demonstrate the strength of the price instrument by estimating a homogeneous (representative-consumer) discrete-choice demand model at the model–market level. For product $j$ in market $t$. Define the mean utility as the difference between the log of product $ j$'s share and the log of the outside option's share:
+\begin{align*}
+    \delta_{jt}^{hom} = \log s_{jt} - \log s_{0,t}.
+\end{align*}
+We project $\delta_{jt}^{hom}$ onto the non-consumer specific coefficients of our demand model:
+\begin{align}\label{eq:instrument_eq}
+    \delta_{jt}^{hom} = \phi_t + \beta'\textbf{X}_{jt} + \alpha p_{jt} + \gamma_f + \epsilon_{jt},
+\end{align}
+\noindent where $\gamma_f$ are firm fixed effects and $\phi_t$ are year fixed effects, and epsilon is the error term.
+
+Table \ref{tab:ols_iv_demand} supports the choice of instrument by comparing OLS and IV estimation of equation \eqref{eq:instrument_eq}. We see that the coefficient on price becomes notably more negative, as expected for downward-sloping demand, and the F-statistic is indicative of a strong instrument.  
+
+% Requires: \usepackage{booktabs, threeparttable}
+\begin{table}[!htbp]
+\centering
+\begin{threeparttable}
+\caption{Demand Estimates: OLS vs.\ IV (2SLS)}
+\label{tab:ols_iv_demand}
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.15}
+\newcommand{\sym}[1]{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{lcc}
+\toprule
+ & \textbf{OLS} & \textbf{IV (2SLS)} \\
+\midrule
+Price                 & $-0.333$ \,($0.038$)\sym{***} & $-1.275$ \,($0.258$)\sym{***} \\
+HP/Weight             & $-0.619$ \,($0.237$)\sym{*}   & $\phantom{-}1.365$ \,($0.564$)\sym{**} \\
+Size                  & $\phantom{-}2.799$ \,($0.404$)\sym{***} & $\phantom{-}7.864$ \,($1.417$)\sym{***} \\
+MPG                   & $\phantom{-}0.456$ \,($0.204$)\sym{*}   & $-0.398$ \,($0.297$) \\
+SUV                   & $\phantom{-}0.925$ \,($0.062$)\sym{***} & $\phantom{-}0.979$ \,($0.067$)\sym{***} \\
+Truck                 & $\phantom{-}0.385$ \,($0.084$)\sym{**}  & $-0.902$ \,($0.379$)\sym{**} \\
+Van                   & $-0.699$ \,($0.116$)\sym{***} & $-2.109$ \,($0.421$)\sym{***} \\
+Hybrid                & $\phantom{-}0.427$ \,($0.198$)\sym{*}   & $-1.236$ \,($0.508$)\sym{**} \\
+ICE                   & $\phantom{-}1.394$ \,($0.321$)\sym{**}  & $-0.760$ \,($0.647$) \\
+\midrule
+Fixed effects         & \multicolumn{2}{c}{Year and Firm} \\
+Instrument            & — & Lag of RER \\
+F-Statistic           & — & 47.78 \\
+Implied own-price elasticity & — & -5.12 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item \textit{Notes:} Entries are coefficients with standard errors in parentheses. Standard errors are clustered by market. Fixed effects are omitted. Significance levels: \sym{*} $p<0.10$, \sym{**} $p<0.05$, \sym{***} $p<0.01$.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\paragraph{Macro Moments}
+The real exchange rate, together with exogenous product characteristics \(\mathbf{X}_{jt}\), is stacked to form the instrument vector \(Z_{jt}\), which allows equation \eqref{eq:projection} to be estimated using instrumental variables. Conditional on \(\theta_2\), the estimated coefficients then permit recovery of the unobserved demand shock:
+\begin{align*}
+    \xi_{jt}(\theta_2)
+    =
+    \delta_{jt}(\theta_2)
+    - \hat{\bar{\phi}}_t
+    - \hat{\bar{\beta}}(\theta_2)'\mathbf{X}_{jt}
+    - \hat{\bar{\alpha}}(\theta_2)(p_{jt} - \tau_{jt}).
+\end{align*}
+
+We construct the first set of moments entering the GMM objective by imposing the standard BLP orthogonality condition that unobserved demand shocks are mean independent of the instruments:
+\begin{equation}
+g^{\text{quality}}(\theta)
+\;=\;
+\frac{1}{N}
+\sum_{t}
+\sum_{j}
+Z_{jt}\,\xi_{jt}(\theta_2),
+\end{equation}
+where \(N\) denotes the number of product–market observations.
+
+\subsection{Demographic Micro Moments}
+
+To help discipline consumer taste heterogeneity and the implied substitution patterns, we incorporate two types of microdata: (i) moments linking consumer demographics to product choices, and (ii) moments capturing the correlation between the characteristics of consumers' first and second choice vehicles.
+
+The demographic micro moments match simulated analogues to empirical expectations of (i) the probability that a consumer purchases any vehicle, (ii) the probability that a consumer purchases an EV, SUV, or truck, and (iii) the expected expenditure on a purchased vehicle, each conditional on consumer demographics.
+
+For each value of \(\theta\), we compute the simulated analogue of the observed moments, denoted \(\tilde{m}(\theta)\), and compare it to its empirical counterpart \(\hat{m}\). Intermediate calculations required to construct these moments are denoted by \(v(\theta)\).
+
+As an illustration, we describe the construction of the expected difference in purchase prices between consumers in each income quintile relative to the first quintile.\footnote{Here, "price paid" corresponds to the pre-subsidy MSRP \(p_{jt}\), since the data used to construct the observed price–demographic moments do not include EV subsidies, which consumers receive as tax credits.} Let \(Q_i\) denote consumer \(i\)’s income quintile, with \(q \in \mathcal{Q} = \{1,2,3,4,5\}\). We simulate the expected purchase price for consumers in income quintile \(q\), conditional on purchasing an inside good, as
+
+
+\begin{equation}
+    v_{p,t}(\theta, q)
+    =
+    \frac{
+        \sum_{i} w_{it} \mathbf{1}\{Q_i = q\}
+        \sum_{j \neq 0} p_{jt}\,P_{ijt}(\theta)
+    }{
+        \sum_{i} w_{it} \mathbf{1}\{Q_i = q\}
+        \sum_{j \neq 0} P_{ijt}(\theta)
+    },
+\end{equation}
+where the restriction \(j \neq 0\) excludes the outside good. The simulated moment for the difference in prices paid by consumers in the third and first income quintiles is then
+\begin{equation}
+    \tilde{m}_{p,t,3}(\theta)
+    =
+    v_{p,t}(\theta,3)
+    -
+    v_{p,t}(\theta,1).
+\end{equation}
+
+The corresponding empirical micro moment is defined as:
+\begin{equation}
+    m_{p,t,3}
+    =
+    \mathbf{E}_t[\text{price} \mid Q_i = 3, j \neq 0]
+    -
+    \mathbf{E}_t[\text{price} \mid Q_i = 1, j \neq 0].
+\end{equation}
+
+This demographic micro moment enters the vector \(g^{\text{demo}}(\theta)\), together with analogous moments capturing differences across income quintiles in vehicle purchase probabilities and the probability of purchasing an EV, SUV, or truck conditional on region of residence. Formally:
+\begin{equation}
+    g^{\text{demo}}(\theta)
+    =
+    \hat{m}^{\text{demo}}
+    -
+    \tilde{m}^{\text{demo}}(\theta).
+\end{equation}
+
+\subsection{Second-Choice Moments}
+Second-choice micro moments use survey evidence on consumers’ first- and second-choice vehicles to provide additional information on substitution patterns across products. We incorporate these moments by matching the simulated correlation between the characteristics of consumers’ first and second choices to their empirical counterparts.
+
+Because we do not have direct access to the underlying survey microdata, we instead use published second-choice moments for the U.S.\ automotive market from \cite{grieco_evolution_2024} for 2015 and \cite{allcott_effects_2024} for 2022.\footnote{For computational simplicity, we apply the \cite{allcott_effects_2024} moments only to the 2022 market.} Since the second-choice data record only inside-good alternatives, all second-choice moments are conditional on an inside-good purchase.
+
+For a candidate parameter vector \(\theta\), let \(P_{ijt}^{in}(\theta_2)\) denote the model-implied probability that consumer \(i\) chooses inside good \(j\) in market \(t\), and let \(P_{ih(-j)t}^{in}(\theta_2)\) denote the probability that the same consumer would choose product \(h\) when product \(j\) is removed from the inside-good choice set. These probabilities are given by:
+
+\begin{equation}
+P_{ijt}^{in}(\theta_2)
+=
+\frac{\exp\!\left(\delta_{jt} + \mu_{ijt}(\theta_2)\right)}
+{\sum_{\ell \in \mathcal{J}_t \setminus \{0\}}
+\exp\!\left(\delta_{\ell t} + \mu_{i\ell t}(\theta_2)\right)},
+\end{equation}
+and,
+\begin{equation}
+P_{ih(-j)t}^{in}(\theta_2)
+=
+\frac{\exp\!\left(\delta_{ht} + \mu_{iht}(\theta_2)\right)}
+{\sum_{\ell \in \mathcal{J}_t \setminus \{j,0\}}
+\exp\!\left(\delta_{\ell t} + \mu_{i\ell t}(\theta_2)\right)}.
+\end{equation}
+
+The implied joint probability that consumer \(i\) has first choice \(j\) and second choice \(h\) is therefore:
+\begin{equation}
+P_{i,(j,h)t}^{in}(\theta)
+=
+P_{ijt}^{in}(\theta)\,
+P_{ih(-j)t}^{in}(\theta),
+\qquad
+j \in \mathcal{J}_t \setminus \{0\},\;
+h \in \mathcal{J}_t \setminus \{j,0\},
+\end{equation}
+where \(\mathcal{J}_t\) denotes the set of products available in market \(t\), and the outside good \(j=0\) is excluded.
+
+For each vehicle characteristic \(x_{jt}\) for which second-choice moments are available from \cite{grieco_evolution_2024} in the 2015 market (horsepower, miles per gallon, SUV indicator, truck indicator, luxury brand indicator, and European brand indicator), we compute the model-implied correlation between first- and second-choice characteristics, denoted
+\(\widetilde{\mathrm{Corr}}_{\theta}(x_{\text{first}}, x_{\text{second}})\).
+
+Given the joint distribution over first–second choice pairs, we compute these correlations by treating \((x_{jt}, x_{ht})\) as a bivariate random variable with weights proportional to \(P_{i,(j,h)t}^{in}(\theta)\). Define normalized weights:
+\begin{equation}
+\omega_{i,jh,t}(\theta)
+=
+w_{it}\, P_{i,(j,h)t}^{in}(\theta),
+\end{equation}
+where normalization follows from \(\sum_i w_{it} = 1\) and
+\(\sum_{j \in \mathcal{J}_t \setminus \{0\}} \sum_{h \in \mathcal{J}_t \setminus \{j,0\}} P_{i,(j,h)t}^{in}(\theta) = 1\).
+
+Let \(x^{(1)}_{i,jh,t}\) denote the value of characteristic \(x\) for consumer \(i\)’s first-choice vehicle and \(x^{(2)}_{i,jh,t}\) the corresponding value for the second-choice vehicle. The model-implied correlation is then:
+\begin{equation}
+\widetilde{\mathrm{Corr}}_{\theta}\!\left(x_{\text{first}}, x_{\text{second}}\right)
+=
+\frac{
+\sum_{i,j,h}
+\omega_{i,jh,t}(\theta)
+\bigl(x^{(1)}_{i,jh,t} - \bar{x}^{(1)}(\theta)\bigr)
+\bigl(x^{(2)}_{i,jh,t} - \bar{x}^{(2)}(\theta)\bigr)
+}{
+\sqrt{
+\sum_{i,j,h}
+\omega_{i,jh,t}(\theta)
+\bigl(x^{(1)}_{i,jh,t} - \bar{x}^{(1)}(\theta)\bigr)^2
+}
+\sqrt{
+\sum_{i,j,h}
+\omega_{i,jh,t}(\theta)
+\bigl(x^{(2)}_{i,jh,t} - \bar{x}^{(2)}(\theta)\bigr)^2
+}
+},
+\end{equation}
+where the weighted means are given by
+\begin{equation}
+\bar{x}^{(1)}(\theta)
+=
+\sum_{i,j,h}
+\omega_{i,jh,t}(\theta)\, x^{(1)}_{i,jh,t},
+\qquad
+\bar{x}^{(2)}(\theta)
+=
+\sum_{i,j,h}
+\omega_{i,jh,t}(\theta)\, x^{(2)}_{i,jh,t}.
+\end{equation}
+All sums are taken over consumers \(i\), first-choice products \(j \in \mathcal{J}_t \setminus \{0\}\), and second-choice products \(h \in \mathcal{J}_t \setminus \{j,0\}\).
+
+The corresponding second-choice micro moment is defined as the difference between the observed target correlation and its simulated analogue:
+\begin{equation}
+g^{sc}_{2015}(\theta)
+=
+\widehat{\mathrm{Corr}}(x_{\text{first}}, x_{\text{second}})
+-
+\widetilde{\mathrm{Corr}}_{\theta}(x_{\text{first}}, x_{\text{second}}).
+\end{equation}
+
+For the 2022 moments borrowed from \cite{allcott_effects_2024}—specifically, the share of EV buyers whose second choice is also an EV and the share whose second choice is an EV of the same vehicle type—we instead construct match probabilities.\footnote{This choice aligns the simulated moments with the empirical definitions reported in the source.} These moments take the form:
+\begin{equation}
+g^{sc}_{2022}
+=
+\widehat{\Pr}[\text{second choice EV} \mid \text{first choice EV}]
+-
+\widetilde{\Pr}_{\theta}[\text{second choice EV} \mid \text{first choice EV}].
+\end{equation}
+
+\subsubsection{Construction of Moments \hl{CHECK looks a bit weird here. May be move to other section (Estimation) CK: Agreed, I'd move it to estimation}}
+
+Before defining the GMM objective function, we describe how the empirical moments used for estimation are constructed.
+
+\paragraph{Income and geographic distribution}
+
+We collect US household demographic data from \cite{ruggles_ipums_2025}, including the number of total households in the US (and in each division) in each year, household incomes, and household location. The number of households in the US defines the numerator of our market size in each year. \footnote{Recall we define market size as total households / 6.} To generate our representative agents we randomly sample 400 household incomes from each division in each year and define the agent's weight as $w_i = \frac{1}{400}\frac{\text{num. households in division}_t}{\text{num. households in US}_t}$.
+
+\paragraph{Income-dependent micro-moment construction}
+
+We use the CEX Interview Survey micro-data to construct income-dependent automobile purchase moments (\cite{bureau_of_labor_statistics_public_2025}). The CEX micro-data reports monthly expenditure on new vehicles linked to household income, which we aggregate to the annual level to construct our observed income micro parts:
+
+\[
+\mathbf{E}_t[\text{price paid}_{it} | \text{income quintile}_{it}],
+\]
+
+\noindent where price paid is the sum of net new-vehicle expenditures in that calendar year before the receipt of any appropriate electric vehicle subsidy.
+
+To build purchase probability micro-moments we define an annual purchase indicator for each consumer unit as $\mathbf{1}[\text{purchase}] = \mathbf{1}[{\text{new vehicle spend > 0}}]$ and define the micro parts. 
+
+\[
+\mathbf{E}_t[\mathbf{1}[\text{purchase}_{it}]| \text{income quintile}_{it}].
+\]
+
+Income quintiles are constructed from the FMLI annual income, using survey weights to form weighted quintile cutoffs within each year. 
+ 
+\paragraph{Division dependent micro-moments}
+
+We construct division micro-moments by aggregating state-based sales to the division level. We define the probability of a household purchasing an electric vehicle, conditional on their associated division, as:
+
+\[
+P(EV | division_i) = \frac{\text{total EV sales}_{d,t}}{\text{total vehicle sales}_{d,t}},
+\]
+
+\noindent where $d$ denotes the division. Observed moments for Truck and SUV sales are computed analogously. 
+
+
+\subsection{GMM Objective and Optimization}
+The GMM objective function is constructed by stacking the macro moments and the two sets of micro moments into a single vector:
+\begin{equation}
+g(\theta)
+\;=\;
+\begin{bmatrix}
+g^{\text{quality}}(\theta) \\
+g^{\text{demo}}(\theta) \\
+g^{\text{sc}}(\theta)
+\end{bmatrix}.
+\end{equation}
+We estimate the demand parameters by minimizing the associated quadratic form:
+\begin{equation}
+\hat{\theta}
+\;=\;
+\arg\min_{\theta}
+\;
+g(\theta)^{\top} W g(\theta).
+\end{equation}
+
+The \texttt{PyBLP} package implements a two-step GMM procedure in which the weighting matrix \(W\) is updated after an initial minimization. In the first step, we use an initial positive definite weighting matrix. In the second step, the weighting matrix is set equal to the inverse of a consistent estimate of the moment covariance matrix:
+\begin{equation}
+W
+\;=\;
+\widehat{\mathrm{Var}}\!\bigl(g(\hat{\theta}^{(1)})\bigr)^{-1},
+\end{equation}
+where \(\widehat{\mathrm{Var}}(\cdot)\) is computed using a cluster-robust estimator at the model level.\footnote{We solve the GMM objective with a convergence tolerance of \(10^{-6}\).}
+
+The complete set of micro moments, along with their empirical targets and simulated analogues, is reported in Table \ref{tab:micro_moments}.
+
+\subsection{Supply-side regression}
+\label{subsec:supply_regression}
+
+This section outlines how we estimate how shocks to the cost of foreign intermediate inputs transmit into the marginal costs of vehicles assembled in the United States. As discussed in Section~\ref{subsec:sourcing_scope}, we do not model firms’ input sourcing decisions explicitly. Instead, we discipline the relevant cost channel by estimating the pass-through of foreign input cost shocks into marginal costs as a function of each vehicle’s exposure to imported parts. This approach allows medium-run sourcing adjustment and upstream cost absorption to influence equilibrium outcomes without imposing additional structure on firms’ high-dimensional sourcing problems.
+
+Our empirical specification faces three primary challenges. First, contemporaneous sourcing shares are endogenous to relative input prices: firms may adjust sourcing in response to cost shocks within the year. Second, prices of individual automotive parts are unobserved, requiring a proxy for foreign input cost shocks. Third, available data report foreign sourcing locations only when imports from a given country exceed a reporting threshold, limiting the dimensionality of observed exposure.
+
+To address the first concern, we measure exposure to foreign inputs using lagged sourcing shares. Specifically, for each domestically assembled vehicle $j$, we use the share of parts value sourced from its primary foreign supplier in the previous year. This lagged exposure captures predetermined differences in reliance on foreign inputs while mitigating endogeneity arising from contemporaneous sourcing responses to cost shocks.
+
+To proxy for foreign input cost shocks, we use bilateral real exchange rates between the United States and each vehicle’s primary foreign sourcing country. Exchange-rate movements shift the dollar cost of imported inputs while plausibly remaining orthogonal to unobserved shocks to vehicle demand and domestic production costs, conditional on fixed effects and observed characteristics. Under this interpretation, exchange-rate variation provides a source of quasi-exogenous cost shocks whose transmission into marginal costs depends on vehicles’ exposure to imported parts.
+
+Because the data report detailed sourcing information only for countries accounting for a substantial share of a vehicle’s imported content, we focus on each vehicle’s primary foreign sourcing location. Vehicles whose primary sourcing country changes over time are excluded to preserve a stable mapping between exposure and exchange-rate variation.
+
+With these considerations in mind, we estimate the following specification for domestically assembled vehicles:
+\begin{equation}
+\log(mc_{jt}) = \gamma' \log(X_{jt}) 
++ \eta \left( \rho^{(1)}_{f,j,t-1} \cdot \log(RER^{(1)}_{jt}) \right)
++ \lambda_t + \lambda_j + \varepsilon_{jt},
+\end{equation}
+where $mc_{jt}$ denotes marginal cost recovered from the pricing first-order conditions, $X_{jt}$ is a vector of observed vehicle characteristics, $\rho^{(1)}_{f,j,t-1}$ is the lagged share of parts value sourced from the vehicle’s primary foreign supplier, and $RER^{(1)}_{jt}$ is the corresponding bilateral real exchange rate. Year fixed effects $\lambda_t$ absorb common cost shocks affecting all vehicles, while product fixed effects $\lambda_j$ control for time-invariant differences in production costs across models.
+
+The coefficient of interest, $\eta$, governs the pass-through of foreign input cost shocks into marginal costs, scaled by exposure to imported inputs. This parameter summarizes the extent to which a given percentage change in the cost of foreign parts translates into higher production costs for domestic assemblers. Importantly, $\eta$ reflects the net effect of two mechanisms: direct cost transmission from foreign suppliers and medium-run adjustments in sourcing or supplier pricing that attenuate these shocks. As such, $\eta$ serves as a sufficient statistic for the responsiveness of marginal costs to foreign input price movements within existing production structures.
+
+Our identification relies on three assumptions. First, exchange-rate movements affect marginal costs primarily through their impact on the dollar price of imported inputs. Second, conditional on fixed effects and observed characteristics, exchange-rate fluctuations are orthogonal to unobserved shocks to vehicle-level marginal costs. Third, lagged input exposure is predetermined with respect to contemporaneous exchange-rate movements, ruling out anticipatory sourcing responses. Under these assumptions, the estimated pass-through captures the economically relevant cost channel through which tariffs on intermediate inputs affect equilibrium prices and welfare.
+
+In Section~\ref{sec:sec_counterfactuals}, we use this estimated pass-through to evaluate how alternative tariff regimes propagate through prices, quantities, and welfare in equilibrium.
+
+CAN WE DO THESE? 
+To assess whether the estimated pass-through reflects genuine transmission of foreign input cost shocks rather than spurious correlation, we conduct a series of placebo tests. First, we estimate an analogous specification for vehicles assembled outside the United States, interacting exchange-rate movements with measures of foreign parts exposure. For these vehicles, exchange-rate fluctuations should not affect marginal costs through the same channel, as production costs are incurred largely abroad and are not mediated by U.S.-based sourcing of imported inputs. Consistent with this interpretation, we find no economically or statistically meaningful relationship between exchange-rate movements and marginal costs for foreign-assembled vehicles.
+
+Second, we estimate a placebo specification in which contemporaneous exchange rates are interacted with lead values of input exposure. If firms were adjusting sourcing in anticipation of future exchange-rate movements, or if our results reflected slow-moving unobserved trends correlated with both exposure and exchange rates, these lead interactions would exhibit predictive power. We find no evidence of such effects, supporting the interpretation that lagged exposure captures predetermined reliance on foreign inputs rather than anticipatory behavior.
+
+Together, these placebo tests support our identifying assumptions and reinforce the interpretation of the estimated pass-through as capturing the causal transmission of foreign input cost shocks into marginal costs for domestically assembled vehicles.
+
+
+\subsection{Supply-Side Regression}
+Estimating the cost side presents several challenges. This section outlines these challenges and our approach to addressing them.
+
+First, contemporaneous sourcing shares \(\rho^*_{j,t}\) are endogenous to relative part prices in the United States and abroad. A domestic or foreign price shock mechanically changes the value of parts, and firms may re-optimize their sourcing decisions in response. This endogeneity motivates our empirical strategy, which uses the lagged sourcing share \(\rho_{j,t-1}\) as the measure of exposure.
+
+Second, the prices of individual parts are unobserved. To proxy for foreign price shocks, we use the bilateral real exchange rate (RER) between the United States and each vehicle’s foreign sourcing location. Under this approach, the estimated coefficient on the exchange rate is interpreted as the pass-through of source-country cost-competitiveness shocks—summarized by movements in the real exchange rate—into vehicle marginal costs.
+
+Third, the data reports the source of foreign parts only when the value imported from a given country exceeds 15\% of the total parts value. For nearly all vehicles in the data, only one foreign sourcing location exceeds this threshold. We therefore focus on the effect of price shocks on each vehicle’s primary foreign sourcing location. To avoid endogeneity concerns, we drop 14 U.S.-assembled vehicles for which the primary sourcing location changes over time. We denote the share of parts value sourced from this primary foreign location as \(\rho^{(1)}_{f,j,t}\), and the corresponding bilateral real exchange rate as \(RER^{(1)}_{jt}\).
+
+With these considerations in mind, we estimate the following specification:
+\begin{align}\label{eq:costEst}
+    \log(mc_{jt})
+    =
+    \gamma' \log(\mathbf{X}_{jt})
+    +
+    \eta \bigl(\rho^{(1)}_{f,j,t-1} \cdot \log(RER^{(1)}_{jt})\bigr)
+    +
+    \lambda_t
+    +
+    \lambda_j
+    +
+    \varepsilon_{jt},
+\end{align}
+
+\noindent where \(\lambda_t\) are year fixed effects that control for U.S.-wide factors affecting vehicle costs, and \(\lambda_j\) are product fixed effects that capture time-invariant cost components not explained by \(\mathbf{X}_{jt}\). The interaction term \(\rho^{(1)}_{f,j,t-1} \log(RER^{(1)}_{jt})\) combines the lagged exposure of product \(j\) to foreign parts from its primary non-U.S., non-Canadian source with the contemporaneous real exchange rate between that country and the United States. The coefficient \(\eta\) governs the pass-through of a percentage change in the real exchange rate into a percentage change in marginal cost, scaled by exposure to imported parts.
+
+The magnitude of \(\eta\) reflects two forces. First, it captures the share of marginal cost that is directly affected by changes in the cost of foreign parts. Second, it incorporates short-run adjustments in sourcing decisions in response to exchange-rate movements.
+
+To illustrate, consider a vehicle for which 100\% of the marginal cost is attributable to parts and for which all parts are imported. If firms do not adjust sourcing, a percentage change in foreign part prices would translate one-for-one into marginal costs. However, if firms respond to the shock by reducing reliance on imported parts—for example, from 100\% to 90\%—then the pass-through from exchange rates to marginal costs would be strictly less than one. The estimated \(\eta\), therefore, captures pass-through net of short-run sourcing adjustments.
+
+We emphasize that \(\eta\) reflects only short-term responses occurring within the same year as the price shock. Firms may face adjustment frictions, such as long-term contracts or production constraints, that limit their ability to re-optimize sourcing decisions in the short run but may be relaxed over longer horizons.
+
+Our interpretation of \(\eta\) as a causal parameter relies on three identifying assumptions.
+
+The first two concern the real exchange rate. Because we use bilateral real exchange rates as a proxy for shocks to the dollar price of imported parts, we assume (i) that exchange rates are a relevant proxy for changes in imported parts prices, and (ii) that, conditional on fixed effects and observed characteristics, country-specific exchange rate movements are orthogonal to unobserved shocks to marginal costs.
+
+Assumption (i) would be violated if imported automotive parts were priced in U.S.\ dollars under long-term contracts that fully insulate prices from exchange rate movements. Under assumption (ii), our primary concern is whether exchange rates are correlated with marginal cost shocks unrelated to foreign input prices. While local economic conditions—such as wages—may be correlated with both exchange rates and part prices, these channels operate precisely through the cost of foreign inputs and therefore do not invalidate the interpretation of \(\eta\).
+
+The third assumption is that lagged exposure \(\rho^{(1)}_{f,j,t-1}\) is uncorrelated with the error term. This assumption can be interpreted as a no-anticipation condition. It would be a violation if firms had advance information about future exchange rate movements or cost shocks and adjusted their sourcing decisions before those shocks were realized.
+
+\section{Results}\label{sec:sec_results} 
+\subsection{Demand Results}
+\subsubsection{Parameter Estimates}
+We present our parameter estimates in Table \ref{tab:blp_est}. The estimated \(\beta\) coefficients display sensible signs for the continuous attributes of horsepower and vehicle size, as expected, although the coefficients on miles per gallon are estimated imprecisely.\footnote{We split the miles-per-gallon characteristic between EVs and ICE/hybrid vehicles, as the second-choice moments from 2015 are based on a market in which EVs were largely absent.} The mean taste coefficients for trucks, vans, and EVs are all strongly negative; however, the large estimated \(\sigma\) parameters for these attributes—along with SUVs—indicate substantial heterogeneity in preferences for these vehicle types. The year fixed effects for EVs indicate that the average utility of electric vehicles has increased markedly over the sample period.
+
+The demographic interactions reported in Panel B indicate that higher-income consumers have a stronger taste for vehicles and are less price sensitive, as expected. These coefficients, combined with the observed income distribution, imply a distribution of price disutility shown in Figure \ref{fig:price_coef}. The regional interaction terms further show that residents of the Pacific region exhibit a relatively strong preference for electric vehicles, while residents of the North Central, South Central, and Mountain regions display stronger preferences for trucks.
+
+\input{Submission_draft/tables/blp_est}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/price_coef.png}
+    \caption{Distribution of consumer distaste for prices}
+    \label{fig:price_coef}
+\end{figure}
+
+Our simulated micro moments closely match their empirical counterparts. The moments with the weakest fit are those capturing differences in purchase probabilities and expected purchase prices across income quintiles. This is not surprising, given that the model includes only a single coefficient on log income to govern heterogeneity in preferences for the inside good and price sensitivity. The observed and simulated micro moments are reported in Table \ref{tab:micro_moments}.
+
+\input{Submission_draft/tables/micro_moments}
+
+\subsubsection{Elasticities and Markups}
+Our demand system implies a share-weighted mean own-price elasticity of \(-6.764\), meaning that a 1\% increase in prices leads to a 6.76\% reduction in sales, and a market elasticity of \(-0.420\) in 2024. Our estimate of the own-price elasticity is in line with the literature, lying between the estimate of \(-5.01\) reported by \cite{grieco_evolution_2024} and the range reported by \cite{cosar_what_2018}, which spans from \(-14.09\) to \(-15.73\). Our estimate of the market elasticity—the percentage change in total vehicle sales following a 1\% increase in the price of all vehicles—is smaller in magnitude than those typically found in the literature, which are generally closer to \(-1\) (\cite{grieco_evolution_2024}, \cite{allcott_effects_2024}, \cite{berry_automobile_1995}).
+
+These elasticities imply markups and marginal costs, which we recover by inverting equation \eqref{eq:blp_mc} to obtain marginal costs and then computing markups as \((p_j - mc_j)/p_j\). The share-weighted average markup across the full sample is 17.2\%. Figure \ref{fig:markups_dist} presents the distribution of own-price elasticities and markups in the 2024 market.
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/markups_dist.png}
+    \caption{Distribution of own-price elasticities and markups, 2024}
+    \label{fig:markups_dist}
+\end{figure}
+
+\subsubsection{Diversion Ratios}
+A key strength of random-coefficients discrete choice models is their ability to generate realistic substitution patterns across products. We rely on these implied substitution patterns to compute changes in consumer and firm welfare in the counterfactual analysis. Here, we assess the plausibility of the model by examining the diversion ratios implied for a set of representative products.
+
+The diversion ratio \(d_{jk}\) is defined as the fraction of consumers who, when switching away from product \(j\) in response to a price change, substitute toward product \(k\) \citep{conlon_empirical_2021}. Formally,
+\begin{align}
+    d_{jk}
+    =
+    -\frac{\partial s_{kt} / \partial p_{jt}}{\partial s_{jt} / \partial p_{jt}}.
+\end{align}
+
+Table \ref{tab:diversions_top5} reports the diversion ratios for six representative products in the 2024 market. The top alternatives are qualitatively similar to the base product in each panel. In most cases, substitution occurs within the same vehicle category (e.g., electric vehicles, trucks), and the leading substitutes correspond to vehicles that would intuitively be considered close competitors.
+
+\input{Submission_draft/diversions_top5}
+
+
+\subsection{Supply-Side Results}
+We present the results for the baseline specification described above, along with an alternative first-differences specification to assess robustness, in Table \ref{tab:cost_side_results}.
+
+
+\input{tables/cost_reg_table.tex}
+
+
+The preferred specification is reported in column (1), which includes vehicle characteristics as controls. In both the levels and first-differences specifications, we obtain sensible coefficients on the characteristics and a statistically significant coefficient on the interaction between the lagged import share and the real exchange rate. The estimated coefficient of interest implies that, for a domestically assembled vehicle that sources 100\% of its parts from abroad, a 1\% increase in the cost of those parts leads to a 0.715\% increase in the vehicle’s marginal cost.
+
+This estimate is very close to external assessments of the share of vehicle costs attributable to parts. In a case study of General Motors, \cite{helper_management_2014} reports that approximately 70\% of a vehicle’s cost is attributable to parts. In contrast, \cite{menk_methodology_2012} estimates that roughly 71\% of the value of finished vehicles reflects parts costs. In this context, we interpret our estimate as consistent with limited short-run re-optimization of sourcing decisions by firms in response to price-level shocks.\footnote{ \hl{CHECK} Here, the short run is defined as within the calendar year of the shock.}
+
+
+
+\section{Counterfactuals}\label{sec:sec_counterfactuals}
+\begin{comment}
+    This is a very good instinct, and you’re right: Section 6 is doing too much at once, which makes it feel “kitchen sink” even though every piece is individually defensible. This is a classic issue for strong applied IO papers going to ReStud.
+
+Below I’ll do three things:
+
+Diagnose precisely why Section 6 feels like a kitchen sink
+
+Propose a cleaner conceptual flow for the counterfactuals
+
+Give you a concrete reorganization plan (with section titles and what moves where)
+
+I’ll be blunt where needed, but this is all very fixable.
+
+1. Why Section 6 currently feels like a kitchen sink
+
+The problem is not that you have too many results. It’s that multiple conceptual questions are being answered in parallel rather than sequentially.
+
+Right now, Section 6 is implicitly answering all of the following at once:
+
+What happens with vehicle tariffs?
+
+What happens with parts tariffs?
+
+What happens with both?
+
+What happens with EV subsidies?
+
+What happens to revenue?
+
+What happens across income groups?
+
+What happens across regions?
+
+What happens to EV sales?
+
+Each of these is reasonable — but they are different questions, and the reader isn’t always sure which margin you are isolating at a given moment.
+
+For ReStud, this triggers the reaction:
+
+“I believe the numbers, but I’m not sure what the experiment is.”
+
+2. The principle you should use to reorganize Section 6
+
+Here is the key rule I recommend:
+
+Each subsection should answer exactly one economic question.
+Not one policy question — one mechanism question.
+
+Everything else (distribution, EVs, revenue) should be conditional on that mechanism, not interwoven with it.
+
+3. A cleaner, ReStud-style flow for Section 6
+
+Here is a proposed restructuring that keeps all your content but imposes a much clearer logic.
+
+Section 6: Counterfactual Analysis
+6.1 Benchmark: Vehicle tariffs only (final-good protection)
+
+Economic question:
+
+What is the incidence of protection when tariffs apply only to final goods?
+
+What goes here:
+
+Vehicle-only tariff results
+
+Price changes
+
+Producer surplus changes
+
+Aggregate consumer surplus
+
+Minimal mention of EVs (only if illustrative)
+
+What stays out:
+
+Parts tariffs
+
+Subsidy repeal
+
+Detailed distributional breakdowns
+
+This section should feel like:
+
+“This is what standard intuition would predict.”
+
+6.2 Intermediate-input tariffs and the reversal of incidence
+
+Economic question:
+
+How does taxing intermediate inputs alter the incidence of protection?
+
+What goes here:
+
+Vehicles + parts tariff
+
+Comparison to 6.1
+
+Emphasis on marginal-cost channel
+
+Firm-level reversals (GM, Ford)
+
+Clear statement: this is where intuition breaks
+
+This is the core contribution section. It should be the longest and cleanest.
+
+6.3 The role of incomplete pass-through
+
+Economic question:
+
+To what extent do sourcing adjustment and upstream absorption mitigate these effects?
+
+What goes here:
+
+Counterfactual with full pass-through vs estimated pass-through
+
+Quantitative attenuation
+
+Clear statement that mitigation ≠ elimination
+
+This section makes your Section 3.3 modeling choice pay off.
+
+6.4 Policy interactions: EV subsidies as an amplifying margin
+
+Economic question:
+
+How do trade policies interact with existing demand-side subsidies?
+
+What goes here:
+
+Stacked tariff + subsidy repeal
+
+EV sales effects
+
+Why EVs are special (input exposure + elastic demand)
+
+Important:
+Frame this explicitly as an interaction, not “another scenario.”
+
+6.5 Distributional and regional incidence (conditional results)
+
+Economic question:
+
+Who bears the burden given the mechanisms above?
+
+What goes here:
+
+Income quintiles
+
+Regional maps
+
+Welfare decomposition
+
+This section should begin with language like:
+
+“Conditional on the incidence mechanisms documented above…”
+
+That signals this is not a new mechanism.
+
+6.6 Fiscal implications (short, contained)
+
+Economic question:
+
+How do tariff revenues compare to welfare losses?
+
+This can be very short and possibly merged into 6.2 or 6.5 if space is tight.
+
+4. What you should move out of the main text (if needed)
+
+If the editor pushes for shortening, here is a clean priority list:
+
+Move to appendix first:
+
+Detailed regional maps
+
+Full income-quintile tables
+
+Secondary EV robustness
+
+Keep in main text no matter what:
+
+Vehicle-only vs vehicle+parts comparison
+
+Pass-through attenuation result
+
+One EV interaction result
+
+5. One concrete change that will help immediately
+
+At the start of each subsection in Section 6, add one sentence answering:
+
+What economic question is this subsection answering?
+
+Example:
+
+“This subsection isolates the effect of taxing intermediate inputs by comparing a vehicle-only tariff to a tariff applied to both vehicles and parts.”
+
+This sounds trivial, but it dramatically improves referee comprehension.
+
+Bottom line
+
+You do not need fewer results.
+You need a clearer hierarchy of questions.
+
+Right now Section 6 says:
+
+“Here is everything we learned.”
+
+It should instead say:
+
+“Here is the mechanism → here is how it changes → here is who it affects.”
+
+\end{comment}
+
+This section quantifies the equilibrium implications of trade policy by combining the three central components of our framework: consumer substitution across differentiated products, firm pricing under oligopolistic competition, and the transmission of foreign input cost shocks into marginal costs through global value chains. The counterfactuals are designed to isolate how these margins interact to shape prices, quantities, and welfare under alternative tariff and subsidy regimes. By varying whether tariffs apply to final goods, intermediate inputs, or both, we clarify how protection reallocates demand, alters firms’ cost structures, and ultimately determines the incidence of trade policy across consumers, producers, and regions.
+
+The Trump Administration has prioritized tariffs as a trade policy instrument, implementing new measures affecting imports of automotive parts and finished vehicles. In March 2025, the U.S.\ government announced additional tariffs of 25\% on imported vehicles and automotive components under Section 232 of the Trade Expansion Act of 1962, with preferential rates subsequently applied to imports from the United Kingdom (10\%), Japan (15\%), and South Korea (15\%) (\cite{united_states_congress_section_2025}).  
+
+At the same time, the Trump Administration repealed EV subsidies enacted under the Biden Administration’s Inflation Reduction Act (IRA), effective September 2025.
+
+We use our model to evaluate the counterfactual effects of these policy changes by applying them to the simulated 2024 U.S.\ automotive market. A central objective is to disentangle the impacts of the policy package on heterogeneous U.S.\ firms and consumers.  
+
+In addition to a baseline scenario featuring no tariffs and the continued availability of IRA EV subsidies, we consider five main counterfactual scenarios. These consist of ``subsidy present'' and ``subsidy removed'' versions of three tariff regimes: (i) no tariffs, (ii) tariffs applied to all imported vehicles and automotive parts, and (iii) tariffs applied to vehicles only, with automotive parts exempted.  
+
+The counterfactual results should be interpreted as \hl{CHECK short-run outcomes}. In our setup, firms can adjust marginal costs through re-sourcing decisions within the same calendar year as the tariff implementation, as described in our cost-side analysis, and can re-optimize product prices. However,  the model does not capture potentially important medium-run adjustments in supplier networks or long-run firm responses such as entry and exit decisions in vehicle assembly or parts manufacturing. The scenario labeled ``vehicles and parts tariffs, subsidy removed'' corresponds to the full automotive policy package implemented in 2025 under the Trump Administration.  
+
+Finally, data from the National Highway Traffic Safety Administration do not distinguish between parts sourced from the United States and Canada. As a result, our simulations effectively treat Canadian parts as tariff-exempt in all scenarios. Vehicles assembled in Canada, however, are subject to tariffs on the model.  
+
+\subsection{Solution method}
+
+\subsubsection{Counterfactual costs, prices, and shares}
+
+Leveraging the estimation of equation \eqref{eq:costEst}, we model the pass-through of a percentage tariff on intermediate goods to the marginal cost of domestically assembled vehicles as:
+\begin{align}
+    mc_{j,CF}^{(d)} = mc^{(d)}_{j,2024} (1+  \eta \cdot \rho_{f, j, 2024} \cdot  tariff_{parts})
+\end{align}
+\noindent where $\rho_{j,2024}$ is the percentage of value of parts imported, $\eta = 0.715$ is as estimated in \eqref{eq:costEst}. Since we do not fully observe the source locations of foreign parts, we do not allow for country-specific tariff rates for intermediate parts; the full 25\% tariff is applied to all imported parts.
+
+For foreign assembled vehicles, we treat the tariff as increasing the marginal cost of vehicle $j$ and calculate the counterfactual marginal costs as:
+\begin{align}
+    mc^{(f)}_{j,CF} = mc^{(f)}_{j,2024} (1+  \tau \cdot  tariff_{j,vehicles})
+\end{align}
+
+\noindent where in this case the subscript $j$ on tariffs represents the country-specific tariff rate. Here $\tau$ is a parameter that governs the pass-through of full vehicle tariffs to marginal costs. We borrow the estimate from \cite{cosar_what_2018} and set $\tau = 0.682$. As explained by the authors of this paper, $\tau$ being less than one indicates that, even for imported vehicles, a material portion of marginal costs is in addition to the value on which the tariff is imposed, such as marketing, intra-US distribution, and customer relations.
+
+Given the perturbed marginal cost vector $mc_{j,CF} = (mc_{j,CF}^{(d)}, mc_{j,CF}^{(f)})$ in the counterfactual, we re-solve for the equilibrium prices and shares using the contraction mapping algorithm from \cite{morrow_fixed-point_2011}.
+
+\subsubsection{Firm and Consumer Surplus Computation}
+
+\paragraph{Firm surplus:}
+We compute firm-level profits using simulated equilibrium prices and shares under each counterfactual scenario. For each product \(j\) in market \(t\), let \(p_{jt}\) denote the equilibrium price, \(c_{jt}\) marginal cost, and \(s_{jt}\) the simulated market share. Product-level per-capita profit is:
+\begin{equation}
+\pi_{jt} = (p_{jt} - c_{jt}) \cdot s_{jt}.
+\end{equation}
+Firm-level profits aggregate per-capita profit across products owned by firm \(f\), which are then scaled by market size $M_t$:
+\begin{equation}
+\Pi_{ft} = M_t\cdot\sum_{j \in \mathcal{J}_f} \pi_{jt}.
+\end{equation}
+Firm-level changes are computed as differences between counterfactual and baseline values. U.S. producer surplus is the sum of profit changes for US-headquartered firms.
+
+\paragraph{Consumer surplus:}
+Consumer surplus is computed using the random-coefficients logit inclusive value, evaluated at simulated equilibrium prices in each market. For consumer \(i\) in market \(t\), we simulate utility for product \(j\):
+\begin{equation}
+u_{ijt} = \delta_{jt} + \mu_{ijt} + \varepsilon_{ijt},
+\end{equation}
+as in equation \ref{eq:u_with_delta}. The inclusive value for agent \(i\) is:
+\begin{equation}
+IV_{it} = \log \left(\sum_{j \in \mathcal{J}_t} \exp(\delta_{jt} + \mu_{ijt}) \right),
+\end{equation}
+The compensating-variation measure of consumer surplus for agent \(i\) is:
+\begin{equation}
+CS_{it} = \frac{1}{|\alpha_i|} \, IV_{it},
+\end{equation}
+with \(\alpha_i\) the consumer-specific marginal utility of price implied by the estimated random coefficients. In practice, we compute \(IV_{it}\) using the simulated draws for \(\mu_{ijt}\) and the equilibrium prices for each scenario, then aggregate over simulated agents using their weights \(w_{it}\) and scale by market size $M_t$:
+\begin{equation}
+CS_t = M_t \cdot\sum_{i} w_{it} \, CS_{it}.
+\end{equation}
+We report changes in consumer surplus as:
+\begin{equation}
+\Delta CS_t = CS^{cf}_t - CS^{0}_t.
+\end{equation}
+
+\subsection{Results}
+
+We now discuss the results of our model in two stages. To isolate the impact of the proposed tariffs, we first consider how the trade counterfactuals affect US firms and consumers with EV subsidies remaining in-place; second, we consider how additionally removing the IRA EV subsidies affects results---it is here that we present results for the full Trump policy package. A summary of our results in Table \ref{tab:cf_summary}.
+
+\input{Submission_draft/tables/cf_summary_table}
+
+\subsubsection{Trade policies}
+
+\paragraph{Consumer and firm welfare}
+As shown in Table \ref{tab:cf_summary}, both the full and parts-exempt tariff scenarios lead to significant reductions in consumer surplus of \$33.6 billion and \$15.0 billion, respectively (with EV subsidies maintained). The welfare losses in percentage terms are largest for lower income consumers who have a stronger distaste for prices (as demonstrated by the interaction terms between income and price in the demand model), however the majority of the absolute value of losses come from higher income consumers. This is partly explained by the fact that lower-income consumers are less likely to purchase a vehicle in the first place. 
+
+Under the full tariff scenario, the Government collects \$41.9 billion (Table \ref{tab:cf_summary}), while the associated consumer and US firm surplus losses are \$33.6 and \$2.42 billion, respectively. In each tariff scenario, the revenue is substantial enough to, in principle, wholly offset losses to American consumers and firms brought about by the tariffs---although the manner in which these funds are used is important for welfare outcomes. 
+
+Both US-assembled and imported vehicles face higher production costs, charge higher prices, yield lower markups, and achieve fewer sales. The modeled markup compression indicates that firms cannot fully pass through cost shocks to prices. Figure \ref{fig:origin_metrics_parts_and_vehicles_tariff__with_subsidy} summarizes these outcomes. 
+
+However, the results for specific firms are mixed. Because the domestic cost shock scales with imported-parts share ($\rho_{fj}$), firms’ equilibrium profit changes inherits the heterogeneity in $\rho_f$. Honda, Tesla, and Toyota are among car makers with domestic assembly facilities that see more than \$270 million in additional profits under the full-tariff scenario. Honda, a foreign-headquartered firm with significant US assembly facilities, is the largest beneficiary with a profit increase of \$427 million. Each of these firms is alike in using a low share of foreign parts in their domestically assembled vehicles, and benefits from consumers substituting away from competitors' vehicles that have seen price increases under tariffs.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=1\linewidth]{Submission_draft/graphs/origin_metrics_parts_and_vehicles_tariff__with_subsidy.png}
+\caption{Changes by origin: Parts and vehicle tariffs, with EV subsidies.}
+\label{fig:origin_metrics_parts_and_vehicles_tariff__with_subsidy}
+
+\captionsetup{font=footnotesize, justification=raggedright, singlelinecheck=false}
+\caption*{\textit{Notes:} Each change is relative to the 'no-tariffs, with EV subsidy' baseline. $\Delta$Share is the percentage point change in share of the market, which includes the outside good (48.4\% baseline market share). ``Assembled'' categorization is distinct from firm headquarters location.}
+\end{figure}
+
+Several US firms with a high reliance on foreign parts, such as Ford, Chevrolet, and GMC, face heavy losses under this tariff scenario. Ford's loss alone is \$1.4 billion. Firms that sell relatively high-priced imported vehicles---such as Mercedes-Benz (-\$516m) and BMW (-\$392m)---are also severely impacted.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/profit_changes_parts_and_vehicles_tariff__with_subsidy.png}
+    \caption{Firm profit changes: Parts and vehicle tariffs, with EV subsidy}
+    \captionsetup{font=footnotesize, justification=raggedright, singlelinecheck=false}
+    \caption*{\textit{Notes:} Bar height is profit change in millions of USD 2015 compared to the 'no-tariffs, with EV subsidy' baseline. Bar labels are the corresponding \% change in firm profits.}
+\label{fig:profit_changes_parts_and_vehicles_tariff__with_subsidy}
+\end{figure}
+
+The second counterfactual considers what happens when automotive parts are exempted from the 25\% tariff. In this case, US-based assemblers see an aggregate increase in profit of \$1.31 billion as consumers switch from foreign vehicles to US-produced vehicles (US firms' share of sales rises by 13.7 pp). US producers that suffered under the full-tariff scenario now see a large benefit---Ford, for example, sees a 2.5\% gain as opposed to a 20.8\% fall in profits. Profits for US-headquartered Jeep and Cadillac rise by 11.5\% and 38\% respectively. Tesla benefits by an even greater margin (19.2\%) than under the full tariff case (13.7\%), as does Honda which has a significant US assembly presence. This scenario also compounds losses for offshore assemblers such as Mercedes-Benz and Audi as more consumers switch away from their products in favor of US-assembled alternatives. Figure \ref{fig:profit_changes_vehicles_only_tariff__with_subsidy} summarizes the firm-by-firm outcomes of the policy. For US headquartered firms, the extent of profit or loss induced by a vehicles only tariff is highly correlated with the average percent of imported parts used. Figure \ref{fig:profit_change_vs_import_share} displays the relationship visually.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/profit_change_vs_import_share_parts_and_vehicles_tariff__with_subsidy.png}
+    \caption{US firms' profit change and parts import share: Vehicles only tariff, with EV subsidies}
+    \label{fig:profit_change_vs_import_share}
+    \captionsetup{font=footnotesize, justification=raggedright, singlelinecheck=false}
+    \caption*{\textit{Notes:} Only US-headquartered firms are show. Profit change in \% is compared to the 'no-tariffs, with EV subsidy' baseline. The x-axis is sales-weighted share of parts imported for the US-assembled vehicles of each US-headquartered firm. The y-axis is total profit change for the firm (including from any vehicles assembled abroad). Rivian has been removed from this chart as its import share \% were imputed as the average of all vehicles.}
+\end{figure}
+
+US-assembled vehicles see a small positive price increase in response to the cost increase for foreign-assembled vehicles. Under Nash–Bertrand pricing, this small price/markup increase indicates that US-assembled vehicles do not gain significant pricing power from the tariff imposition. This is consistent with imports being imperfect substitutes and/or the outside good and within-US competition being sufficient to limit markups from increasing. Given the outside good holds 48.4\% market share within the data and defined market size, the diversion to the outside good is on average 19.3\%, and US-assembled products are 53.5\% of inside goods, we interpret this as a plausible explanation.
+
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=1\linewidth]{Submission_draft/graphs/origin_metrics_vehicles_only_tariff__with_subsidy.png}
+\caption{Changes by origin: Vehicle only tariffs, with EV subsidies.}
+\label{fig:origin_metrics_vehicles_only_tariff__with_subsidy}
+
+\captionsetup{font=footnotesize, justification=raggedright, singlelinecheck=false}
+\caption*{\textit{Notes:} Each change is relative to the 'no-tariffs, with EV subsidy' baseline. $\Delta$Share is the percentage point change in share of the market, which includes the outside good (48.4\% baseline market share). ``Assembled'' categorization is distinct from firm headquarters location.}
+\end{figure}
+
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/profit_changes_vehicles_only_tariff__with_subsidy.png}
+    \caption{Firm profit changes: Vehicle-only tariffs, with EV subsidy}
+    \captionsetup{font=footnotesize, justification=raggedright, singlelinecheck=false}
+    \caption*{\textit{Notes:} Bar height is profit change in millions of USD 2015 compared to the 'no-tariffs, with EV subsidy' baseline. Bar labels are the corresponding \% change in firm profits.}
+\label{fig:profit_changes_vehicles_only_tariff__with_subsidy}
+\end{figure}
+
+\paragraph{State-based impacts}
+
+Here, we extend our analysis of consumer and firm impacts to the state level. State-level consumer welfare varies through two channels: first, the distribution of incomes across states affects state-average consumer welfare impacts through income-based distaste for prices channel; second, regional preferences for electric vehicles, trucks, and SUVs affect the welfare implications of policies at the division level. Figure \ref{fig:cs_map_parts_and_vehicles_tariff__with_subsidy} demonstrates the geographical spread of consumer surplus losses under the full tariff scenario. The geographic spread of the parts-exempt tariff impacts is qualitatively similar (though lower in magnitude).
+
+\begin{figure}[!htbp]
+\centering
+\begin{adjustbox}{center}
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/cs_map_parts_and_vehicles_tariff__with_subsidy.png}
+\end{adjustbox}
+\caption{State consumer surplus impacts: Parts and vehicle tariffs, with EV subsidies}
+\label{fig:cs_map_parts_and_vehicles_tariff__with_subsidy}
+\captionsetup{font=footnotesize, justification=raggedright, singlelinecheck=false}
+\caption*{\textit{Notes:} Consumer surplus change is relative to the 'no-tariffs, with EV subsidy' baseline. Labels for Rhode Island and Delaware have been removed.}
+\end{figure}
+
+Tariffs also have varied impacts on vehicle assembly across states.\footnote{We define production/assembly in this section as the sales of vehicles whose final assembly location is in each state.} In the case that parts are subject to tariffs, Michigan's automotive production reduces from 1.5 to 1.39 million units, a contraction of 7.5\%. Texas' output reduces by 4.8\% and California, though lower in absolute production quantity, loses 13.9\% of production. Meanwhile, states like Ohio, Indiana, and Alabama see growth in sales.
+
+When parts are exempt from tariffs, all vehicle-producing states benefit. The largest increases are in Michigan, Texas, and Tennessee (see Figure \ref{fig:assembly_map_vehicles_only_tariff__with_subsidy}. 
+
+
+\begin{figure}[!htbp]
+\centering
+\begin{adjustbox}{center}
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/assembly_map_parts_and_vehicles_tariff__with_subsidy.png}
+\end{adjustbox}
+\caption{State assembly impacts: Parts and vehicle tariffs, with EV subsidies.}
+\label{fig:assembly_map_parts_and_vehicles_tariff__with_subsidy}
+\captionsetup{font=footnotesize, justification=raggedright, singlelinecheck=false}
+\caption*{\textit{Notes:} Values shown are total counterfactual vehicle production and \% change from 'no-tariffs, with EV subsidy' baseline. Arizona production has been removed as only the Lucid Air, with a negligible share, is produced there.}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+\centering
+\begin{adjustbox}{center}
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/assembly_map_vehicles_only_tariff__with_subsidy.png}
+\end{adjustbox}
+\caption{State assembly impacts: Vehicle only tariffs, with EV subsidies.}
+\label{fig:assembly_map_vehicles_only_tariff__with_subsidy}
+\captionsetup{font=footnotesize, justification=raggedright, singlelinecheck=false}
+\caption*{\textit{Notes:} Values shown are total counterfactual vehicle production and \% change from 'no-tariffs, with EV subsidy' baseline. Arizona production has been removed as only the Lucid Air, with a negligible share, is produced there.}
+\end{figure}
+
+\subsubsection{EV subsidy removal}
+
+\paragraph{Consumer and firm welfare}
+
+Removing the IRA EV subsidy produce consumer losses of a smaller magnitude than do the tariffs, however their impact on US producer surplus is equivalent to the full tariff scenario. Losses are also concentrated among the firms and states that disproportionately produce and consume electric vehicles. 
+
+Here we compare the effect of 'stacking' EV subsidy removal on the 'parts and vehicles tariffs' scenario to simulate the full Trump 2025 automotive policy package. The magnitude of the changes induced by the EV subsidy removal are qualitatively similar regardless of the chosen tariff baseline as can be seen by viewing Table \ref{tab:cf_summary}.
+
+Average prices are almost unchanged when the subsidy is removed (e.g., under the parts-and-vehicles tariff, $\Delta$Price rises only from 10.06\% to 10.12\% in Table \ref{tab:cf_summary}). Instead, the subsidy removal operates by raising the effective price of EVs, shifting demand away from subsidized EV models and toward ICE alternatives and the outside option. Under the full tariff scenario, removing the subsidy reduces the EV share of sales from 6.65\% to 3.15\% (a decline of 3.5 percentage points, or roughly 53\%), and reduces total vehicle sales by a further 174,000 units to $-1.10$ million. Under the no-tariff, subsidy removal scenario, EV share falls by 54.5\%, which is close to \cite{allcott_effects_2024}'s 26.7\% estimate (based on the 2022 market). 
+
+These demand shifts translate into additional consumer surplus losses: total consumer surplus falls by $-\$37.6$ billion ($-11.5\%$) with subsidy removal, compared to $-\$33.6$ billion ($-10.2\%$) when subsidies remain in place, an incremental loss of \$4.1 billion. 
+
+On the producer side, subsidy removal primarily affects Tesla, canceling out the gains it had achieved from tariffs and reducing modeled profits by 53\% relative to the baseline, along with US-based EV producers Jeep and Cadillac. Figure \ref{fig:profit_changes_no_tariff__no_subsidy} isolates the effect of subsidy removal, while Figure \ref{fig:profit_changes_parts_and_vehicles_tariff__no_subsidy} shows the net effect of the full tariffs and subsidy removal. Under the full tariff, no subsidy scenario, aggregate US producer surplus declines from $-\$2.42$ billion with the subsidy to $-\$4.38$ billion without it (Table \ref{tab:cf_summary}). These outcomes are consistent with subsidy removal weakening the relative attractiveness of domestic EV products and shifting demand toward unsubsidized ICE options, foreign (unsubsidized) EVs, and the outside good.
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/profit_changes_no_tariff__no_subsidy.png}
+    \caption{Firm profit changes: No tariffs, subsidy removed}
+    \caption*{\textit{Notes:} Bar height is profit change in millions of USD 2015 compared to the 'no-tariffs, with EV subsidy' baseline. Bar labels are the corresponding \% change in firm profits.}
+    \label{fig:profit_changes_no_tariff__no_subsidy}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/profit_changes_parts_and_vehicles_tariff__no_subsidy.png}
+    \caption{Firm profit changes: Parts and vehicles tariffs, subsidy removed}
+    \captionsetup{font=footnotesize, justification=raggedright, singlelinecheck=false}
+    \caption*{\textit{Notes:} Bar height is profit change in millions of USD 2015 compared to the 'no-tariffs, with EV subsidy' baseline. Bar labels are the corresponding \% change in firm profits.}
+    \label{fig:profit_changes_parts_and_vehicles_tariff__no_subsidy}
+\end{figure}
+
+\paragraph{State-based impacts}
+
+In this section, we show only the no-tariff, EV removal maps to isolate the effect of EV subsidy removal, which are of smaller magnitude than the tariff effects. 
+
+Removing the EV subsidy generates a geographically broad, but relatively modest, decline in consumer welfare. Figure \ref{fig:cs_map_no_tariff__no_subsidy} shows that most states experience consumer surplus losses on the order of roughly $0.6$---$1.8\%$ in percentage terms. Losses are somewhat larger in a small set of states and are concentrated in regions with a stronger preference for EVs---most notably the Pacific states of Oregon ($-4.6\%$), Washington ($-3.0\%$), and California ($-3.1\%$), and Alaska ($-3.9\%$). Each of these Pacific states shares the same EV preference in our model; the difference in welfare losses comes from heterogeneity in incomes and corresponding distaste for price increases.
+
+The manufacturing impact primarily falls on the EV-producing states of California and Texas, with modest gains for many of the other assembler-states, in particular Illinois. Figure \ref{fig:assembly_map_no_tariff__no_subsidy} isolates how subsidy removal changes the distribution of US vehicle assembly across producing states, holding tariffs at zero. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/cs_map_no_tariff__no_subsidy.png}
+    \caption{State consumer surplus impacts:  No tariffs, subsidies removed}
+    \captionsetup{font=footnotesize, justification=raggedright, singlelinecheck=false}
+    \caption*{\textit{Notes:} Consumer surplus change is relative to the 'no-tariffs, with EV subsidy' baseline. Labels for Rhode Island and Delaware have been removed.}
+    \label{fig:cs_map_no_tariff__no_subsidy}
+\end{figure}
+
+
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/assembly_map_no_tariff__no_subsidy.png}
+    \caption{State assembly impacts: No tariffs, subsidies removed.}
+    \label{fig:assembly_map_no_tariff__no_subsidy}
+    \captionsetup{font=footnotesize, justification=raggedright, singlelinecheck=false}
+    \caption*{\textit{Notes:} Values shown are total counterfactual vehicle production and \% change from baseline. Arizona production has been removed as only the Lucid Air, with a negligible share, is produced there.}
+\end{figure}
+
+A fuller account of manufacturing impacts for all scenarios is given in Table \ref{tab:plant_location_changes}.
+
+\begin{table}[!htbp]
+\centering
+\caption{Counterfactual Changes in Vehicles Sold by Assembly Location (2024)}
+\label{tab:plant_location_changes}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.10}
+
+\begin{adjustbox}{center}
+\begin{threeparttable}
+\begin{tabular}{llccccc}
+\toprule
+ &  & \multicolumn{2}{c}{With subsidy} & \multicolumn{3}{c}{No subsidy} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-7}
+Plant location & Measure
+& Parts \& vehicles tariff & Vehicles-only tariff
+& Parts \& vehicles tariff & Vehicles-only tariff & No tariff \\
+\midrule
+Alabama & \% change             & 14.8\% & 31.3\% & 16.0\% & 32.8\% & 0.950\% \\
+        & $\Delta$ units (100k) & 0.770 & 1.63 & 0.831 & 1.71 & 0.0494 \\
+\addlinespace[2pt]
+Arizona & \% change             & -28.6\% & 29.7\% & 17.6\% & 111\% & 57.5\% \\
+        & $\Delta$ units (100k) & -0.0118 & 0.0123 & 0.00727 & 0.0458 & 0.0237 \\
+\addlinespace[2pt]
+California & \% change             & -13.1\% & 12.8\% & -54.1\% & -41.9\% & -51.9\% \\
+           & $\Delta$ units (100k) & -0.184 & 0.181 & -0.763 & -0.592 & -0.733 \\
+\addlinespace[2pt]
+Georgia & \% change             & 16.0\% & 29.2\% & 17.8\% & 31.2\% & 1.34\% \\
+        & $\Delta$ units (100k) & 0.383 & 0.700 & 0.428 & 0.748 & 0.0323 \\
+\addlinespace[2pt]
+Illinois & \% change             & -18.2\% & 23.0\% & -8.06\% & 37.4\% & 10.8\% \\
+         & $\Delta$ units (100k) & -0.194 & 0.245 & -0.0859 & 0.398 & 0.115 \\
+\addlinespace[2pt]
+Indiana & \% change             & 9.21\% & 27.8\% & 10.5\% & 29.7\% & 1.13\% \\
+        & $\Delta$ units (100k) & 0.555 & 1.67 & 0.634 & 1.79 & 0.0679 \\
+\addlinespace[2pt]
+Kansas & \% change             & 6.09\% & 33.0\% & 6.55\% & 33.8\% & 0.438\% \\
+       & $\Delta$ units (100k) & 0.0635 & 0.344 & 0.0683 & 0.352 & 0.00456 \\
+\addlinespace[2pt]
+Kentucky & \% change             & -10.9\% & 23.9\% & -10.8\% & 24.4\% & 0.182\% \\
+         & $\Delta$ units (100k) & -0.567 & 1.24 & -0.563 & 1.27 & 0.00947 \\
+\addlinespace[2pt]
+Michigan & \% change             & -7.06\% & 11.7\% & -6.73\% & 11.9\% & -0.182\% \\
+         & $\Delta$ units (100k) & -1.06 & 1.74 & -1.01 & 1.78 & -0.0273 \\
+\addlinespace[2pt]
+Mississippi & \% change             & 10.3\% & 13.9\% & 10.7\% & 14.3\% & 0.361\% \\
+            & $\Delta$ units (100k) & 0.0729 & 0.0985 & 0.0758 & 0.101 & 0.00256 \\
+\addlinespace[2pt]
+Missouri & \% change             & -1.68\% & 11.2\% & -0.965\% & 12.1\% & 0.727\% \\
+         & $\Delta$ units (100k) & -0.0751 & 0.499 & -0.0431 & 0.539 & 0.0324 \\
+\addlinespace[2pt]
+Ohio & \% change             & 14.1\% & 25.3\% & 12.0\% & 22.7\% & -3.17\% \\
+     & $\Delta$ units (100k) & 0.715 & 1.28 & 0.605 & 1.15 & -0.161 \\
+\addlinespace[2pt]
+South Carolina & \% change             & -19.8\% & 55.7\% & -18.3\% & 59.4\% & 1.12\% \\
+               & $\Delta$ units (100k) & -0.243 & 0.684 & -0.225 & 0.730 & 0.0138 \\
+\addlinespace[2pt]
+Tennessee & \% change             & -3.25\% & 28.8\% & -6.59\% & 22.8\% & -5.03\% \\
+          & $\Delta$ units (100k) & -0.173 & 1.54 & -0.351 & 1.22 & -0.268 \\
+\addlinespace[2pt]
+Texas & \% change             & -4.05\% & 15.3\% & -28.9\% & -8.23\% & -22.3\% \\
+     & $\Delta$ units (100k) & -0.271 & 1.02 & -1.93 & -0.550 & -1.49 \\
+\midrule
+United States & \% change             &  &  &  &  &  \\
+              & $\Delta$ units (100k) & -0.217 & 12.9 & -2.32 & 10.7 & -2.33 \\
+\bottomrule
+\end{tabular}
+
+\begin{tablenotes}[flushleft]\footnotesize
+\item \textit{Notes:} For each plant location, the first row reports the percent change in units sold and the second row reports the change in units sold in hundreds of thousands of vehicles (100k), relative to the corresponding baseline scenario. The United States row reports the sum of state-level changes (percent changes omitted).
+\end{tablenotes}
+\end{threeparttable}
+\end{adjustbox}
+
+\end{table}
+
+
+
+\begin{table}[!htbp]
+\centering
+\caption{Counterfactual Changes in Consumer Surplus by State (2024)}
+\label{tab:cs_by_state}
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{0.92}
+
+\begin{adjustbox}{center, max width=\textwidth}
+\begin{threeparttable}
+\begin{tabular}{lccccc}
+\toprule
+ & \multicolumn{2}{c}{With subsidy} & \multicolumn{3}{c}{No subsidy} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-6}
+State
+& Parts \& vehicles tariff & Vehicles-only tariff
+& Parts \& vehicles tariff & Vehicles-only tariff & No tariff \\
+\midrule
+AL & -27.9 (-10.6\%) & -11.7 (-4.45\%) & -29.3 (-11.1\%) & -13.3 (-5.06\%) & -1.38 (-0.526\%) \\
+AK & -37.5 (-10.5\%) & -18.1 (-5.06\%) & -45 (-12.6\%) & -26.7 (-7.48\%) & -7.21 (-2.02\%) \\
+AZ & -32.7 (-10.8\%) & -14.8 (-4.9\%) & -36 (-11.9\%) & -18.5 (-6.13\%) & -3.11 (-1.03\%) \\
+AR & -26.4 (-11.3\%) & -11.8 (-5.04\%) & -27.5 (-11.7\%) & -13.1 (-5.59\%) & -1.14 (-0.485\%) \\
+CA & -43 (-9.68\%) & -21.2 (-4.77\%) & -49.4 (-11.1\%) & -28.5 (-6.41\%) & -5.85 (-1.32\%) \\
+CO & -38.7 (-9.27\%) & -16 (-3.82\%) & -42.2 (-10.1\%) & -19.8 (-4.74\%) & -3.22 (-0.77\%) \\
+CT & -38 (-9.1\%) & -17.7 (-4.24\%) & -41.2 (-9.88\%) & -21.3 (-5.1\%) & -2.86 (-0.685\%) \\
+DE & -35.8 (-11.6\%) & -17 (-5.53\%) & -38.9 (-12.6\%) & -20.6 (-6.69\%) & -2.94 (-0.954\%) \\
+DC & -42.6 (-8.33\%) & -20.1 (-3.93\%) & -45.6 (-8.92\%) & -23.5 (-4.61\%) & -2.77 (-0.541\%) \\
+FL & -31.2 (-11.5\%) & -14.2 (-5.24\%) & -33.4 (-12.3\%) & -16.8 (-6.17\%) & -2.07 (-0.763\%) \\
+GA & -33.6 (-11.1\%) & -15.4 (-5.1\%) & -36.6 (-12.1\%) & -18.8 (-6.22\%) & -2.8 (-0.926\%) \\
+HI & -42.1 (-10.4\%) & -20.6 (-5.08\%) & -51.2 (-12.6\%) & -30.7 (-7.58\%) & -8.1 (-2.0\%) \\
+ID & -32.2 (-10.7\%) & -14.3 (-4.75\%) & -34.7 (-11.5\%) & -17.2 (-5.7\%) & -2.39 (-0.792\%) \\
+IL & -36.5 (-9.86\%) & -15.8 (-4.27\%) & -37.8 (-10.2\%) & -17.3 (-4.68\%) & -1.18 (-0.319\%) \\
+IN & -32.1 (-10.4\%) & -13.4 (-4.36\%) & -33.6 (-10.9\%) & -15.2 (-4.91\%) & -1.36 (-0.441\%) \\
+IA & -33.1 (-11.3\%) & -14 (-4.76\%) & -34.8 (-11.8\%) & -15.9 (-5.4\%) & -1.61 (-0.547\%) \\
+KS & -33.9 (-10.4\%) & -14 (-4.32\%) & -35.7 (-11.0\%) & -16 (-4.94\%) & -1.68 (-0.519\%) \\
+KY & -30 (-10.8\%) & -12.9 (-4.68\%) & -31.2 (-11.3\%) & -14.3 (-5.18\%) & -1.16 (-0.421\%) \\
+LA & -26.8 (-10.9\%) & -11.4 (-4.66\%) & -27.8 (-11.3\%) & -12.6 (-5.12\%) & -0.927 (-0.377\%) \\
+ME & -33 (-11.3\%) & -15.3 (-5.24\%) & -36.2 (-12.4\%) & -18.9 (-6.46\%) & -2.91 (-0.998\%) \\
+MD & -39 (-10.4\%) & -19 (-5.04\%) & -42.2 (-11.2\%) & -22.6 (-5.98\%) & -2.89 (-0.766\%) \\
+MA & -39.4 (-9.46\%) & -18 (-4.33\%) & -41.8 (-10.0\%) & -20.8 (-4.99\%) & -2.13 (-0.512\%) \\
+MI & -33.1 (-9.72\%) & -14.4 (-4.22\%) & -35.4 (-10.4\%) & -17 (-4.98\%) & -2.1 (-0.617\%) \\
+MN & -36.9 (-10.0\%) & -15.3 (-4.17\%) & -38.9 (-10.6\%) & -17.6 (-4.8\%) & -2.01 (-0.549\%) \\
+MS & -24.4 (-12.3\%) & -9.85 (-4.96\%) & -25.8 (-13.0\%) & -11.5 (-5.76\%) & -1.33 (-0.669\%) \\
+MO & -32.2 (-11.0\%) & -12.8 (-4.39\%) & -33.6 (-11.5\%) & -14.5 (-4.96\%) & -1.31 (-0.45\%) \\
+MT & -31.7 (-11.1\%) & -14 (-4.89\%) & -34.7 (-12.1\%) & -17.3 (-6.06\%) & -2.84 (-0.991\%) \\
+NE & -35.7 (-10.7\%) & -15.2 (-4.59\%) & -37.3 (-11.2\%) & -17 (-5.13\%) & -1.47 (-0.442\%) \\
+NV & -34 (-10.3\%) & -14.5 (-4.39\%) & -37.5 (-11.3\%) & -18.4 (-5.57\%) & -3.17 (-0.959\%) \\
+NH & -39.2 (-10.1\%) & -18.3 (-4.72\%) & -42.3 (-10.9\%) & -21.9 (-5.64\%) & -2.93 (-0.757\%) \\
+NJ & -40.5 (-9.28\%) & -18.2 (-4.17\%) & -44.4 (-10.2\%) & -22.4 (-5.14\%) & -3.35 (-0.767\%) \\
+NM & -31.6 (-11.3\%) & -14.2 (-5.08\%) & -34.2 (-12.2\%) & -17.1 (-6.13\%) & -2.43 (-0.869\%) \\
+NY & -38 (-9.92\%) & -17.4 (-4.55\%) & -41.5 (-10.8\%) & -21.3 (-5.56\%) & -3.18 (-0.831\%) \\
+NC & -27.7 (-11.3\%) & -13.1 (-5.34\%) & -30.1 (-12.3\%) & -15.9 (-6.48\%) & -2.28 (-0.93\%) \\
+ND & -34.5 (-10.0\%) & -14.2 (-4.12\%) & -36.4 (-10.6\%) & -16.3 (-4.73\%) & -1.71 (-0.497\%) \\
+OH & -35.1 (-10.2\%) & -15.1 (-4.39\%) & -36.6 (-10.6\%) & -17 (-4.92\%) & -1.55 (-0.448\%) \\
+OK & -29 (-10.7\%) & -11.8 (-4.38\%) & -30.3 (-11.2\%) & -13.4 (-4.94\%) & -1.25 (-0.464\%) \\
+OR & -35.8 (-11.6\%) & -17.3 (-5.58\%) & -44 (-14.2\%) & -26.4 (-8.52\%) & -7.35 (-2.37\%) \\
+PA & -34.1 (-10.3\%) & -16.1 (-4.85\%) & -36.9 (-11.1\%) & -19.2 (-5.79\%) & -2.56 (-0.771\%) \\
+RI & -36.6 (-10.7\%) & -16.1 (-4.68\%) & -39.9 (-11.6\%) & -19.7 (-5.73\%) & -3.02 (-0.878\%) \\
+SC & -28.6 (-11.6\%) & -13.1 (-5.33\%) & -30.3 (-12.3\%) & -15.1 (-6.16\%) & -1.72 (-0.701\%) \\
+SD & -34.6 (-9.88\%) & -14.3 (-4.09\%) & -36.5 (-10.4\%) & -16.4 (-4.7\%) & -1.84 (-0.525\%) \\
+TN & -29.7 (-10.6\%) & -12.4 (-4.45\%) & -31.4 (-11.3\%) & -14.4 (-5.17\%) & -1.66 (-0.595\%) \\
+TX & -33.7 (-9.36\%) & -14.2 (-3.93\%) & -35.1 (-9.76\%) & -15.8 (-4.39\%) & -1.36 (-0.378\%) \\
+UT & -36.9 (-9.84\%) & -16.5 (-4.39\%) & -39.4 (-10.5\%) & -19.3 (-5.16\%) & -2.48 (-0.661\%) \\
+VT & -31.8 (-11.7\%) & -14.4 (-5.31\%) & -34.6 (-12.8\%) & -17.6 (-6.5\%) & -2.56 (-0.944\%) \\
+VA & -35.9 (-10.1\%) & -16.7 (-4.67\%) & -38.7 (-10.8\%) & -19.9 (-5.58\%) & -2.69 (-0.754\%) \\
+WA & -39.1 (-9.63\%) & -19.1 (-4.7\%) & -45.5 (-11.2\%) & -26.3 (-6.47\%) & -5.81 (-1.43\%) \\
+WV & -26.4 (-12.4\%) & -11.8 (-5.54\%) & -28.8 (-13.6\%) & -14.5 (-6.81\%) & -2.33 (-1.1\%) \\
+WI & -34.6 (-10.4\%) & -14.5 (-4.35\%) & -36.4 (-10.9\%) & -16.5 (-4.94\%) & -1.6 (-0.479\%) \\
+WY & -32 (-10.6\%) & -14 (-4.65\%) & -34.4 (-11.5\%) & -16.7 (-5.56\%) & -2.3 (-0.767\%) \\
+\bottomrule
+\end{tabular}
+
+\begin{tablenotes}[flushleft]\footnotesize
+\item \textit{Notes:} Each entry reports the change in consumer surplus in billion USD, with the percent change shown in parentheses. Values are relative to the corresponding baseline.
+\end{tablenotes}
+\end{threeparttable}
+\end{adjustbox}
+
+\end{table}
+
+%%% START: NEW SECTION 6 %%%
+\clearpage
+\section{Counterfactual analysis}
+\label{sec:sec_counterfactuals}
+
+This section evaluates the equilibrium effects of trade policy by combining the three central elements of our framework: substitution across differentiated vehicles, firm pricing under oligopolistic competition, and the transmission of foreign input cost shocks into marginal costs through global value chains. The counterfactuals are organized to clarify how these margins interact. We begin with tariffs applied only to final goods, then introduce tariffs on intermediate inputs to isolate the marginal-cost channel, examine the role of incomplete pass-through, and finally study interactions with electric-vehicle (EV) subsidies and the resulting distributional and regional incidence.
+
+\subsection{Vehicle tariffs only}
+
+We first consider the benchmark case in which tariffs apply to imported vehicles but not to imported parts. This experiment isolates the demand-reallocation channel emphasized in much of the trade-policy literature: higher prices for foreign-assembled vehicles induce substitution toward domestically assembled models and the outside option. Because domestically assembled vehicles do not experience a direct cost shock in this scenario, changes in their equilibrium outcomes arise entirely through competitive interactions.
+
+Table~\ref{tab:cf_vehicles_only_summary} summarizes the aggregate effects of the vehicle-only tariff when EV subsidies remain in place. Average vehicle prices increase by 5.70 percent, consumer surplus falls by \$15.0 billion (4.6 percent), and U.S.\ producer surplus rises by \$1.31 billion. The domestic share of vehicle sales increases sharply, from 53.5 percent to 67.2 percent, reflecting substantial substitution away from imported vehicles. Tariff revenues amount to \$15.7 billion.
+
+\begin{table}[!htbp]
+\centering
+\caption{Vehicle-only tariff: aggregate outcomes (with EV subsidies)}
+\label{tab:cf_vehicles_only_summary}
+\small
+\begin{tabular}{lcc}
+\toprule
+ & Baseline & Vehicle-only tariff \\
+\midrule
+Average price change (\%) & -- & 5.70 \\
+$\Delta$ Consumer surplus (b USD, \%) & -- & -15.0 (-4.60\%) \\
+$\Delta$ US producer surplus (b USD) & -- & 1.31 \\
+EV share (\% sales) & 7.39 & 6.75 \\
+US-assembled share (\% sales) & 53.5 & 67.2 \\
+Tariff revenue (b USD) & -- & 15.7 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Figure~\ref{fig:origin_metrics_vehicles_only_tariff__with_subsidy_main} illustrates how these effects differ by assembly location. Imported vehicles experience higher prices and declining market shares, while domestically assembled vehicles gain share but exhibit only modest price increases. This limited price response reflects imperfect substitution between imported and domestic vehicles, competition among U.S.\ assemblers, and a substantial diversion of demand to the outside good.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/origin_metrics_vehicles_only_tariff__with_subsidy.png}
+    \caption{Changes by origin: Vehicle-only tariff, with EV subsidies.}
+    \label{fig:origin_metrics_vehicles_only_tariff__with_subsidy_main}
+    \captionsetup{font=footnotesize}
+    \caption*{\textit{Notes:} Changes relative to the no-tariff, with-subsidy baseline.}
+\end{figure}
+
+Firm-level outcomes under vehicle-only tariffs are heterogeneous and depend on product mix and assembly location. Figure~\ref{fig:profit_changes_vehicles_only_tariff__with_subsidy_main} shows that firms with a larger share of domestically assembled vehicles tend to benefit, while firms specializing in imported vehicles experience losses. At this stage, however, domestic producers do not face offsetting cost increases, so the vehicle-only tariff resembles the standard protective policy intuition.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/profit_changes_vehicles_only_tariff__with_subsidy.png}
+    \caption{Firm profit changes: Vehicle-only tariff, with EV subsidy.}
+    \label{fig:profit_changes_vehicles_only_tariff__with_subsidy_main}
+    \captionsetup{font=footnotesize}
+\end{figure}
+
+\subsection{Tariffs on vehicles and intermediate inputs}
+
+We next extend the tariff to imported automotive parts. This scenario introduces a direct marginal-cost shock for domestically assembled vehicles that depends on each firm’s reliance on foreign inputs. As a result, the demand-reallocation effects observed under vehicle-only tariffs now interact with cost increases faced by U.S.\ assemblers.
+
+Table~\ref{tab:cf_parts_vehicles_summary} reports the corresponding aggregate outcomes. Average prices increase by 10.06 percent, consumer surplus falls by \$33.6 billion (10.2 percent), and U.S.\ producer surplus declines by \$2.42 billion. Although tariff revenues are substantial at \$41.9 billion, the composition of gains and losses differs sharply from the vehicle-only case.
+
+\begin{table}[!htbp]
+\centering
+\caption{Parts and vehicles tariffs: aggregate outcomes (with EV subsidies)}
+\label{tab:cf_parts_vehicles_summary}
+\small
+\begin{tabular}{lcc}
+\toprule
+ & Baseline & Parts \& vehicles tariffs \\
+\midrule
+Average price change (\%) & -- & 10.06 \\
+$\Delta$ Consumer surplus (b USD, \%) & -- & -33.6 (-10.2\%) \\
+$\Delta$ US producer surplus (b USD) & -- & -2.42 \\
+EV share (\% sales) & 7.39 & 6.65 \\
+US-assembled share (\% sales) & 53.5 & 57.6 \\
+Tariff revenue (b USD) & -- & 41.9 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Figure~\ref{fig:origin_metrics_parts_and_vehicles_tariff__with_subsidy_main} shows that once parts are taxed, domestically assembled vehicles experience meaningful cost-driven price increases. The resulting contraction in demand offsets much of the competitive advantage created by taxing imported vehicles, reducing gains for many domestic producers.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/origin_metrics_parts_and_vehicles_tariff__with_subsidy.png}
+    \caption{Changes by origin: Parts and vehicle tariffs, with EV subsidies.}
+    \label{fig:origin_metrics_parts_and_vehicles_tariff__with_subsidy_main}
+    \captionsetup{font=footnotesize}
+\end{figure}
+
+Firm-level effects reveal a sharp reversal relative to the vehicle-only case. Figure~\ref{fig:profit_changes_parts_and_vehicles_tariff__with_subsidy_main} shows that firms with high reliance on imported parts, including several large U.S.\ manufacturers, experience substantial profit declines. In contrast, firms with low imported-parts exposure and significant U.S.\ assembly capacity continue to benefit.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/profit_changes_parts_and_vehicles_tariff__with_subsidy.png}
+    \caption{Firm profit changes: Parts and vehicle tariffs, with EV subsidy.}
+    \label{fig:profit_changes_parts_and_vehicles_tariff__with_subsidy_main}
+    \captionsetup{font=footnotesize}
+\end{figure}
+
+Figure~\ref{fig:profit_change_vs_import_share_main} makes this mechanism explicit by plotting firm-level profit changes against the average imported-parts share of domestically assembled vehicles. Profit outcomes are tightly linked to input exposure, underscoring that final assembly location alone is an insufficient statistic for tariff incidence.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Submission_draft/graphs/profit_change_vs_import_share_parts_and_vehicles_tariff__with_subsidy}
+    \caption{Firm profit changes and imported-parts exposure.}
+    \label{fig:profit_change_vs_import_share_main}
+    \captionsetup{font=footnotesize}
+\end{figure}
+
+\subsection{Incomplete pass-through}
+
+The magnitude of these effects depends on the extent to which foreign input cost shocks are transmitted into marginal costs. We therefore compare results using the estimated pass-through parameter to counterfactuals assuming full and zero pass-through.
+
+Incomplete pass-through attenuates price and welfare effects relative to full pass-through, reflecting upstream cost absorption and medium-run sourcing adjustments. However, attenuation does not eliminate the reversal in incidence induced by taxing intermediate inputs: firms with greater imported-parts exposure continue to experience larger cost increases and profit losses, even when pass-through is substantially below one.
+
+\subsection{Interaction with EV subsidies}
+
+We next consider how tariffs interact with the removal of EV purchase subsidies. EVs provide a revealing case because they combine relatively high imported-parts exposure with demand that is particularly sensitive to price-based policy incentives.
+
+Removing EV subsidies has little effect on average vehicle prices but induces a large reallocation of demand away from EVs and toward internal combustion vehicles and the outside option. When combined with parts and vehicle tariffs, subsidy removal reduces the EV share of sales from 6.65 percent to 3.15 percent, a decline of roughly 53 percent. Consumer surplus losses increase by an additional \$4.1 billion, and U.S.\ producer surplus declines further as firms with EV-heavy portfolios lose market share.
+
+Figure~\ref{fig:profit_changes_parts_and_vehicles_tariff__no_subsidy_main} illustrates how the full policy package disproportionately affects EV-oriented manufacturers, while Figure~\ref{fig:ev_share_changes_main} summarizes changes in EV market share across scenarios.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/profit_changes_parts_and_vehicles_tariff__no_subsidy.png}
+    \caption{Firm profit changes: Parts and vehicle tariffs, EV subsidy removed.}
+    \label{fig:profit_changes_parts_and_vehicles_tariff__no_subsidy_main}
+    \captionsetup{font=footnotesize}
+\end{figure}
+
+\subsection{Distributional and regional incidence}
+
+Finally, we examine how these mechanisms translate into distributional and regional outcomes. Percentage consumer surplus losses are larger for lower-income households, reflecting greater price sensitivity, while the bulk of absolute losses accrue to higher-income households who account for a larger share of vehicle purchases. Regionally, welfare losses and production shifts vary substantially across states, driven by differences in income distributions, vehicle preferences, and exposure to imported inputs.
+
+Figure~\ref{fig:cs_map_parts_and_vehicles_tariff__with_subsidy_main} illustrates the geographic distribution of consumer surplus losses under parts and vehicle tariffs. Detailed state-level tables and additional maps for alternative scenarios are reported in the appendix.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{Submission_draft/graphs/cs_map_parts_and_vehicles_tariff__with_subsidy.png}
+    \caption{State consumer surplus impacts: Parts and vehicle tariffs, with EV subsidies.}
+    \label{fig:cs_map_parts_and_vehicles_tariff__with_subsidy_main}
+    \captionsetup{font=footnotesize}
+\end{figure}
+
+%%% END: NEW SECTION 6 %%%
+\subsection{Economic interpretation and incidence mechanisms}
+
+The counterfactual results highlight a set of equilibrium mechanisms that are not specific to the automobile market, but arise more generally in differentiated-products industries with market power and fragmented production. This subsection interprets the results through the lens of these mechanisms and clarifies why taxing intermediate inputs fundamentally alters the incidence of protection.
+
+In a standard setting with differentiated products and oligopolistic pricing, tariffs on imported final goods tend to benefit domestic producers by shifting demand away from foreign competitors. Our results show that this intuition can fail once domestically assembled goods rely on imported intermediate inputs. When parts are taxed, domestic producers experience a marginal-cost increase that scales with their exposure to foreign inputs. Because this cost shock applies to all units sold, it weakens domestic firms’ competitive positions precisely in the segments where they would otherwise gain from demand reallocation. As a result, protection aimed at foreign producers can reduce domestic producer surplus, even when domestic firms retain market power and substitution toward domestic products remains imperfect.
+
+An important feature of the results is that firms are unable to fully offset these cost increases through higher markups. Under Nash-Bertrand pricing with differentiated products, markups depend on substitution patterns and the elasticity of demand faced by each product. In our setting, imported and domestically assembled vehicles are imperfect substitutes, and the outside option captures a substantial share of demand. These features limit firms’ ability to raise prices without losing sales, so parts tariffs compress markups rather than translating one-for-one into higher prices. This markup compression amplifies the adverse profit effects for firms with high imported-input exposure.
+
+Allowing for incomplete pass-through of foreign input cost shocks moderates, but does not eliminate, these effects. Economically, incomplete pass-through reflects a combination of upstream cost absorption and medium-run sourcing adjustments within existing production structures. While these margins dampen the immediate impact of tariffs on marginal costs, they do not sever the link between global input prices and domestic production costs. Consequently, the qualitative incidence patterns—particularly the dependence of firm-level outcomes on imported-input exposure—remain intact even when pass-through is substantially below one.
+
+The interaction between tariffs and EV subsidy removal further illustrates how cost-side and demand-side policies jointly shape incidence. Electric vehicles are disproportionately affected because they combine relatively high exposure to imported inputs with demand that is especially sensitive to price-based incentives. Removing EV subsidies raises the effective price of EVs without materially affecting average vehicle prices, inducing sharp demand shifts away from EV models. When combined with tariffs that raise production costs, this interaction magnifies producer losses for EV-oriented firms and accelerates the contraction of EV sales. More generally, policy interactions are likely to be most consequential in market segments characterized by both high input exposure and elastic demand.
+
+Taken together, these mechanisms imply that the incidence of trade policy cannot be inferred from final assembly location alone. In industries with global value chains, what matters for both firm and consumer outcomes is the degree to which production costs are exposed to foreign inputs and the extent to which firms can adjust prices in response. Policies that appear protective when viewed through the lens of final goods trade can impose substantial costs on domestic producers once intermediate inputs and market structure are taken into account. This logic extends beyond automobiles to other sectors with fragmented production and differentiated products, including electronics, machinery, and clean energy technologies.
+
+
+\section{Conclusion}\label{sec:sec_conclusion}
+
+This paper studies the incidence of trade policy in a differentiated-products market with market power and global value chains. Using the U.S.\ automobile industry as a laboratory, we show that exposure to imported intermediate inputs fundamentally alters how tariffs affect prices, profits, and welfare. When domestically assembled goods rely on foreign parts, protection that targets both final goods and intermediate inputs can raise domestic producers’ marginal costs and reverse the competitive gains they would otherwise obtain from tariffs on imported final goods alone.
+
+Our results highlight that this reversal arises from the interaction of three forces: substitution across differentiated products, oligopolistic pricing, and cost exposure through global value chains. Vehicle-only tariffs primarily operate through demand reallocation, shifting sales toward domestically assembled products. Once intermediate inputs are taxed, however, cost shocks scale with firms’ reliance on imported parts and apply to all units sold, weakening domestic firms’ competitive positions. Because firms face elastic demand and competition from both foreign producers and the outside option, they are unable to fully pass these cost increases through to prices, leading to markup compression and, for many firms, lower profits.
+
+Allowing for incomplete pass-through of foreign input cost shocks moderates these effects but does not eliminate them. Medium-run sourcing adjustments and upstream cost absorption dampen the transmission of tariffs into marginal costs, yet the qualitative incidence patterns remain tightly linked to firms’ input exposure. As a result, final assembly location alone is an insufficient statistic for evaluating the effects of protection in industries with fragmented production.
+
+The interaction between tariffs and EV subsidy removal further illustrates how cost-side and demand-side policies jointly shape incidence. Electric vehicles are disproportionately affected because they combine high exposure to imported inputs with demand that is especially sensitive to price-based incentives. Stacking tariffs with subsidy repeal sharply contracts EV sales and redistributes producer surplus toward firms less exposed to both imported inputs and EV demand, underscoring the importance of evaluating trade and industrial policies in combination rather than in isolation.
+
+Although our empirical analysis focuses on automobiles, the mechanisms we document are not specific to that sector. Many industries affected by recent trade policy—including electronics, machinery, and clean energy technologies—feature differentiated products, market power, and heavy reliance on imported intermediate inputs. In such settings, policies that tax inputs as well as final goods are likely to reshape marginal costs and competitive positions in ways that differ from intuition based solely on final-goods trade. More broadly, our findings underscore that evaluating the incidence of trade policy requires explicit attention to global value chains and the interaction between cost exposure and market structure.
+
+%\include{demand}
+%\include{cost}
+%\include{counterfactuals}
+%\include{conclusion}
+
+
+\bibliographystyle{ecta}   % or abbrvnat, unsrtnat, ecta, qje, etc.
+\bibliography{references}      % no .bib extension
+
+\newpage 
+\appendix\
+\counterwithin{figure}{section}         % reset figure counter at each \section
+\renewcommand{\thefigure}{\thesection\arabic{figure}}  % prints A1 not A.1
+
+\section{Appendix Figures}\label{sec:appendix_fig}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{Submission_draft/graphs/div_map.png}
+    \caption{US regional divisions}
+    \label{fig:div_map}
+\end{figure}
+
+\counterwithin{table}{section}
+\renewcommand{\thetable}{\thesection\arabic{table}}
+\section{Appendix Tables}\label{sec:appendix_table}
+
+
+\begin{table}[!htbp]
+\centering
+\caption{Average EV Subsidy Available by Producer}
+\label{tab:avg_ev_subsidy_by_producer}
+\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+
+\begin{adjustbox}{center, max width=\textwidth}
+\begin{threeparttable}
+\begin{tabular}{l*{10}{S[table-format=4.0]}}
+\toprule
+ & \multicolumn{10}{c}{Market year} \\
+\cmidrule(lr){2-11}
+Producer & {2015} & {2016} & {2017} & {2018} & {2019} & {2020} & {2021} & {2022} & {2023} & {2024} \\
+\midrule
+Cadillac    & 0    & 0    & 0    & 0    & 0    & 0    & 0    & 0    & 7500 & 7500 \\
+Chevrolet   & 7500 & 7500 & 7500 & 7500 & 4200 & 465  & 0    & 0    & 7500 & 1834 \\
+Ford        & 7500 & 7500 & 7500 & 0    & 0    & 0    & 7500 & 4664 & 2684 & 7500 \\
+Hyundai     & 0    & 0    & 7500 & 7500 & 7500 & 7500 & 7500 & 4664 & 0    & 0    \\
+Kia         & 7500 & 7500 & 7500 & 7500 & 7500 & 7500 & 7500 & 4664 & 0    & 0    \\
+Nissan      & 7500 & 7500 & 7500 & 7500 & 7500 & 7500 & 7500 & 4664 & 7500 & 3750 \\
+Tesla       & 7500 & 7500 & 7500 & 7500 & 2805 & 0    & 0    & 0    & 7500 & 7500 \\
+Volkswagen  & 7500 & 7500 & 7500 & 7500 & 7500 & 0    & 7500 & 4664 & 7500 & 7500 \\
+\bottomrule
+\end{tabular}
+
+\begin{tablenotes}[flushleft]\footnotesize
+\item \textit{Notes:} Entries are average EV subsidy amounts (USD) by producer and market year. Values are rounded to the nearest dollar.
+\end{tablenotes}
+\end{threeparttable}
+\end{adjustbox}
+
+\end{table}
+
+\section{Theoretical Results}
+
+\section{Derivations for the stylized duopoly logit framework}
+\label{app:duopoly_derivations}
+
+This appendix provides the derivations underlying Section~\ref{subsec:duopoly_theory}. We show how equilibrium prices and profits respond to small ad-valorem tariffs using the Implicit Function Theorem.
+
+Market shares under multinomial logit are:
+\[
+s_j(p_d,p_f) = \frac{\exp(\tilde v_j-\alpha p_j)}{1+\exp(\tilde v_d-\alpha p_d)+\exp(\tilde v_f-\alpha p_f)},
+\]
+with own-price derivatives:
+\[
+\frac{\partial s_j}{\partial p_j} = -\alpha s_j(1-s_j),
+\qquad
+\frac{\partial s_j}{\partial p_k} = \alpha s_j s_k \quad (k\neq j).
+\]
+
+Let $F_j(p,c)$ denote firm $j$’s pricing first-order condition:
+\[
+F_j(p,c) \equiv p_j - c_j + \frac{s_j(p)}{\partial s_j/\partial p_j}.
+\]
+Stacking conditions yields $F(p,c)=0$. Total differentiation gives:
+\[
+F_p\, dp + F_c\, dc = 0,
+\qquad
+dp = -F_p^{-1}F_c\, dc.
+\]
+
+Closed-form expressions for $F_p$ and $F_c$ follow from the logit derivatives above. Substituting into the total derivative yields the equilibrium price responses to marginal changes in domestic and foreign costs.
+
+Product-level profit is $\pi_j=(p_j-c_j)M s_j$. Differentiating with respect to the parts tariff and substituting the price responses yields:
+\[
+\frac{d\pi_j}{d\tau}
+= -M s_j \rho_j c_{parts}(2-s_j),
+\]
+which aggregates to the firm-level expressions reported in the main text. All results are exact local comparative statics evaluated at the baseline equilibrium.
+
+
+\end{document}

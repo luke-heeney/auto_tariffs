@@ -1,0 +1,54 @@
+\begin{table}[htbp]
+\centering
+\caption{BLP demand estimates with income and regional heterogeneity}
+\label{tab:blp_est}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{threeparttable}
+
+\begin{tabular}{@{}l r l r@{}}
+\toprule
+\multicolumn{2}{@{}l}{\textbf{Panel A. Std.\ devs of random coefficients \(\sigma\)}} &
+\multicolumn{2}{l}{\textbf{Panel B. Demographic heterogeneity \(\pi\)}} \\
+ & Coef (s.e.) & & Coef (s.e.) \\
+\midrule
+\(\log(\text{mpg}_{\text{ICE/Hyb}})\) & 5.753 (1.049) & Intercept \(\times \log(\text{income}_{10k})\) & 3.935 (0.931) \\
+\(\log(\text{hp})\) & 1.957 (0.184) & Price\(-\)subsidy \(\times \log(\text{income}_{10k})\) & 4.679 (1.563) \\
+Van & 6.581 (1.672) & Truck \(\times \) North Central & 3.512 (2.051) \\
+Truck & 12.456 (3.192) & Truck \(\times\) South Central & 3.229 (2.103) \\
+SUV & 2.640 (0.323) & Truck \(\times\) Mountain & 3.595 (2.806) \\
+EV & 1.996 (0.987) & SUV \(\times\) North East & 0.625 (0.531) \\
+Euro brand & 2.074 (0.392) & SUV \(\times\) North Central & 0.553 (0.505) \\
+Luxury brand & 2.707 (0.468) & EV \(\times\) North East & 0.893 (1.056) \\
+ &  & EV \(\times\) South Atlantic & 0.693 (1.113) \\
+ &  & EV \(\times\) Mountain & 1.290 (1.383) \\
+ &  & EV \(\times \) Pacific & 3.204 (1.059) \\
+\midrule
+\multicolumn{4}{@{}l}{\textbf{Panel C. Mean tastes \(\beta\) and EV\(\times\)year interactions}} \\
+\multicolumn{2}{@{}l}{Mean tastes \(\beta\)} & \multicolumn{2}{l}{EV\(\times\)year interactions} \\
+Variable & Coef (s.e.) & Term & Coef (s.e.) \\
+\midrule
+Price\(-\)subsidy & -33.147 (5.205) & EV \(\times 2016\) & 1.201 (0.972) \\
+\(\log(\text{size})\) & 1.428 (0.139) & EV \(\times 2017\) & -0.206 (0.951) \\
+\(\log(\text{hp})\) & 1.240 (0.347) & EV \(\times 2018\) & 1.678 (1.024) \\
+\(\log(\text{mpg}_{\text{ICE/hyb}})\) & -1.147 (0.930) & EV \(\times 2019\) & 1.348 (0.795) \\
+\(\log(\text{mpg}_{\text{EV}})\) & 1.457 (1.508) & EV \(\times 2020\) & 2.841 (0.918) \\
+Hybrid & -3.875 (0.553) & EV \(\times 2021\) & 3.193 (1.029) \\
+EV & -11.989 (3.705) & EV \(\times 2022\) & 4.522 (1.098) \\
+Van & -11.099 (2.984) & EV \(\times 2023\) & 4.169 (1.167) \\
+Truck & -17.668 (4.679) & EV \(\times 2024\) & 3.266 (1.162) \\
+SUV & -0.594 (0.328) &  &  \\
+\bottomrule
+\end{tabular}
+
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item \textit{Notes:} 
+Standard errors are clustered by model (2{,}982 clusters). \(\log(\text{income}_{10k})\) is household
+income in \$10,000 units. Prices and subsidies are in \$100,000 units. Year and firm fixed effects and additional year-by-SUV, year-by-Hybrid interactions are included but
+omitted from the table for brevity.
+\end{tablenotes}
+
+\end{threeparttable}
+\end{table}

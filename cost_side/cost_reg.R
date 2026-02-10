@@ -90,17 +90,111 @@ m2_fd <- feols(
   cluster = ~ make_model
 )
 
-# ---- Table ----
-# IMPORTANT: keep uses regex to match interaction in either order
-etable(
-  "Levels: chars" = m1_levels,
-  "Levels: lean"  = m2_levels,
-  "FD: chars"     = m1_fd,
-  "FD: lean"      = m2_fd,
-  se.below = TRUE
+# ---- Export LaTeX table ----
+models <- list(m1_levels, m2_levels, m1_fd, m2_fd)
+
+fmt_num <- function(x, digits = 3) {
+  sprintf(paste0("%.", digits, "f"), x)
+}
+
+sig_star <- function(p) {
+  if (is.na(p)) return("")
+  if (p < 0.01) return("\\sym{***}")
+  if (p < 0.05) return("\\sym{**}")
+  if (p < 0.10) return("\\sym{*}")
+  ""
+}
+
+coef_se_cell <- function(model, term_pattern) {
+  ct <- summary(model)$coeftable
+  term_name <- grep(term_pattern, rownames(ct), value = TRUE)
+  if (length(term_name) == 0) {
+    return(list(coef = "", se = ""))
+  }
+  term_name <- term_name[1]
+  est <- ct[term_name, "Estimate"]
+  se <- ct[term_name, "Std. Error"]
+  p <- ct[term_name, "Pr(>|t|)"]
+  list(
+    coef = paste0("$", fmt_num(est), "$", sig_star(p)),
+    se = paste0("$(", fmt_num(se), ")$")
+  )
+}
+
+fit_stat <- function(model, stat) {
+  as.numeric(fitstat(model, stat)[[1]])
+}
+
+row_cells <- function(pattern, use_models = c(TRUE, TRUE, TRUE, TRUE)) {
+  vals <- vector("list", 4)
+  for (i in seq_along(models)) {
+    if (use_models[i]) {
+      vals[[i]] <- coef_se_cell(models[[i]], pattern)
+    } else {
+      vals[[i]] <- list(coef = "", se = "")
+    }
+  }
+  vals
+}
+
+size_cells <- row_cells("^ln_size$", c(TRUE, FALSE, TRUE, FALSE))
+weight_cells <- row_cells("^ln_weight$", c(TRUE, FALSE, TRUE, FALSE))
+hp_cells <- row_cells("^ln_hp$", c(TRUE, FALSE, TRUE, FALSE))
+mpg_cells <- row_cells("^ln_mpg$", c(TRUE, FALSE, TRUE, FALSE))
+int_cells <- row_cells("ln_inv_rer_code1:pcOth1_pct1_lag1|pcOth1_pct1_lag1:ln_inv_rer_code1")
+
+n_vec <- sapply(models, nobs)
+r2_vec <- sapply(models, fit_stat, stat = "r2")
+wr2_vec <- sapply(models, fit_stat, stat = "wr2")
+
+tex_lines <- c(
+  "% Requires: \\usepackage{booktabs,threeparttable}",
+  "\\begin{table}[!htbp]",
+  "\\centering",
+  "\\begin{threeparttable}",
+  "\\caption{Cost-Side Regressions: Exchange-Rate Shocks and Imported Parts Exposure}",
+  "\\label{tab:cost_side_results}",
+  "\\setlength{\\tabcolsep}{5pt}",
+  "\\renewcommand{\\arraystretch}{1.12}",
+  "\\newcommand{\\sym}[1]{\\ifmmode^{#1}\\else\\(^{#1}\\)\\fi}",
+  "\\begin{tabular}{lcccc}",
+  "\\toprule",
+  " & \\multicolumn{2}{c}{\\textbf{Levels}} & \\multicolumn{2}{c}{\\textbf{First-differences}} \\\\",
+  "\\cmidrule(lr){2-3}\\cmidrule(lr){4-5}",
+  " & \\textbf{(1)} & \\textbf{(2)} & \\textbf{(3)} & \\textbf{(4)} \\\\",
+  "\\midrule",
+  paste0("$\\ln(\\text{size})$",
+         "\n  & ", size_cells[[1]]$coef, " & ", size_cells[[2]]$coef, " & ", size_cells[[3]]$coef, " & ", size_cells[[4]]$coef, " \\\\",
+         "\n  & ", size_cells[[1]]$se,   " & ", size_cells[[2]]$se,   " & ", size_cells[[3]]$se,   " & ", size_cells[[4]]$se,   " \\\\"),
+  paste0("$\\ln(\\text{weight})$",
+         "\n  & ", weight_cells[[1]]$coef, " & ", weight_cells[[2]]$coef, " & ", weight_cells[[3]]$coef, " & ", weight_cells[[4]]$coef, " \\\\",
+         "\n  & ", weight_cells[[1]]$se,   " & ", weight_cells[[2]]$se,   " & ", weight_cells[[3]]$se,   " & ", weight_cells[[4]]$se,   " \\\\"),
+  paste0("$\\ln(\\text{hp})$",
+         "\n  & ", hp_cells[[1]]$coef, " & ", hp_cells[[2]]$coef, " & ", hp_cells[[3]]$coef, " & ", hp_cells[[4]]$coef, " \\\\",
+         "\n  & ", hp_cells[[1]]$se,   " & ", hp_cells[[2]]$se,   " & ", hp_cells[[3]]$se,   " & ", hp_cells[[4]]$se,   " \\\\"),
+  paste0("$\\ln(\\text{mpg})$",
+         "\n  & ", mpg_cells[[1]]$coef, " & ", mpg_cells[[2]]$coef, " & ", mpg_cells[[3]]$coef, " & ", mpg_cells[[4]]$coef, " \\\\",
+         "\n  & ", mpg_cells[[1]]$se,   " & ", mpg_cells[[2]]$se,   " & ", mpg_cells[[3]]$se,   " & ", mpg_cells[[4]]$se,   " \\\\"),
+  paste0("$\\rho^{(1)}_{f,j,t-1}\\cdot \\log\\!\\big(RER^{(1)}_{jt}\\big)$",
+         "\n  & ", int_cells[[1]]$coef, " & ", int_cells[[2]]$coef, " & ", int_cells[[3]]$coef, " & ", int_cells[[4]]$coef, " \\\\",
+         "\n  & ", int_cells[[1]]$se,   " & ", int_cells[[2]]$se,   " & ", int_cells[[3]]$se,   " & ", int_cells[[4]]$se,   " \\\\"),
+  "\\midrule",
+  "Make-model FE & Yes & Yes & No  & No  \\\\",
+  "Year FE       & Yes & Yes & Yes & Yes \\\\",
+  "\\midrule",
+  paste0("Observations  & ", n_vec[1], " & ", n_vec[2], " & ", n_vec[3], " & ", n_vec[4], " \\\\"),
+  paste0("$R^2$         & ", fmt_num(r2_vec[1]), " & ", fmt_num(r2_vec[2]), " & ", fmt_num(r2_vec[3]), " & ", fmt_num(r2_vec[4]), " \\\\"),
+  paste0("Within $R^2$  & ", fmt_num(wr2_vec[1]), " & ", fmt_num(wr2_vec[2]), " & ", fmt_num(wr2_vec[3]), " & ", fmt_num(wr2_vec[4]), " \\\\"),
+  "\\bottomrule",
+  "\\end{tabular}",
+  "\\begin{tablenotes}[flushleft]",
+  "\\footnotesize",
+  "\\item \\textit{Notes:} The dependent variable is $\\ln(\\text{costs})$. The real exchange rate is the bilateral real exchange rate between the US and the supplier country, normalized to 1 for each country in 2015; an increase in the $RER$ variable indicates an appreciation of the foreign currency. Standard errors (clustered by make-model) are in parentheses below coefficients.",
+  "Significance levels: \\sym{*} $p<0.10$, \\sym{**} $p<0.05$, \\sym{***} $p<0.01$.",
+  "\\end{tablenotes}",
+  "\\end{threeparttable}",
+  "\\end{table}"
 )
 
-
-
-names(coef(m1_levels))
-
+dir.create("cost_side/outputs", showWarnings = FALSE, recursive = TRUE)
+writeLines(tex_lines, "cost_side/outputs/cost_reg_table.tex")

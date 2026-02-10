@@ -1,0 +1,46 @@
+% Requires: \usepackage{booktabs,threeparttable}
+\begin{table}[!htbp]
+\centering
+\begin{threeparttable}
+\caption{Cost-Side Regressions: Exchange-Rate Shocks and Imported Parts Exposure}
+\label{tab:cost_side_results}
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.12}
+\newcommand{\sym}[1]{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{lcccc}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Levels}} & \multicolumn{2}{c}{\textbf{First-differences}} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+ & \textbf{(1)} & \textbf{(2)} & \textbf{(3)} & \textbf{(4)} \\
+\midrule
+$\ln(\text{size})$
+  & $0.518$\sym{***} &  & $0.575$\sym{***} &  \\
+  & $(0.190)$ &  & $(0.191)$ &  \\
+$\ln(\text{weight})$
+  & $0.459$\sym{*} &  & $0.705$\sym{**} &  \\
+  & $(0.272)$ &  & $(0.333)$ &  \\
+$\ln(\text{hp})$
+  & $0.223$\sym{**} &  & $0.265$\sym{**} &  \\
+  & $(0.087)$ &  & $(0.101)$ &  \\
+$\ln(\text{mpg})$
+  & $-0.088$ &  & $-0.025$ &  \\
+  & $(0.074)$ &  & $(0.063)$ &  \\
+$\rho^{(1)}_{f,j,t-1}\cdot \log\!\big(RER^{(1)}_{jt}\big)$
+  & $0.715$\sym{***} & $0.764$\sym{***} & $0.662$\sym{**} & $0.860$\sym{***} \\
+  & $(0.258)$ & $(0.250)$ & $(0.257)$ & $(0.297)$ \\
+\midrule
+Make-model FE & Yes & Yes & No  & No  \\
+Year FE       & Yes & Yes & Yes & Yes \\
+\midrule
+Observations  & 323 & 323 & 207 & 207 \\
+$R^2$         & 0.986 & 0.981 & 0.362 & 0.159 \\
+Within $R^2$  & 0.306 & 0.087 & 0.272 & 0.040 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]
+\footnotesize
+\item \textit{Notes:} The dependent variable is $\ln(\text{costs})$. The real exchange rate is the bilateral real exchange rate between the US and the supplier country, normalized to 1 for each country in 2015; an increase in the $RER$ variable indicates an appreciation of the foreign currency. Standard errors (clustered by make-model) are in parentheses below coefficients.
+Significance levels: \sym{*} $p<0.10$, \sym{**} $p<0.05$, \sym{***} $p<0.01$.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}

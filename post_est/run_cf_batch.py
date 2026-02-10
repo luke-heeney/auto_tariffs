@@ -114,8 +114,8 @@ def _save_plotly_figure(fig, path_base: Path) -> None:
         return
     try:
         fig.write_image(str(path_base.with_suffix(".png")))
-    except Exception:
-        fig.write_html(str(path_base.with_suffix(".html")))
+    except Exception as err:
+        print(f"[warn] Failed to save plotly PNG at {path_base.with_suffix('.png')}: {err}")
 
 
 def _calc_subsidy_spend(pt: pd.DataFrame) -> float:
