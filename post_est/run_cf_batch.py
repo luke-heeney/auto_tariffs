@@ -127,6 +127,66 @@ def _calc_subsidy_spend(pt: pd.DataFrame) -> float:
     return spend
 
 
+def _escape_tex(s: object) -> str:
+    text = str(s)
+    return (
+        text.replace("\\", "\\textbackslash{}")
+        .replace("&", "\\&")
+        .replace("%", "\\%")
+        .replace("_", "\\_")
+        .replace("#", "\\#")
+        .replace("{", "\\{")
+        .replace("}", "\\}")
+    )
+
+
+def _write_ownership_matrix_table(owner_map_path: Path | None, out_path: Path) -> None:
+    if owner_map_path is None or not owner_map_path.exists():
+        return
+    try:
+        df = pd.read_excel(owner_map_path, sheet_name="brands")
+    except Exception as err:
+        print(f"[warn] Failed to read ownership mapping sheet: {err}")
+        return
+
+    cols = {c.strip().lower(): c for c in df.columns}
+    needed = ["brand", "owner", "pricer"]
+    missing = [c for c in needed if c not in cols]
+    if missing:
+        print(f"[warn] Ownership mapping missing required columns: {missing}")
+        return
+
+    table_df = df[[cols["brand"], cols["owner"], cols["pricer"]]].copy()
+    table_df.columns = ["brand", "owner", "pricer"]
+    table_df = table_df.dropna(subset=["brand", "owner", "pricer"])
+    table_df = table_df.sort_values("brand").reset_index(drop=True)
+
+    lines: list[str] = []
+    lines.append("\\begin{table}[!htbp]")
+    lines.append("\\centering")
+    lines.append("\\caption{Brand ownership and pricing groups}")
+    lines.append("\\label{tab:ownership_matrix}")
+    lines.append("\\small")
+    lines.append("\\setlength{\\tabcolsep}{6pt}")
+    lines.append("\\renewcommand{\\arraystretch}{1.1}")
+    lines.append("\\begin{adjustbox}{max width=\\textwidth}")
+    lines.append("\\begin{tabular}{lll}")
+    lines.append("\\toprule")
+    lines.append("Brand & Owner & Pricing group (pricer) \\\\")
+    lines.append("\\midrule")
+    for _, row in table_df.iterrows():
+        lines.append(
+            f"{_escape_tex(row['brand'])} & {_escape_tex(row['owner'])} & {_escape_tex(row['pricer'])} \\\\"
+        )
+    lines.append("\\bottomrule")
+    lines.append("\\end{tabular}")
+    lines.append("\\end{adjustbox}")
+    lines.append("\\end{table}")
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text("\n".join(lines) + "\n")
+
+
 def _save_profit_change_vs_import_share(
     out: dict[str, pd.DataFrame],
     *,
@@ -423,6 +483,8 @@ def main() -> None:
         pd.set_option("display.max_columns", None)
         pd.set_option("display.max_rows", None)
         pd.set_option("display.width", 200)
+
+        _write_ownership_matrix_table(owner_map_path, Path("outputs") / "ownership_matrix.tex")
 
         print("\nMAIN OUTPUT TABLE (summary_tbl_all)\n")
         print(summary_tbl_all.to_string())
@@ -805,6 +867,8 @@ def main() -> None:
     pd.set_option("display.max_columns", None)
     pd.set_option("display.max_rows", None)
     pd.set_option("display.width", 200)
+
+    _write_ownership_matrix_table(owner_map_path, Path("outputs") / "ownership_matrix.tex")
 
     print("\nMAIN OUTPUT TABLE (summary_tbl_all)\n")
     print(summary_tbl_all.to_string())
