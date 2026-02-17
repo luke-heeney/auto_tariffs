@@ -1,0 +1,7 @@
+scenario_key,scenario_label,label_slug
+tariffs_parts_vehicles_with_subsidy,parts and vehicles tariff (with subsidy),parts_and_vehicles_tariff__with_subsidy
+tariffs_vehicles_only_with_subsidy,vehicles-only tariff (with subsidy),vehicles_only_tariff__with_subsidy
+tariffs_parts_vehicles_no_subsidy,parts and vehicles tariff (no subsidy),parts_and_vehicles_tariff__no_subsidy
+tariffs_vehicles_only_no_subsidy,vehicles-only tariff (no subsidy),vehicles_only_tariff__no_subsidy
+no_tariff_with_subsidy,no tariff (with subsidy),no_tariff__with_subsidy
+no_tariff_no_subsidy,no tariff (no subsidy),no_tariff__no_subsidy
