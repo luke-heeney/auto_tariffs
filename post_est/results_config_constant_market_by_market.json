@@ -7,6 +7,7 @@
   "ownership_mode": "owner",
   "owner_mapping_path": "data/raw/brand_owner_hq.xlsx",
   "allow_unmapped_brands": false,
+  "counterfactual_solver_mode": "market_by_market",
   "parts_cost_adjustment": {
     "mode": "constant",
     "constant_pass_through": 0.715,

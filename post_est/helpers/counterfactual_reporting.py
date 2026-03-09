@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from helpers.counterfactual_helpers import run_unified_counterfactual
+from helpers.counterfactual_helpers import run_cf_and_summarize, run_unified_counterfactual
 from helpers.counterfactual_profit_tables import profit_changes_table, profit_changes_table_latex
 from helpers.counterfactual_helpers import origin_percent_metrics, plot_origin_percent_metrics_bw
 from helpers.consumer_surplus import cs_change_by_state
@@ -96,15 +96,20 @@ def run_scenario_outputs(
     gamma: float = 0.0,
     total_market_size: float = 132_000_000 / 6,
     price_scale_usd_per_unit: float = 100_000.0,
+    parts_pass_through: float = 0.715,
+    parts_pass_through_mode: str = "constant",
+    parts_pass_through_intercept: float | None = None,
+    parts_pass_through_log_elas_coef: float | None = None,
+    fallback_to_constant_parts_pass_through: bool = True,
+    clip_negative_parts_pass_through: bool = True,
+    solver_mode: str = "unified",
     specs: dict[str, ScenarioSpec],
 ) -> dict[str, dict[str, Any]]:
     outputs: dict[str, dict[str, Any]] = {}
+    if solver_mode not in {"unified", "market_by_market"}:
+        raise ValueError(f"Unsupported solver_mode: {solver_mode}")
     for key, spec in specs.items():
-        out = run_unified_counterfactual(
-            results,
-            product_data,
-            costs_df2,
-            agent_data=agent_data,
+        kwargs = dict(
             costs_full=costs_full,
             ownership_mode=ownership_mode,
             owner_map=owner_map,
@@ -115,12 +120,33 @@ def run_scenario_outputs(
             vehicle_tariff=spec.vehicle_tariff,
             subsidy_zero=spec.subsidy_zero,
             country_tariffs=spec.country_tariffs,
+            parts_pass_through=parts_pass_through,
+            parts_pass_through_mode=parts_pass_through_mode,
+            parts_pass_through_intercept=parts_pass_through_intercept,
+            parts_pass_through_log_elas_coef=parts_pass_through_log_elas_coef,
+            fallback_to_constant_parts_pass_through=fallback_to_constant_parts_pass_through,
+            clip_negative_parts_pass_through=clip_negative_parts_pass_through,
             price_x2_index=price_x2_index,
             beta_price_index=beta_price_index,
             gamma=gamma,
             total_market_size=total_market_size,
             price_scale_usd_per_unit=price_scale_usd_per_unit,
         )
+        if solver_mode == "unified":
+            out = run_unified_counterfactual(
+                results,
+                product_data,
+                costs_df2,
+                agent_data=agent_data,
+                **kwargs,
+            )
+        else:
+            out = run_cf_and_summarize(
+                results,
+                product_data,
+                costs_df2,
+                **kwargs,
+            )
         outputs[key] = {"label": spec.label, "out": out}
     return outputs
 

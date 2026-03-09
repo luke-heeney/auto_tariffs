@@ -26,6 +26,7 @@ def prepare_costs_df2_for_year(
     product_data: pd.DataFrame,
     vehicle_costs_csv: str,
     pc_panel_csv: str,
+    elasticity_csv: str | None = None,
     year: int = 2024,
     id_col: str = "product_ids",
     market_year_col: str = "market_year",
@@ -35,6 +36,8 @@ def prepare_costs_df2_for_year(
     markup_col: str = "markups",
     rho_year_col: str = "year",
     share_col: str = "pcUSCA_pct",
+    elasticity_year_col: str = "market_year",
+    elasticity_col: str = "own_elasticity",
     us_value: str = "United States",
 ):
     # Allow product_data to use clustering_ids instead of product_ids.
@@ -68,6 +71,18 @@ def prepare_costs_df2_for_year(
     ].copy()
     df[cost_col] = pd.to_numeric(df[cost_col], errors="coerce")
     df = df.merge(rho_y, on=id_col, how="left")
+
+    if elasticity_csv is not None:
+        elas = pd.read_csv(elasticity_csv, usecols=[id_col, elasticity_year_col, elasticity_col])
+        elas[id_col] = elas[id_col].astype(str)
+        elas[elasticity_year_col] = pd.to_numeric(elas[elasticity_year_col], errors="coerce")
+        elas[elasticity_col] = pd.to_numeric(elas[elasticity_col], errors="coerce")
+        elas_y = elas.loc[elas[elasticity_year_col] == year, [id_col, elasticity_col]].copy()
+        elas_y = elas_y.drop_duplicates(subset=[id_col], keep="last")
+        df = df.merge(elas_y, on=id_col, how="left")
+        df["own_elasticity_abs"] = np.abs(pd.to_numeric(df[elasticity_col], errors="coerce"))
+        with np.errstate(divide="ignore", invalid="ignore"):
+            df["log_abs_own_elasticity"] = np.log(df["own_elasticity_abs"].to_numpy(dtype=float))
 
     # --- 5) Carry forward pcUSCA_pct for any missing values (product_id, make_model, then firm) ---
     missing_any = df[share_col].isna()

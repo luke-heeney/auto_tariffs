@@ -3,6 +3,7 @@ from __future__ import annotations
 import contextlib
 import io
 import json
+import os
 from pathlib import Path
 from datetime import datetime
 
@@ -27,6 +28,7 @@ from helpers.counterfactual_reporting import (
     build_state_cs_table,
     build_state_cs_map_figure,
 )
+from helpers.figure_export import save_plotly_figure as _save_plotly_figure
 
 # ---- config (mirrors run_cf.ipynb) ----
 PRICE_X2_INDEX = 1
@@ -109,15 +111,6 @@ def _save_matplotlib_figure(fig, path: Path) -> None:
     plt.close(fig)
 
 
-def _save_plotly_figure(fig, path_base: Path) -> None:
-    if fig is None:
-        return
-    try:
-        fig.write_image(str(path_base.with_suffix(".png")))
-    except Exception as err:
-        print(f"[warn] Failed to save plotly PNG at {path_base.with_suffix('.png')}: {err}")
-
-
 def _calc_subsidy_spend(pt: pd.DataFrame) -> float:
     if "subsidy_cf" not in pt.columns:
         return np.nan
@@ -125,6 +118,152 @@ def _calc_subsidy_spend(pt: pd.DataFrame) -> float:
     spend = float(TOTAL_MARKET_SIZE) * float(np.nansum(pt["s_cf"].to_numpy(dtype=float) * sub_cf))
     spend = spend * float(PRICE_SCALE_USD_PER_UNIT) / 1_000_000_000.0
     return spend
+
+
+def _wavg_series(values: pd.Series, weights: pd.Series) -> float:
+    x = pd.to_numeric(values, errors="coerce").to_numpy(dtype=float)
+    w = pd.to_numeric(weights, errors="coerce").to_numpy(dtype=float)
+    den = float(np.nansum(w))
+    if den <= 0:
+        return np.nan
+    return float(np.nansum(x * w) / den)
+
+
+def _build_group_table_from_product_table(product_table: pd.DataFrame, group_col: str) -> pd.DataFrame:
+    rows = []
+    for group_value, d in product_table.groupby(group_col, dropna=False):
+        w0 = pd.to_numeric(d["s0"], errors="coerce")
+        wcf = pd.to_numeric(d["s_cf"], errors="coerce")
+        pi0_percap_total = float(pd.to_numeric(d["pi0"], errors="coerce").sum())
+        pi_cf_percap_total = float(pd.to_numeric(d["pi_cf"], errors="coerce").sum())
+        row = {
+            group_col: group_value,
+            "share0_total": float(w0.sum()),
+            "share_cf_total": float(wcf.sum()),
+            "p0_sw": _wavg_series(d["p0"], w0),
+            "p_cf_sw": _wavg_series(d["p_cf"], wcf),
+            "c0_sw": _wavg_series(d["c0"], w0),
+            "c_cf_sw": _wavg_series(d["c_cf"], wcf),
+            "mu0_sw": _wavg_series(d["mu0"], w0),
+            "mu_cf_sw": _wavg_series(d["mu_cf"], wcf),
+            "pi0_percap_total": pi0_percap_total,
+            "pi_cf_percap_total": pi_cf_percap_total,
+        }
+        row["dp_sw"] = row["p_cf_sw"] - row["p0_sw"]
+        row["dc_sw"] = row["c_cf_sw"] - row["c0_sw"]
+        row["dmu_sw"] = row["mu_cf_sw"] - row["mu0_sw"]
+        row["dpi_percap_total"] = row["pi_cf_percap_total"] - row["pi0_percap_total"]
+        rows.append(row)
+
+    tbl = pd.DataFrame(rows)
+    factor_musd = float(TOTAL_MARKET_SIZE) * (float(PRICE_SCALE_USD_PER_UNIT) / 1_000_000.0)
+    tbl["pi0_millions_usd"] = tbl["pi0_percap_total"] * factor_musd
+    tbl["pi_cf_millions_usd"] = tbl["pi_cf_percap_total"] * factor_musd
+    tbl["dpi_millions_usd"] = tbl["dpi_percap_total"] * factor_musd
+    return tbl.sort_values("dpi_millions_usd", ascending=False).reset_index(drop=True)
+
+
+def _rebase_product_table_to_baseline(product_table: pd.DataFrame, baseline_product_table: pd.DataFrame) -> pd.DataFrame:
+    key_cols = ["market_ids", "product_ids"]
+    base = baseline_product_table[key_cols + [
+        "p_cf", "subsidy_cf", "p_cf_net", "c_cf", "s_cf", "mu_cf", "margin_cf_pct", "pi_cf"
+    ]].copy()
+    base = base.rename(columns={
+        "p_cf": "p0_new",
+        "subsidy_cf": "subsidy0_new",
+        "p_cf_net": "p0_net_new",
+        "c_cf": "c0_new",
+        "s_cf": "s0_new",
+        "mu_cf": "mu0_new",
+        "margin_cf_pct": "margin0_pct_new",
+        "pi_cf": "pi0_new",
+    })
+    pt = product_table.merge(base, on=key_cols, how="left", validate="one_to_one")
+
+    pt["p0"] = pt["p0_new"]
+    pt["subsidy0"] = pt["subsidy0_new"]
+    pt["p0_net"] = pt["p0_net_new"]
+    pt["c0"] = pt["c0_new"]
+    pt["s0"] = pt["s0_new"]
+    pt["mu0"] = pt["mu0_new"]
+    pt["margin0_pct"] = pt["margin0_pct_new"]
+    pt["pi0"] = pt["pi0_new"]
+
+    pt["dp"] = pt["p_cf"] - pt["p0"]
+    pt["dp_pct"] = 100.0 * np.where(pt["p0"] != 0, pt["dp"] / pt["p0"], np.nan)
+    pt["dc"] = pt["c_cf"] - pt["c0"]
+    pt["dc_pct"] = 100.0 * np.where(pt["c0"] != 0, pt["dc"] / pt["c0"], np.nan)
+    pt["ds"] = pt["s_cf"] - pt["s0"]
+    pt["ds_pct"] = 100.0 * np.where(pt["s0"] != 0, pt["ds"] / pt["s0"], np.nan)
+    pt["mu_cf"] = pt["p_cf"] - pt["c_cf"]
+    pt["dmu"] = pt["mu_cf"] - pt["mu0"]
+    pt["margin_cf_pct"] = 100.0 * np.where(pt["p_cf"] != 0, pt["mu_cf"] / pt["p_cf"], np.nan)
+    pt["dmargin_pct"] = pt["margin_cf_pct"] - pt["margin0_pct"]
+    pt["pi_cf"] = pt["mu_cf"] * pt["s_cf"]
+    pt["dpi"] = pt["pi_cf"] - pt["pi0"]
+
+    drop_cols = [
+        "p0_new", "subsidy0_new", "p0_net_new", "c0_new",
+        "s0_new", "mu0_new", "margin0_pct_new", "pi0_new",
+    ]
+    return pt.drop(columns=drop_cols)
+
+
+def _rebase_market_surplus_table_to_baseline(
+    market_surplus_table: pd.DataFrame,
+    baseline_market_surplus_table: pd.DataFrame,
+) -> pd.DataFrame:
+    key_cols = ["market_ids"]
+    base = baseline_market_surplus_table[key_cols + ["CS_cf", "CS_cf_millions_usd"]].copy()
+    base = base.rename(columns={
+        "CS_cf": "CS0_new",
+        "CS_cf_millions_usd": "CS0_millions_usd_new",
+    })
+    mt = market_surplus_table.merge(base, on=key_cols, how="left", validate="one_to_one")
+    mt["CS0"] = mt["CS0_new"]
+    mt["dCS"] = mt["CS_cf"] - mt["CS0"]
+    mt["CS0_millions_usd"] = mt["CS0_millions_usd_new"]
+    mt["dCS_millions_usd"] = mt["CS_cf_millions_usd"] - mt["CS0_millions_usd"]
+    return mt.drop(columns=["CS0_new", "CS0_millions_usd_new"])
+
+
+def _rebase_outputs_to_baseline(
+    outs: dict,
+    *,
+    baseline_label: str,
+) -> dict:
+    baseline_meta = next((m for m in outs.values() if m["label"] == baseline_label), None)
+    if baseline_meta is None:
+        raise ValueError(f"Baseline scenario not found for rebasing: {baseline_label}")
+
+    baseline_out = baseline_meta["out"]
+    baseline_product_table = baseline_out["product_table"]
+    baseline_market_table = baseline_out["market_surplus_table"]
+
+    rebased = {}
+    for key, meta in outs.items():
+        out = meta["out"].copy()
+        product_table = _rebase_product_table_to_baseline(out["product_table"], baseline_product_table)
+        out["product_table"] = product_table
+        out["firm_table"] = _build_group_table_from_product_table(product_table, "firm_ids")
+        out["owner_table"] = (
+            _build_group_table_from_product_table(product_table, "owner_ids")
+            if "owner_ids" in product_table.columns else None
+        )
+        out["market_surplus_table"] = _rebase_market_surplus_table_to_baseline(
+            out["market_surplus_table"],
+            baseline_market_table,
+        )
+        out["overall_surplus"] = pd.DataFrame([{
+            "year": 2024,
+            "total_firm_surplus_change_millions_usd": float(out["firm_table"]["dpi_millions_usd"].sum()),
+            "total_consumer_surplus_change_millions_usd": float(out["market_surplus_table"]["dCS_millions_usd"].sum()),
+            "assumptions_total_market_size": float(TOTAL_MARKET_SIZE),
+            "assumptions_price_scale_usd_per_unit": float(PRICE_SCALE_USD_PER_UNIT),
+        }])
+        rebased[key] = {"label": meta["label"], "out": out}
+
+    return rebased
 
 
 def _escape_tex(s: object) -> str:
@@ -275,6 +414,81 @@ def _find_existing_output_dir(out_root: Path, results_path: Path) -> Path | None
     return matches[-1][1]
 
 
+def _resolve_cfg_path_value(cfg_path: Path, value: str | None) -> Path | None:
+    if not value:
+        return None
+    p = Path(value)
+    if not p.is_absolute():
+        p = (cfg_path.parent / p).resolve()
+    return p
+
+
+def _local_path(base_dir: Path, value: str) -> Path:
+    p = Path(value)
+    if not p.is_absolute():
+        p = (base_dir / p).resolve()
+    return p
+
+
+def _load_parts_cost_adjustment(cfg: dict, cfg_path: Path) -> dict:
+    pcfg = cfg.get("parts_cost_adjustment", {}) or {}
+    mode = str(pcfg.get("mode", "constant")).strip().lower()
+    if mode not in {"constant", "elasticity_interaction"}:
+        raise ValueError(f"Unsupported parts_cost_adjustment mode: {mode}")
+
+    constant_pass_through = float(pcfg.get("constant_pass_through", 0.715))
+    fallback_to_constant = bool(pcfg.get("fallback_to_constant", True))
+    clip_negative = bool(pcfg.get("clip_negative_pass_through", True))
+    elasticity_path = _resolve_cfg_path_value(cfg_path, pcfg.get("elasticity_path"))
+    coeff_path = _resolve_cfg_path_value(cfg_path, pcfg.get("coefficient_path"))
+
+    out = {
+        "mode": mode,
+        "constant_pass_through": constant_pass_through,
+        "parts_pass_through": constant_pass_through,
+        "intercept": None,
+        "log_elas_coef": None,
+        "fallback_to_constant": fallback_to_constant,
+        "clip_negative_pass_through": clip_negative,
+        "elasticity_path": elasticity_path,
+        "coefficient_path": coeff_path,
+    }
+
+    if mode == "elasticity_interaction":
+        if elasticity_path is None or not elasticity_path.exists():
+            raise FileNotFoundError(
+                "Elasticity interaction mode requires a valid elasticity_path in results_config.json."
+            )
+        if coeff_path is None or not coeff_path.exists():
+            raise FileNotFoundError(
+                "Elasticity interaction mode requires a valid coefficient_path in results_config.json."
+            )
+        coeffs = pd.read_csv(coeff_path)
+        coeffs["term_label"] = coeffs["term_label"].astype(str)
+        base_row = coeffs.loc[coeffs["term_label"] == "rho_x_log_rer"]
+        log_row = coeffs.loc[coeffs["term_label"] == "rho_x_log_abs_own_elas_lag1_x_log_rer"]
+        if len(base_row) != 1 or len(log_row) != 1:
+            raise ValueError(
+                "Primary-spec coefficient file must contain exactly one "
+                "`rho_x_log_rer` row and one `rho_x_log_abs_own_elas_lag1_x_log_rer` row."
+            )
+        intercept = float(base_row["estimate"].iloc[0])
+        log_elas_coef = float(log_row["estimate"].iloc[0])
+        out.update({
+            "parts_pass_through": intercept,
+            "intercept": intercept,
+            "log_elas_coef": log_elas_coef,
+        })
+    return out
+
+
+def _load_counterfactual_solver_mode(cfg: dict) -> str:
+    mode = str(cfg.get("counterfactual_solver_mode", "unified")).strip().lower()
+    if mode not in {"unified", "market_by_market"}:
+        raise ValueError(f"Unsupported counterfactual_solver_mode: {mode}")
+    return mode
+
+
 def _existing_outputs_ok(out_dir: Path) -> bool:
     if not (out_dir / "summary_tbl_all.csv.gz").exists():
         return False
@@ -298,9 +512,15 @@ def _existing_outputs_ok(out_dir: Path) -> bool:
 
 def main() -> None:
     # load results config
-    cfg_path = Path("results_config.json")
-    if not cfg_path.exists():
-        cfg_path = Path("post_est") / "results_config.json"
+    cfg_path_env = os.environ.get("RESULTS_CONFIG_PATH")
+    if cfg_path_env:
+        cfg_path = Path(cfg_path_env)
+    else:
+        cfg_path = Path("results_config.json")
+        if not cfg_path.exists():
+            cfg_path = Path("post_est") / "results_config.json"
+    cfg_path = cfg_path.resolve()
+    base_dir = cfg_path.parent
     cfg = json.loads(cfg_path.read_text())
     results_path = Path(cfg["results_file"])
     if not results_path.is_absolute():
@@ -312,6 +532,9 @@ def main() -> None:
     owner_map = None
     pricer_map = None
     owner_map_path = None
+    parts_cost_adjustment = _load_parts_cost_adjustment(cfg, cfg_path)
+    counterfactual_solver_mode = _load_counterfactual_solver_mode(cfg)
+    baseline_label = "no tariff (no subsidy)"
     if ownership_mode == "owner":
         if not owner_mapping_path:
             raise ValueError("ownership_mode='owner' requires owner_mapping_path in results_config.json")
@@ -343,14 +566,14 @@ def main() -> None:
     if not agent_data_path.exists():
         raise FileNotFoundError(f"agent_data file not found: {agent_data_path}")
     agent_data = pd.read_csv(agent_data_path)
-    agent_cf_path = Path("data/raw/agent_data_cf.csv")
+    agent_cf_path = _local_path(base_dir, "data/raw/agent_data_cf.csv")
     agent_data_cf = pd.read_csv(agent_cf_path) if agent_cf_path.exists() else None
 
     with open(results_path, "rb") as f:
         results = pickle.load(f)
 
     # determine output directory (reuse if possible)
-    out_root = Path("saved_outputs")
+    out_root = _local_path(base_dir, "saved_outputs")
     out_root.mkdir(exist_ok=True)
     existing_dir = _find_existing_output_dir(out_root, results_path)
     if existing_dir is not None:
@@ -361,23 +584,46 @@ def main() -> None:
             meta = {}
         meta_owner_mode = meta.get("ownership_mode", "firm")
         meta_owner_path = meta.get("owner_mapping_path")
+        meta_parts_mode = meta.get("parts_pass_through_mode", "constant")
+        meta_coeff_path = meta.get("parts_cost_coefficient_path")
+        meta_elas_path = meta.get("parts_cost_elasticity_path")
+        meta_solver_mode = meta.get("counterfactual_solver_mode", "unified")
+        meta_baseline_label = meta.get("baseline_scenario_label", "no tariff (with subsidy)")
         if meta_owner_mode != ownership_mode:
             existing_dir = None
-        elif ownership_mode == "owner" and owner_map_path is not None:
+        if existing_dir is not None and ownership_mode == "owner" and owner_map_path is not None:
             if meta_owner_path != str(owner_map_path):
                 existing_dir = None
+        if existing_dir is not None and meta_parts_mode != parts_cost_adjustment["mode"]:
+            existing_dir = None
+        if existing_dir is not None and meta_coeff_path != (
+            str(parts_cost_adjustment["coefficient_path"]) if parts_cost_adjustment["coefficient_path"] is not None else None
+        ):
+            existing_dir = None
+        if existing_dir is not None and meta_elas_path != (
+            str(parts_cost_adjustment["elasticity_path"]) if parts_cost_adjustment["elasticity_path"] is not None else None
+        ):
+            existing_dir = None
+        if existing_dir is not None and meta_solver_mode != counterfactual_solver_mode:
+            existing_dir = None
+        if existing_dir is not None and meta_baseline_label != baseline_label:
+            existing_dir = None
     reuse_outputs = False
-    if existing_dir is not None and _existing_outputs_ok(existing_dir):
+    force_rerun = str(os.environ.get("FORCE_RERUN", "")).strip().lower() in {"1", "true", "yes"}
+    if not force_rerun and existing_dir is not None and _existing_outputs_ok(existing_dir):
         out_dir = existing_dir
         reuse_outputs = True
     else:
-        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        stamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
         results_stem = _safe_slug(results_path.stem)
         out_dir = out_root / f"{results_stem}_{stamp}"
         out_dir.mkdir(parents=True, exist_ok=True)
 
     fig_dir = out_dir / "figures"
     fig_dir.mkdir(parents=True, exist_ok=True)
+
+    vehicle_costs_csv = _local_path(base_dir, "data/derived/vehicle_costs_markups_chars.csv")
+    pc_panel_csv = _local_path(base_dir, "data/raw/pc_data_panel.csv")
 
     if reuse_outputs:
         summary_tbl_all = pd.read_csv(out_dir / "summary_tbl_all.csv.gz", index_col=0)
@@ -386,8 +632,9 @@ def main() -> None:
         outs = None
         product_data, _, costs_df2, _ = prepare_costs_df2_for_year(
             product_data=product_data,
-            vehicle_costs_csv="data/derived/vehicle_costs_markups_chars.csv",
-            pc_panel_csv="data/raw/pc_data_panel.csv",
+            vehicle_costs_csv=str(vehicle_costs_csv),
+            pc_panel_csv=str(pc_panel_csv),
+            elasticity_csv=str(parts_cost_adjustment["elasticity_path"]) if parts_cost_adjustment["elasticity_path"] is not None else None,
             year=2024,
         )
         # regenerate figures only (no counterfactual solves)
@@ -484,7 +731,7 @@ def main() -> None:
         pd.set_option("display.max_rows", None)
         pd.set_option("display.width", 200)
 
-        _write_ownership_matrix_table(owner_map_path, Path("outputs") / "ownership_matrix.tex")
+        _write_ownership_matrix_table(owner_map_path, base_dir / "outputs" / "ownership_matrix.tex")
 
         print("\nMAIN OUTPUT TABLE (summary_tbl_all)\n")
         print(summary_tbl_all.to_string())
@@ -494,11 +741,12 @@ def main() -> None:
         # prepare costs
         product_data, rho_data, costs_df2, diag = prepare_costs_df2_for_year(
             product_data=product_data,
-            vehicle_costs_csv="data/derived/vehicle_costs_markups_chars.csv",
-            pc_panel_csv="data/raw/pc_data_panel.csv",
+            vehicle_costs_csv=str(vehicle_costs_csv),
+            pc_panel_csv=str(pc_panel_csv),
+            elasticity_csv=str(parts_cost_adjustment["elasticity_path"]) if parts_cost_adjustment["elasticity_path"] is not None else None,
             year=2024,
         )
-        vehicle_costs_df = pd.read_csv("data/derived/vehicle_costs_markups_chars.csv")
+        vehicle_costs_df = pd.read_csv(vehicle_costs_csv)
         if ownership_mode == "owner":
             missing_cols = [c for c in ["owner_ids", "pricer_ids"] if c not in vehicle_costs_df.columns]
             if missing_cols:
@@ -530,8 +778,17 @@ def main() -> None:
             price_x2_index=PRICE_X2_INDEX,
             beta_price_index=PRICE_BETA_INDEX,
             gamma=CS_GAMMA,
+            parts_pass_through=parts_cost_adjustment["parts_pass_through"],
+            parts_pass_through_mode=parts_cost_adjustment["mode"],
+            parts_pass_through_intercept=parts_cost_adjustment["intercept"],
+            parts_pass_through_log_elas_coef=parts_cost_adjustment["log_elas_coef"],
+            fallback_to_constant_parts_pass_through=parts_cost_adjustment["fallback_to_constant"],
+            clip_negative_parts_pass_through=parts_cost_adjustment["clip_negative_pass_through"],
+            solver_mode=counterfactual_solver_mode,
             specs=specs,
         )
+
+    outs = _rebase_outputs_to_baseline(outs, baseline_label=baseline_label)
 
     # EV share + tariff revenue table
     scenarios_for_ev = {}
@@ -553,7 +810,6 @@ def main() -> None:
         price_scale_usd_per_unit=PRICE_SCALE_USD_PER_UNIT,
     )
 
-    baseline_label = "no tariff (with subsidy)"
     baseline_meta = next((m for m in outs.values() if m["label"] == baseline_label), None)
     if baseline_meta is None:
         raise ValueError(f"Baseline scenario not found: {baseline_label}")
@@ -725,11 +981,21 @@ def main() -> None:
         "cs_market_id": CS_MARKET_ID,
         "parts_tariff": PARTS_TARIFF,
         "vehicle_tariff": VEHICLE_TARIFF,
+        "parts_pass_through": parts_cost_adjustment["parts_pass_through"],
+        "parts_pass_through_mode": parts_cost_adjustment["mode"],
+        "parts_pass_through_intercept": parts_cost_adjustment["intercept"],
+        "parts_pass_through_log_elas_coef": parts_cost_adjustment["log_elas_coef"],
+        "parts_cost_elasticity_path": str(parts_cost_adjustment["elasticity_path"]) if parts_cost_adjustment["elasticity_path"] is not None else None,
+        "parts_cost_coefficient_path": str(parts_cost_adjustment["coefficient_path"]) if parts_cost_adjustment["coefficient_path"] is not None else None,
+        "parts_cost_fallback_to_constant": parts_cost_adjustment["fallback_to_constant"],
+        "parts_cost_clip_negative_pass_through": parts_cost_adjustment["clip_negative_pass_through"],
+        "counterfactual_solver_mode": counterfactual_solver_mode,
         "country_tariffs": COUNTRY_TARIFFS,
         "total_market_size": TOTAL_MARKET_SIZE,
         "price_scale_usd_per_unit": PRICE_SCALE_USD_PER_UNIT,
         "costs_prep_diag": diag,
         "baseline_subsidy_spend_billion_usd": baseline_subsidy_spend,
+        "baseline_scenario_label": baseline_label,
         "scenarios": {k: v["label"] for k, v in outs.items()},
         "ownership_mode": ownership_mode,
         "owner_mapping_path": str(owner_map_path) if owner_map_path is not None else None,

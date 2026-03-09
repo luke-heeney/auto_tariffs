@@ -142,16 +142,16 @@ mL_tri_l1 <- feols(
 # triple interaction with log(abs(elas_t))
 mL_tri_log_t <- feols(
   ln_costs ~ ln_inv_rer_code1:pcOth1_pct1_lag1 +
-    ln_inv_rer_code1:own_elas_t +
     ln_inv_rer_code1:pcOth1_pct1_lag1:log_abs_own_elas_t +
     ln_size + ln_weight + ln_hp + ln_mpg | make_model + year,
   data = df, cluster = ~ make_model
 )
 
 # triple interaction with log(abs(elas_{t-1}))
+# Primary specification of interest: lagged imported-parts exposure interacted
+# with log absolute lagged own-price elasticity and log real exchange rate.
 mL_tri_log_l1 <- feols(
   ln_costs ~ ln_inv_rer_code1:pcOth1_pct1_lag1 +
-    ln_inv_rer_code1:own_elas_lag1 +
     ln_inv_rer_code1:pcOth1_pct1_lag1:log_abs_own_elas_lag1 +
     ln_size + ln_weight + ln_hp + ln_mpg | make_model + year,
   data = df, cluster = ~ make_model
@@ -231,16 +231,15 @@ mFD_tri_l1 <- feols(
 # triple interaction with log(abs(elas_t))
 mFD_tri_log_t <- feols(
   ln_costs ~ ln_inv_rer_code1:pcOth1_pct1_lag1 +
-    ln_inv_rer_code1:own_elas_t +
     ln_inv_rer_code1:pcOth1_pct1_lag1:log_abs_own_elas_t +
     ln_size + ln_weight + ln_hp + ln_mpg | year,
   data = df_fd, cluster = ~ make_model
 )
 
 # triple interaction with log(abs(elas_{t-1}))
+# Primary specification of interest in first differences.
 mFD_tri_log_l1 <- feols(
   ln_costs ~ ln_inv_rer_code1:pcOth1_pct1_lag1 +
-    ln_inv_rer_code1:own_elas_lag1 +
     ln_inv_rer_code1:pcOth1_pct1_lag1:log_abs_own_elas_lag1 +
     ln_size + ln_weight + ln_hp + ln_mpg | year,
   data = df_fd, cluster = ~ make_model
@@ -266,10 +265,27 @@ dict <- c(
   "ln_mpg" = "$\\ln(\\text{mpg})$"
 )
 
+relabel_model_numbers <- function(path, labels) {
+  lines <- readLines(path, warn = FALSE)
+  model_idx <- grep("^\\s*Model:\\s*&", lines)
+  if (length(model_idx) == 1) {
+    label_str <- paste(labels, collapse = "            & ")
+    lines[model_idx] <- sub(
+      "&.*\\\\\\\\\\s*$",
+      paste0("& ", label_str, "\\\\\\\\  "),
+      lines[model_idx]
+    )
+  }
+  writeLines(lines, path)
+}
+
+levels_path <- file.path(out_dir, "cost_reg_elas_levels_table.tex")
+fd_path <- file.path(out_dir, "cost_reg_elas_fd_table.tex")
+
 etable(
-  mL_base, mL_tw_t, mL_tw_l1, mL_tri_t, mL_tri_l1, mL_tri_log_t, mL_tri_log_l1,
+  mL_base, mL_tri_log_t, mL_tri_log_l1,
   tex = TRUE,
-  file = file.path(out_dir, "cost_reg_elas_levels_table.tex"),
+  file = levels_path,
   replace = TRUE,
   title = "Cost-side regressions with elasticity interactions (levels, domestic vehicles)",
   label = "tab:cost_reg_elas_levels",
@@ -279,9 +295,9 @@ etable(
 )
 
 etable(
-  mFD_base, mFD_tw_t, mFD_tw_l1, mFD_tri_t, mFD_tri_l1, mFD_tri_log_t, mFD_tri_log_l1,
+  mFD_base, mFD_tri_log_t, mFD_tri_log_l1,
   tex = TRUE,
-  file = file.path(out_dir, "cost_reg_elas_fd_table.tex"),
+  file = fd_path,
   replace = TRUE,
   title = "Cost-side regressions with elasticity interactions (first differences, domestic vehicles)",
   label = "tab:cost_reg_elas_fd",
@@ -290,7 +306,41 @@ etable(
   signif.code = c("***" = 0.01, "**" = 0.05, "*" = 0.10)
 )
 
+relabel_model_numbers(levels_path, c("(1)", "(2)", "(3)"))
+relabel_model_numbers(fd_path, c("(1)", "(2)", "(3)"))
+
+extract_coef_row <- function(model, term) {
+  ct <- summary(model)$coeftable
+  if (!(term %in% rownames(ct))) {
+    stop(paste("Missing coefficient in model:", term))
+  }
+  data.frame(
+    coefficient = term,
+    estimate = unname(ct[term, "Estimate"]),
+    std_error = unname(ct[term, "Std. Error"]),
+    stringsAsFactors = FALSE
+  )
+}
+
+primary_coef_rows <- bind_rows(
+  extract_coef_row(mL_tri_log_l1, "ln_inv_rer_code1:pcOth1_pct1_lag1"),
+  extract_coef_row(mL_tri_log_l1, "ln_inv_rer_code1:pcOth1_pct1_lag1:log_abs_own_elas_lag1")
+) %>%
+  mutate(
+    source_model = "levels_primary_spec_3",
+    model_label = "spec_3",
+    term_label = c("rho_x_log_rer", "rho_x_log_abs_own_elas_lag1_x_log_rer")
+  ) %>%
+  select(source_model, model_label, term_label, coefficient, estimate, std_error)
+
+write.csv(
+  primary_coef_rows,
+  file.path(out_dir, "cost_reg_elas_primary_spec_coeffs.csv"),
+  row.names = FALSE
+)
+
 cat("Saved:\n")
 cat(" -", file.path(out_dir, "cost_reg_elas_merge_diagnostics.csv"), "\n")
-cat(" -", file.path(out_dir, "cost_reg_elas_levels_table.tex"), "\n")
-cat(" -", file.path(out_dir, "cost_reg_elas_fd_table.tex"), "\n")
+cat(" -", levels_path, "\n")
+cat(" -", fd_path, "\n")
+cat(" -", file.path(out_dir, "cost_reg_elas_primary_spec_coeffs.csv"), "\n")

@@ -29,6 +29,13 @@ def build_counterfactual_costs(
     vehicle_tariff: float = 0.0,
     country_tariffs: dict[str, float] | None = None,
     parts_pass_through: float = 0.715,
+    parts_pass_through_mode: str = "constant",
+    parts_pass_through_intercept: float | None = None,
+    parts_pass_through_log_elas_coef: float | None = None,
+    parts_elasticity_col: str = "own_elasticity",
+    parts_log_abs_elasticity_col: str = "log_abs_own_elasticity",
+    fallback_to_constant_parts_pass_through: bool = True,
+    clip_negative_parts_pass_through: bool = True,
     vehicle_pass_through: float = 0.682,
     us_value: str = "United States",
     id_col: str = "product_ids",
@@ -40,7 +47,9 @@ def build_counterfactual_costs(
         costs_df2 = costs_df2.copy()
         costs_df2[id_col] = costs_df2["clustering_ids"].astype(str)
 
-    df = costs_df2[[id_col, "firm_ids", plant_col, "market_year", cost_col, share_col]].copy()
+    base_cols = [id_col, "firm_ids", plant_col, "market_year", cost_col, share_col]
+    extra_cols = [c for c in [parts_elasticity_col, parts_log_abs_elasticity_col] if c in costs_df2.columns]
+    df = costs_df2[base_cols + extra_cols].copy()
     df[id_col] = df[id_col].astype(str)
 
     us = df[plant_col].astype(str).eq(us_value)
@@ -51,7 +60,52 @@ def build_counterfactual_costs(
     if parts_tariff:
         s = pd.to_numeric(df[share_col], errors="coerce").to_numpy(dtype=float)
         imported_share = np.clip(1.0 - s, 0.0, 1.0)
-        infl_us = 1.0 + imported_share * (parts_pass_through * parts_tariff)
+        parts_pass_through_vec = np.full(len(df), float(parts_pass_through), dtype=float)
+        df["parts_pass_through_mode"] = "constant"
+        df["parts_pass_through_fallback"] = False
+        df["parts_pass_through_clipped"] = False
+
+        if parts_pass_through_mode == "elasticity_interaction":
+            if parts_pass_through_intercept is None or parts_pass_through_log_elas_coef is None:
+                raise ValueError(
+                    "Elasticity interaction mode requires parts_pass_through_intercept and "
+                    "parts_pass_through_log_elas_coef."
+                )
+            if parts_log_abs_elasticity_col in df.columns:
+                log_abs_elas = pd.to_numeric(df[parts_log_abs_elasticity_col], errors="coerce").to_numpy(dtype=float)
+            elif parts_elasticity_col in df.columns:
+                elas = pd.to_numeric(df[parts_elasticity_col], errors="coerce").to_numpy(dtype=float)
+                with np.errstate(divide="ignore", invalid="ignore"):
+                    log_abs_elas = np.log(np.abs(elas))
+            else:
+                raise ValueError(
+                    "Elasticity interaction mode requires own-price elasticity columns in costs_df2."
+                )
+
+            pt_raw = parts_pass_through_intercept + parts_pass_through_log_elas_coef * log_abs_elas
+            fallback_mask = ~np.isfinite(pt_raw)
+            if clip_negative_parts_pass_through:
+                clipped_mask = np.isfinite(pt_raw) & (pt_raw < 0)
+                pt_raw = np.where(clipped_mask, 0.0, pt_raw)
+            else:
+                clipped_mask = np.zeros(len(df), dtype=bool)
+
+            if fallback_to_constant_parts_pass_through:
+                pt_raw = np.where(np.isfinite(pt_raw), pt_raw, float(parts_pass_through))
+            elif fallback_mask.any():
+                raise ValueError(
+                    "Missing elasticities for some products and fallback_to_constant_parts_pass_through=False."
+                )
+
+            parts_pass_through_vec = pt_raw
+            df["parts_pass_through_mode"] = np.where(
+                np.isfinite(log_abs_elas), "elasticity_interaction", "constant_fallback"
+            )
+            df["parts_pass_through_fallback"] = fallback_mask
+            df["parts_pass_through_clipped"] = clipped_mask
+
+        df["parts_pass_through_cf"] = parts_pass_through_vec
+        infl_us = 1.0 + imported_share * (parts_pass_through_vec * parts_tariff)
         infl_us = np.where(np.isfinite(infl_us), infl_us, 1.0)  # ignore NaNs
         infl = np.where(us, infl_us, infl)
 
@@ -264,6 +318,11 @@ def run_unified_counterfactual(
     vehicle_tariff: float = 0.0,
     country_tariffs: dict[str, float] | None = None,
     parts_pass_through: float = 0.715,
+    parts_pass_through_mode: str = "constant",
+    parts_pass_through_intercept: float | None = None,
+    parts_pass_through_log_elas_coef: float | None = None,
+    fallback_to_constant_parts_pass_through: bool = True,
+    clip_negative_parts_pass_through: bool = True,
     vehicle_pass_through: float = 0.682,
     subsidy_zero: bool = False,
     baseline_fixed_prices: bool = True,
@@ -338,6 +397,11 @@ def run_unified_counterfactual(
             vehicle_tariff=vehicle_tariff,
             country_tariffs=country_tariffs,
             parts_pass_through=parts_pass_through,
+            parts_pass_through_mode=parts_pass_through_mode,
+            parts_pass_through_intercept=parts_pass_through_intercept,
+            parts_pass_through_log_elas_coef=parts_pass_through_log_elas_coef,
+            fallback_to_constant_parts_pass_through=fallback_to_constant_parts_pass_through,
+            clip_negative_parts_pass_through=clip_negative_parts_pass_through,
             vehicle_pass_through=vehicle_pass_through,
             id_col=id_col,
         )
@@ -533,6 +597,11 @@ def run_cf(
     vehicle_tariff: float = 0.0,
     country_tariffs: dict[str, float] | None = None,
     parts_pass_through: float = 0.715,
+    parts_pass_through_mode: str = "constant",
+    parts_pass_through_intercept: float | None = None,
+    parts_pass_through_log_elas_coef: float | None = None,
+    fallback_to_constant_parts_pass_through: bool = True,
+    clip_negative_parts_pass_through: bool = True,
     vehicle_pass_through: float = 0.682,
     iter_cfg=None,
     ownership_mode: str = "firm",
@@ -567,23 +636,41 @@ def run_cf(
         vehicle_tariff=vehicle_tariff,
         country_tariffs=country_tariffs,
         parts_pass_through=parts_pass_through,
+        parts_pass_through_mode=parts_pass_through_mode,
+        parts_pass_through_intercept=parts_pass_through_intercept,
+        parts_pass_through_log_elas_coef=parts_pass_through_log_elas_coef,
+        fallback_to_constant_parts_pass_through=fallback_to_constant_parts_pass_through,
+        clip_negative_parts_pass_through=clip_negative_parts_pass_through,
         vehicle_pass_through=vehicle_pass_through,
         id_col=id_col,
     )
     cf_cost_map = cf_costs_df.set_index(id_col)[cf_cost_col]
 
     year_markets = aligned_pd.loc[aligned_pd["market_year"] == year, market_col].unique()
+    market_ids_full = np.asarray(results.problem.products.market_ids).reshape(-1)
+    has_results_subsidy = "subsidy" in results.problem.products.dtype.names
+    subsidy0_full = (
+        np.asarray(results.problem.products["subsidy"]).reshape(-1).astype(float)
+        if has_results_subsidy else None
+    )
 
     blocks = []
     for mid in year_markets:
         m_idx = aligned_pd[market_col].eq(mid)
         ids_m = aligned_pd.loc[m_idx, id_col].astype(str).to_numpy()
 
-        market_ids_full = np.asarray(results.problem.products.market_ids).reshape(-1)
         c0 = costs_full[market_ids_full == mid]
+        subsidy0_m = subsidy0_full[market_ids_full == mid] if subsidy0_full is not None else np.zeros_like(c0)
 
         cf_m = pd.to_numeric(cf_cost_map.reindex(ids_m), errors="coerce").to_numpy(dtype=float)
         c_m = np.where(np.isfinite(cf_m), cf_m, c0)
+        subsidy_cf_m = (
+            pd.to_numeric(aligned_pd.loc[m_idx, "subsidy"], errors="coerce").to_numpy(dtype=float)
+            if "subsidy" in aligned_pd.columns else subsidy0_m
+        )
+        subsidy_cf_m = np.where(np.isfinite(subsidy_cf_m), subsidy_cf_m, subsidy0_m)
+        subsidy_delta_m = subsidy_cf_m - subsidy0_m
+        transformed_costs_m = c_m - subsidy_delta_m
 
         ownership = None
         if ownership_mode == "owner":
@@ -591,12 +678,15 @@ def run_cf(
             m_owner = m_owner.rename(columns={"pricer_ids": "firm_ids"})
             ownership = np.asarray(pyblp.build_ownership(m_owner), dtype=float)
 
-        p_m = np.asarray(
-            results.compute_prices(costs=c_m, market_id=mid, ownership=ownership, iteration=iter_cfg),
+        # The estimated model uses I(prices - subsidy). Solve in transformed prices
+        # that preserve the original subsidy-coded demand system, then map back.
+        p_tilde_m = np.asarray(
+            results.compute_prices(costs=transformed_costs_m, market_id=mid, ownership=ownership, iteration=iter_cfg),
             dtype=float
         ).reshape(-1)
+        p_m = p_tilde_m + subsidy_delta_m
 
-        s_m = np.asarray(results.compute_shares(prices=p_m, market_id=mid), dtype=float).reshape(-1)
+        s_m = np.asarray(results.compute_shares(prices=p_tilde_m, market_id=mid), dtype=float).reshape(-1)
 
         blocks.append(pd.DataFrame({market_col: mid, id_col: ids_m, "p_cf": p_m, "s_cf": s_m}))
 
@@ -619,7 +709,13 @@ def run_cf_and_summarize(
     vehicle_tariff: float = 0.0,
     country_tariffs: dict[str, float] | None = None,
     parts_pass_through: float = 0.715,
+    parts_pass_through_mode: str = "constant",
+    parts_pass_through_intercept: float | None = None,
+    parts_pass_through_log_elas_coef: float | None = None,
+    fallback_to_constant_parts_pass_through: bool = True,
+    clip_negative_parts_pass_through: bool = True,
     vehicle_pass_through: float = 0.682,
+    subsidy_zero: bool = False,
     price_x2_index: int | None = None,
     beta_price_index: int | None = None,
     gamma: float = 0.0,
@@ -643,13 +739,22 @@ def run_cf_and_summarize(
     if price_x2_index is None or beta_price_index is None:
         raise ValueError("price_x2_index and beta_price_index are required to compute manual CS.")
 
+    product_cf = product_data.copy()
+    if subsidy_zero and "subsidy" in product_cf.columns:
+        product_cf["subsidy"] = 0.0
+
     cf_year, cf_costs_df, cf_cost_col = run_cf(
-        results, product_data, costs_df2,
+        results, product_cf, costs_df2,
         costs_full=costs_full,
         year=year, market_col=market_col, id_col=id_col,
         parts_tariff=parts_tariff, vehicle_tariff=vehicle_tariff,
         country_tariffs=country_tariffs,
         parts_pass_through=parts_pass_through, vehicle_pass_through=vehicle_pass_through,
+        parts_pass_through_mode=parts_pass_through_mode,
+        parts_pass_through_intercept=parts_pass_through_intercept,
+        parts_pass_through_log_elas_coef=parts_pass_through_log_elas_coef,
+        fallback_to_constant_parts_pass_through=fallback_to_constant_parts_pass_through,
+        clip_negative_parts_pass_through=clip_negative_parts_pass_through,
         iter_cfg=iter_cfg,
         firm_col=firm_col,
         ownership_mode=ownership_mode,
@@ -661,37 +766,59 @@ def run_cf_and_summarize(
     cf_ps = cf_year.set_index([market_col, id_col])[["p_cf", "s_cf"]]
     cf_cost_map = cf_costs_df.set_index(id_col)[cf_cost_col]
 
-    aligned_pd = align_product_data_for_sim(results, product_data, id_col=id_col, market_col=market_col)
+    aligned_base = align_product_data_for_sim(results, product_data, id_col=id_col, market_col=market_col)
+    aligned_cf = align_product_data_for_sim(results, product_cf, id_col=id_col, market_col=market_col)
     if ownership_mode == "owner":
         if pricer_map is None:
             raise ValueError("pricer_map is required when ownership_mode='owner'.")
-        aligned_pd = add_owner_ids(
-            aligned_pd,
+        aligned_base = add_owner_ids(
+            aligned_base,
+            pricer_map,
+            firm_col=firm_col,
+            owner_col="pricer_ids",
+            allow_unmapped=allow_unmapped_brands,
+        )
+        aligned_cf = add_owner_ids(
+            aligned_cf,
             pricer_map,
             firm_col=firm_col,
             owner_col="pricer_ids",
             allow_unmapped=allow_unmapped_brands,
         )
         if owner_map is not None:
-            aligned_pd = add_owner_ids(
-                aligned_pd,
+            aligned_base = add_owner_ids(
+                aligned_base,
                 owner_map,
                 firm_col=firm_col,
                 owner_col="owner_ids",
                 allow_unmapped=allow_unmapped_brands,
             )
-    year_markets = aligned_pd.loc[aligned_pd["market_year"] == year, market_col].unique()
+            aligned_cf = add_owner_ids(
+                aligned_cf,
+                owner_map,
+                firm_col=firm_col,
+                owner_col="owner_ids",
+                allow_unmapped=allow_unmapped_brands,
+            )
+    year_markets = aligned_base.loc[aligned_base["market_year"] == year, market_col].unique()
 
     prod_blocks = []
 
     for mid in year_markets:
-        m_idx = aligned_pd[market_col].eq(mid)
-        ids_m = aligned_pd.loc[m_idx, id_col].astype(str).to_numpy()
+        m_idx = aligned_base[market_col].eq(mid)
+        ids_m = aligned_base.loc[m_idx, id_col].astype(str).to_numpy()
 
-        p0 = pd.to_numeric(aligned_pd.loc[m_idx, price_col], errors="coerce").to_numpy(dtype=float)
+        p0 = pd.to_numeric(aligned_base.loc[m_idx, price_col], errors="coerce").to_numpy(dtype=float)
         s0 = np.asarray(results.compute_shares(market_id=mid), dtype=float).reshape(-1)
         market_ids_full = np.asarray(results.problem.products.market_ids).reshape(-1)
         c0 = costs_full[market_ids_full == mid]
+
+        sub0 = None
+        if "subsidy" in aligned_base.columns:
+            sub0 = pd.to_numeric(aligned_base.loc[m_idx, "subsidy"], errors="coerce").to_numpy(dtype=float)
+        sub_cf = None
+        if "subsidy" in aligned_cf.columns:
+            sub_cf = pd.to_numeric(aligned_cf.loc[aligned_cf[market_col].eq(mid), "subsidy"], errors="coerce").to_numpy(dtype=float)
 
         cf_block = cf_ps.reindex(pd.MultiIndex.from_product([[mid], ids_m]))
         p_cf = pd.to_numeric(cf_block["p_cf"], errors="coerce").to_numpy(dtype=float)
@@ -706,17 +833,23 @@ def run_cf_and_summarize(
         pi_cf = mu_cf * s_cf
 
         base_cols = [market_col, id_col, firm_col, plant_col]
-        if "owner_ids" in aligned_pd.columns:
+        if "owner_ids" in aligned_base.columns:
             base_cols.append("owner_ids")
-        if "pricer_ids" in aligned_pd.columns:
+        if "pricer_ids" in aligned_base.columns:
             base_cols.append("pricer_ids")
-        block = aligned_pd.loc[m_idx, base_cols].copy()
+        block = aligned_base.loc[m_idx, base_cols].copy()
         block[id_col] = block[id_col].astype(str)
 
         block["p0"] = p0
         block["p_cf"] = p_cf
         block["dp"] = p_cf - p0
         block["dp_pct"] = 100.0 * np.where(p0 != 0, block["dp"] / p0, np.nan)
+        if sub0 is not None:
+            block["subsidy0"] = sub0
+            block["p0_net"] = p0 - sub0
+        if sub_cf is not None:
+            block["subsidy_cf"] = sub_cf
+            block["p_cf_net"] = p_cf - sub_cf
 
         block["c0"] = c0
         block["c_cf"] = c_cf

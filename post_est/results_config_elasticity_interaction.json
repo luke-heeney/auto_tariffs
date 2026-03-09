@@ -7,8 +7,9 @@
   "ownership_mode": "owner",
   "owner_mapping_path": "data/raw/brand_owner_hq.xlsx",
   "allow_unmapped_brands": false,
+  "counterfactual_solver_mode": "market_by_market",
   "parts_cost_adjustment": {
-    "mode": "constant",
+    "mode": "elasticity_interaction",
     "constant_pass_through": 0.715,
     "elasticity_path": "data/derived/product_year_elasticities.csv",
     "coefficient_path": "../cost_side/outputs/cost_reg_elas_primary_spec_coeffs.csv",
