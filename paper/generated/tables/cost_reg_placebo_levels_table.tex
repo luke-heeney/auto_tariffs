@@ -1,0 +1,41 @@
+
+\begin{table}[htbp]
+   \caption{\label{tab:cost_reg_placebo_levels} Exchange-rate placebo regressions (levels)}
+   \centering
+   \begin{tabular}{lcccc}
+      \tabularnewline \midrule \midrule
+      Dependent Variable: & \multicolumn{4}{c}{ln\_costs}\\
+       & \multicolumn{3}{c}{Domestic sample} & Foreign placebo \\
+      Model:                                   & (1)            & (2)            & (3)            & (4)\\
+      \midrule
+      \emph{Variables}\\
+      $\ln(\text{size})$                       & 0.5452$^{***}$ & 0.5037$^{***}$ & 0.5036$^{***}$ & -0.1112\\
+                                               & (0.2007)       & (0.1905)       & (0.1909)       & (0.1976)\\
+      $\ln(\text{weight})$                     & 0.3021$^{*}$   & 0.3843$^{**}$  & 0.3844$^{**}$  & 0.3867$^{**}$\\
+                                               & (0.1749)       & (0.1597)       & (0.1620)       & (0.1549)\\
+      $\ln(\text{hp})$                         & 0.1890$^{**}$  & 0.1957$^{**}$  & 0.1957$^{**}$  & 0.2554$^{***}$\\
+                                               & (0.0825)       & (0.0780)       & (0.0787)       & (0.0532)\\
+      $\ln(\text{mpg})$                        & -0.0945        & -0.0657        & -0.0657        & -0.0930\\
+                                               & (0.0758)       & (0.0779)       & (0.0777)       & (0.0651)\\
+      $\rho_{j,t-1}\times\log(RER_{jt})$       & 0.5980$^{**}$  &                & -0.0011        & -0.0495\\
+                                               & (0.2292)       &                & (0.2137)       & (0.0772)\\
+      $\rho_{j,t-1}\times\log(RER_{j,t+1})$    &                & 0.7390$^{***}$ & 0.7398$^{***}$ &   \\
+                                               &                & (0.2222)       & (0.2180)       &   \\
+      \midrule
+      \emph{Fixed-effects}\\
+      make\_model                              & Yes            & Yes            & Yes            & Yes\\
+      year                                     & Yes            & Yes            & Yes            & Yes\\
+      \midrule
+      \emph{Fit statistics}\\
+      Observations                             & 374            & 374            & 374            & 882\\
+      R$^2$                                    & 0.97850        & 0.97929        & 0.97929        & 0.99152\\
+      Within R$^2$                             & 0.18083        & 0.21088        & 0.21088        & 0.18728\\
+      \midrule \midrule
+      \multicolumn{5}{l}{\emph{Clustered (make\_model) standard-errors in parentheses}}\\
+      \multicolumn{5}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
+   \end{tabular}
+\vspace{0.25em}
+\begin{minipage}{0.96\textwidth}
+\footnotesize \textit{Notes:} The dependent variable is log recovered marginal cost. Columns (1)--(3) use U.S.-assembled vehicles: column (1) includes the contemporaneous exchange-rate exposure term, column (2) replaces it with the one-year-ahead term, and column (3) includes both terms. Column (4) is a foreign-assembled placebo estimated with the contemporaneous exposure term on a different sample; it tests whether the same exposure construction predicts costs where the domestic imported-parts channel should not apply. All specifications include make-model and year fixed effects and vehicle controls. Standard errors are clustered by make-model.
+\end{minipage}
+\end{table}

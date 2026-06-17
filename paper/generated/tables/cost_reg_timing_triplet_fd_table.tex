@@ -1,0 +1,42 @@
+
+\begin{table}[htbp]
+   \caption{\label{tab:cost_reg_timing_triplet_fd} Current, future, and lagged exchange-rate timing regressions (first differences)}
+   \centering
+   \begin{tabular}{lccc}
+      \tabularnewline \midrule \midrule
+      Dependent Variable: & \multicolumn{3}{c}{ln\_costs}\\
+                                                      & Current + future & Lag + current + future & Lag + current \\
+      Model:                                          & (1)            & (2)            & (3)\\
+      \midrule
+      \emph{Variables}\\
+      $\Delta\ln(\text{size})$                        & 0.5250$^{**}$    & 0.4973$^{*}$           & 0.4843$^{*}$\\
+                                                      & (0.2550)         & (0.2773)               & (0.2806)\\
+      $\Delta\ln(\text{weight})$                      & 0.4077$^{*}$     & 0.3723                 & 0.3645\\
+                                                      & (0.2231)         & (0.2265)               & (0.2252)\\
+      $\Delta\ln(\text{hp})$                          & 0.2061$^{**}$    & 0.2166$^{**}$          & 0.2224$^{**}$\\
+                                                      & (0.0978)         & (0.0944)               & (0.0944)\\
+      $\Delta\ln(\text{mpg})$                         & -0.0559          & -0.0462                & -0.0385\\
+                                                      & (0.0742)         & (0.0713)               & (0.0680)\\
+      $\rho_{j,t-1}\times\Delta\log(RER_{jt})$        & 0.2133           & 0.5872$^{**}$          & 0.7697$^{***}$\\
+                                                      & (0.2329)         & (0.2590)               & (0.2474)\\
+      $\rho_{j,t-1}\times\Delta\log(RER_{j,t+1})$     & 0.4958$^{**}$    & 0.3126                 &   \\
+                                                      & (0.2286)         & (0.2237)               &   \\
+      $\rho_{j,t-1}\times\Delta\log(RER_{j,t-1})$     &                  & -0.7855$^{*}$          & -0.8842$^{**}$\\
+                                                      &                  & (0.3960)               & (0.3862)\\
+      \midrule
+      \emph{Fixed-effects}\\
+      year                                            & Yes              & Yes                    & Yes\\
+      \midrule
+      \emph{Fit statistics}\\
+      Observations                                    & 255              & 255                    & 255\\
+      R$^2$                                           & 0.15492          & 0.17321                & 0.16929\\
+      Within R$^2$                                    & 0.12492          & 0.14385                & 0.13979\\
+      \midrule \midrule
+      \multicolumn{4}{l}{\emph{Clustered (make\_model) standard-errors in parentheses}}\\
+      \multicolumn{4}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
+   \end{tabular}
+\vspace{0.25em}
+\begin{minipage}{0.96\textwidth}
+\footnotesize \textit{Notes:} The dependent variable is the first difference of log recovered marginal cost. All columns use the same consecutive-year timing sample with non-missing lagged, contemporaneous, and one-year-ahead exchange-rate differences. Column (1) includes contemporaneous and one-year-ahead exposure terms. Column (2) adds the lagged exposure term. Column (3) includes lagged and contemporaneous exposure terms and excludes the one-year-ahead term. All specifications include year fixed effects and differenced vehicle controls. Standard errors are clustered by make-model.
+\end{minipage}
+\end{table}
