@@ -1,0 +1,44 @@
+\begin{table}[htbp]
+\centering
+\caption{Summary Statistics by Vehicle Type}
+\label{tab:summary_by_type}
+\footnotesize
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{llllll}
+\toprule
+ &  & Cars, $N = 4178$ & Trucks, $N = 455$ & SUVs, $N = 3015$ & Vans, $N = 403$ \\
+\midrule
+\multirow{4}{*}{Sales} & Mean & 15,686 & 57,234 & 22,869 & 19,918 \\
+  & Std. dev. & 33,280 & 92,476 & 38,741 & 25,606 \\
+  & Min & 15 & 38 & 18 & 18 \\
+  & Max & 334,818 & 529,238 & 374,263 & 130,780 \\
+\midrule
+\multirow{4}{*}{Price (2015 USD, \$100,000)} & Mean & 0.36 & 0.35 & 0.43 & 0.31 \\
+  & Std. dev. & 0.17 & 0.07 & 0.16 & 0.05 \\
+  & Min & 0.13 & 0.19 & 0.18 & 0.21 \\
+  & Max & 1.00 & 0.74 & 1.00 & 0.47 \\
+\midrule
+\multirow{4}{*}{Horsepower (100s)} & Mean & 2.46 & 3.41 & 2.91 & 2.65 \\
+  & Std. dev. & 1.04 & 0.97 & 0.89 & 0.64 \\
+  & Min & 0.70 & 1.91 & 1.38 & 1.31 \\
+  & Max & 8.45 & 8.35 & 8.35 & 4.01 \\
+\midrule
+\multirow{4}{*}{Footprint (square ft, 100s)} & Mean & 0.97 & 1.31 & 1.06 & 1.27 \\
+  & Std. dev. & 0.12 & 0.19 & 0.12 & 0.20 \\
+  & Min & 0.45 & 1.02 & 0.81 & 0.86 \\
+  & Max & 1.27 & 1.84 & 1.40 & 1.92 \\
+\midrule
+\multirow{4}{*}{Curb weight (pounds, 1000s)} & Mean & 3.54 & 5.06 & 4.43 & 4.57 \\
+  & Std. dev. & 0.57 & 0.87 & 0.76 & 0.64 \\
+  & Min & 1.81 & 3.52 & 3.02 & 3.25 \\
+  & Max & 5.92 & 9.10 & 6.92 & 5.99 \\
+\midrule
+\multirow{1}{*}{Imported (\%)} & Mean & 0.75 & 0.08 & 0.55 & 0.59 \\
+\midrule
+\multirow{1}{*}{Electric (\%)} & Mean & 0.06 & 0.04 & 0.05 & 0.00 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}

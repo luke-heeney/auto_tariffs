@@ -1,0 +1,22 @@
+
+\begin{table}[htbp]
+\centering
+\caption{Leave-one-country-out baseline pass-through regressions}
+\label{tab:leave_one_country_out_report}
+\begin{tabular}{lcccc}
+\toprule
+Omitted country & Levels coef. & Levels $N$ & FD coef. & FD $N$ \\
+\midrule
+Full sample & 0.598 (0.229) & 374 & 0.445 (0.214) & 255 \\
+Mexico & 1.250 (0.496) & 199 & 1.117 (0.497) & 143 \\
+Japan & 0.605 (0.512) & 227 & -0.027 (0.451) & 142 \\
+Korea & 0.628 (0.229) & 341 & 0.490 (0.222) & 238 \\
+Germany & 0.608 (0.224) & 357 & 0.459 (0.218) & 243 \\
+Spain & 0.597 (0.229) & 372 & 0.435 (0.215) & 254 \\
+\bottomrule
+\end{tabular}
+\vspace{0.25em}
+\begin{minipage}{0.96\textwidth}
+\footnotesize \textit{Notes:} Each row re-estimates the baseline contemporaneous exchange-rate pass-through regression after omitting observations whose primary source country is listed in the first column. The full-sample row imposes no country omission. The levels specification includes make-model and year fixed effects and vehicle controls. The first-difference specification uses consecutive-year differences and year fixed effects. Coefficients are reported with make-model clustered standard errors in parentheses.
+\end{minipage}
+\end{table}
