@@ -7,10 +7,16 @@ This directory contains the post-estimation counterfactual pipeline. It loads an
 The recommended scripted entry point is:
 
 ```bash
-python post_est/run_cf_batch.py
+bash post_est/make.sh
 ```
 
-`run_cf_batch.py` is the best place to start if you want a reproducible batch run instead of a notebook workflow.
+`post_est/make.sh` builds the fixed-results tables, runs the canonical counterfactual batch, rebases outputs to the no-tariff/no-subsidy baseline, exports graph values from the canonical rebased bundle, and runs post-estimation consistency checks.
+
+For only the counterfactual batch, run:
+
+```bash
+python post_est/run_cf_batch.py
+```
 
 ## What `run_cf_batch.py` does
 
@@ -75,3 +81,16 @@ Typical run artifacts include:
 - figures under `saved_outputs/<run_id>/figures/`
 
 Treat `outputs/` and `saved_outputs/` as generated artifacts rather than hand-edited source files.
+
+## Consistency checks
+
+Run:
+
+```bash
+python post_est/check_downstream_consistency.py
+```
+
+The checker validates canonical config paths, scenario labels, selected rebased bundle metadata, required per-scenario files, B0 rebasing invariants, cost-side outputs, and paper manifest consistency. It writes generated reports to:
+
+- `post_est/outputs/downstream_consistency_report.json`
+- `post_est/outputs/downstream_consistency_report.md`

@@ -1,10 +1,10 @@
 library(dplyr)
 library(fixest)
 
-panel_path <- if (file.exists("cost_side_panel_dropped.csv")) {
-  "cost_side_panel_dropped.csv"
+panel_path <- if (file.exists("cost_side_panel.csv")) {
+  "cost_side_panel.csv"
 } else {
-  "cost_side/cost_side_panel_dropped.csv"
+  "cost_side/cost_side_panel.csv"
 }
 
 out_dir <- "cost_side/outputs"
@@ -166,6 +166,39 @@ diag_df <- full_join(levels_counts, fd_counts, by = "veh_type4") %>%
 
 write.csv(diag_df, file.path(out_dir, "cost_reg_vehicle_type_sample_counts.csv"), row.names = FALSE)
 
+extract_vehicle_terms <- function(model, sample, spec, terms) {
+  ct <- coeftable(model)
+  available <- intersect(terms, rownames(ct))
+  if (length(available) == 0) {
+    return(data.frame())
+  }
+  data.frame(
+    sample = sample,
+    spec = spec,
+    coefficient = available,
+    estimate = ct[available, "Estimate"],
+    std_error = ct[available, "Std. Error"],
+    nobs = nobs(model),
+    row.names = NULL
+  )
+}
+
+levels_terms <- c("rho_rer_car", "rho_rer_truck", "rho_rer_suv", "rho_rer_van")
+fd_terms <- c("rho_rer_fd_car", "rho_rer_fd_truck", "rho_rer_fd_suv", "rho_rer_fd_van")
+
+coef_rows <- bind_rows(
+  extract_vehicle_terms(m1_levels, "levels_controls", "levels", levels_terms),
+  extract_vehicle_terms(m2_levels, "levels_no_controls", "levels", levels_terms),
+  extract_vehicle_terms(m1_fd, "fd_controls", "fd", fd_terms),
+  extract_vehicle_terms(m2_fd, "fd_no_controls", "fd", fd_terms)
+)
+
+write.csv(
+  coef_rows,
+  file.path(out_dir, "cost_reg_vehicle_type_coefficients.csv"),
+  row.names = FALSE
+)
+
 # ---- Export LaTeX table ----
 etable(
   m1_levels, m2_levels, m1_fd, m2_fd,
@@ -199,3 +232,4 @@ etable(
 cat("Saved:\n")
 cat(" -", file.path(out_dir, "cost_reg_vehicle_type_table.tex"), "\n")
 cat(" -", file.path(out_dir, "cost_reg_vehicle_type_sample_counts.csv"), "\n")
+cat(" -", file.path(out_dir, "cost_reg_vehicle_type_coefficients.csv"), "\n")

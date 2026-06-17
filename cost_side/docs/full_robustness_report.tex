@@ -1,0 +1,109 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{parskip}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue
+}
+
+\title{Full Cost-Side Robustness Report}
+\date{}
+
+\begin{document}
+\maketitle
+
+This memo consolidates the cost-side exchange-rate robustness evidence into one report. It is organized for co-author review rather than for direct journal submission. Two previously explored ideas are intentionally excluded from the final package: source-country fixed effects and lagged-\(RER\) timing-triplet specifications. The focus here is on the no-source-country-FE baseline, standalone and conditional forward-\(RER\) placebo designs, first-difference evidence, markup-channel diagnostics, and high-exposure visuals.
+
+\section*{Executive Summary}
+
+The imported-parts cost channel remains visible across the core robustness checks, but the forward-\(RER\) placebo remains active. This remains true in the conditional current-plus-forward regression that controls for \(\rho_{j,t-1}\log(RER_{jt})\) while testing \(\rho_{j,t-1}\log(RER_{j,t+1})\). The cleanest interpretation is therefore narrower than the strongest version of the paper's current identification claim. The first-difference specifications and the foreign-assembled placebo are the most supportive pieces of evidence. The new decomposition results are designed to show whether the exchange-rate exposure term loads primarily on recovered marginal costs or on recovered markups.
+
+\section*{Main Identification Table}
+
+\input{cost_side/outputs/full_robustness_main_table.tex}
+
+The main lessons from this table are simple. First, the foreign-assembled placebo stays near zero. Second, the forward-\(RER\) term remains active in both levels and first differences. Third, the current-plus-forward specification should be treated as the main timing diagnostic because it controls directly for the contemporaneous exposure-weighted exchange-rate term. In that conditional specification, the future term remains large in levels and remains positive in first differences, while the current \(RER\) term looks materially stronger in first differences than in levels once the forward term is introduced.
+
+\section*{Detailed Placebo Regressions}
+
+Table \ref{tab:cost_reg_placebo_levels} reports the detailed levels placebo regressions. Table \ref{tab:cost_reg_placebo_fd} reports the first-difference placebo regressions. In both tables, the current-plus-forward column is the conditional future-\(RER\) placebo: it tests whether the future exposure-weighted exchange-rate term predicts current recovered costs after controlling for the contemporaneous exposure-weighted exchange-rate term.
+
+\input{cost_side/outputs/cost_reg_placebo_levels_table.tex}
+
+\clearpage
+
+\input{cost_side/outputs/cost_reg_placebo_fd_table.tex}
+
+\section*{Sample and Specification Robustness}
+
+Table \ref{tab:cost_reg_robustness_canonical} reports the canonical pass-through coefficient in levels and first differences. Table \ref{tab:cost_reg_robustness_rer_main} adds an unrestricted exchange-rate main effect. Table \ref{tab:cost_reg_alt_exposure} replaces the baseline exposure measure with alternative exposure definitions in the preferred first-difference designs. Table \ref{tab:leave_one_country_out_report} summarizes the leave-one-country-out checks.
+
+\input{cost_side/outputs/cost_reg_robustness_canonical_table.tex}
+
+\clearpage
+
+\input{cost_side/outputs/cost_reg_robustness_rer_main_table.tex}
+
+\clearpage
+
+\input{cost_side/outputs/cost_reg_alt_exposure_table.tex}
+
+\input{cost_side/outputs/leave_one_country_out_report_table.tex}
+
+\section*{Elasticity-Interaction Robustness}
+
+Table \ref{tab:cost_reg_robustness_elas} re-estimates the elasticity-interaction specification on the canonical domestic sample. The point of this table is not to settle identification on its own, but to document the heterogeneity pattern used by optional counterfactual paths.
+
+\input{cost_side/outputs/cost_reg_robustness_elas_table.tex}
+
+\section*{Markup-Channel Diagnostics}
+
+Table \ref{tab:cost_reg_price_markup_decomp} decomposes the baseline current-\(RER\) result across recovered marginal costs, observed prices, and recovered markups. Table \ref{tab:cost_reg_price_markup_forward_placebo} repeats the same exercise for the forward-\(RER\) placebo. If the exchange-rate exposure term were showing up mainly in recovered markups rather than in recovered costs, that would be a direct warning sign for the paper's current interpretation of \(\eta\).
+
+\input{cost_side/outputs/cost_reg_price_markup_decomp_table.tex}
+
+\clearpage
+
+\input{cost_side/outputs/cost_reg_price_markup_forward_placebo_table.tex}
+
+\section*{High-Exposure Visual Evidence}
+
+Figure \ref{fig:high_exposure_series} plots indexed year-level medians of recovered marginal cost, observed price, and the primary-source \(RER\) for the high-exposure domestic vehicles only. Figure \ref{fig:high_exposure_fd} then shows residualized first-difference patterns for recovered marginal costs, observed prices, and recovered markups against residualized exchange-rate changes, again on the high-exposure sample only.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{cost_side/outputs/high_exposure_series_mc_price_rer.png}
+\caption{Indexed year-series for high-exposure domestic vehicles}
+\label{fig:high_exposure_series}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{cost_side/outputs/high_exposure_fd_decomp.png}
+\caption{Residualized first-difference patterns for high-exposure domestic vehicles}
+\label{fig:high_exposure_fd}
+\end{figure}
+
+\clearpage
+
+\section*{Lessons From Related Papers}
+
+The related exchange-rate pass-through literature suggests three practical lessons for our empirical design.
+
+First, the right benchmark object is heterogeneous pass-through rather than an average exchange-rate coefficient. This is clearest in Amiti, Itskhoki, and Konings, where import intensity proxies marginal-cost sensitivity and market share proxies markup elasticity. That reinforces the choice to keep the exposure interaction central.
+
+Second, the more informative robustness checks are about decomposition and differential responses, not about adding a standalone source-country fixed effect. The structural papers by Goldberg and Verboven and by Goldberg and Hellerstein emphasize separating traded-cost responses from local-cost or markup adjustment. The price/markup decomposition in this memo is the closest analogue we can implement in the current repo.
+
+Third, the literature is comfortable with rich time and market controls, but it does not suggest that a time-invariant source-country effect should be the main credibility test in a product fixed-effect design. That is why the current memo drops the source-country-FE branch and instead emphasizes placebo timing, sample tightening, alternative exposure definitions, and decomposition.
+
+\section*{Bottom Line}
+
+The robustness package continues to support the existence of an imported-parts cost channel, especially in first differences and relative to the foreign-assembled placebo. The canonical panel now excludes product-years with conflicting raw primary source countries while allowing share averaging when the primary country agrees. At the same time, the forward-\(RER\) placebo remains active, so the cleanest interpretation is still narrower than a fully resolved causal timing design. The report therefore points toward a practical revision strategy: keep the channel, emphasize the first-difference evidence, document the remaining timing concern clearly, and avoid claiming that the current placebo evidence fully settles the identification question.
+
+\end{document}

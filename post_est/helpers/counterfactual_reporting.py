@@ -6,11 +6,19 @@ Helpers to run standardized counterfactual scenarios and build common tables/fig
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
+import sys
 from typing import Any
 
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from country_normalization import normalize_country_series  # noqa: E402
 
 from helpers.counterfactual_helpers import run_cf_and_summarize, run_unified_counterfactual
 from helpers.counterfactual_profit_tables import profit_changes_table, profit_changes_table_latex
@@ -258,7 +266,7 @@ def build_state_units_table(
             f"{plant_country_col}/{plant_location_col} not found after merge; available: {','.join(m.columns)}"
         )
 
-    us_mask = m[plant_country_col].astype(str).str.strip() == "United States"
+    us_mask = normalize_country_series(m[plant_country_col]).eq("United States")
     m_us = m.loc[us_mask & m[plant_location_col].notna()].copy()
 
     g = (
@@ -418,6 +426,15 @@ def build_state_cs_map_figure(
         margin={"r": 10, "t": 30, "l": 10, "b": 10},
         width=1100,
         height=700,
+        meta={
+            "replication_static_export": _state_map_static_payload(
+                state_units,
+                state_centroids=state_centroids,
+                zmax=zmax,
+                value_col="pct_change",
+                include_units=False,
+            )
+        },
     )
     fig.update_geos(
         projection_scale=1.05,
@@ -546,6 +563,15 @@ def build_state_map_figure(
         margin={"r": 10, "t": 30, "l": 10, "b": 10},
         width=1100,
         height=700,
+        meta={
+            "replication_static_export": _state_map_static_payload(
+                state_map,
+                state_centroids=state_centroids,
+                zmax=zmax,
+                value_col="pct_change",
+                include_units="units_cf" in state_map.columns,
+            )
+        },
     )
     fig.update_geos(
         projection_scale=1.05,
@@ -554,6 +580,38 @@ def build_state_map_figure(
         showcoastlines=False,
     )
     return fig
+
+
+def _state_map_static_payload(
+    state_df: pd.DataFrame,
+    *,
+    state_centroids: dict[str, tuple[float, float]],
+    zmax: float,
+    value_col: str,
+    include_units: bool,
+) -> dict[str, Any]:
+    rows: list[dict[str, Any]] = []
+    for row in state_df.itertuples(index=False):
+        state_abbr = str(getattr(row, "state_abbr"))
+        if state_abbr not in state_centroids:
+            continue
+        lat, lon = state_centroids[state_abbr]
+        item: dict[str, Any] = {
+            "state_abbr": state_abbr,
+            "lat": float(lat),
+            "lon": float(lon),
+            "value": float(getattr(row, value_col)),
+        }
+        if include_units and hasattr(row, "units_cf"):
+            item["units_millions"] = float(getattr(row, "units_cf")) / 1_000_000.0
+        rows.append(item)
+
+    return {
+        "type": "state_map",
+        "value_label": "% change",
+        "zmax": float(zmax),
+        "rows": rows,
+    }
 
 
 def build_scenario_report(

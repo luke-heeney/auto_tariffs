@@ -4,12 +4,18 @@ import json
 import os
 import re
 import shutil
+import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+from country_normalization import normalize_country_series
 from build_cf_state_tables import build_plant_location_table, build_state_cs_table
 from helpers.counterfactual_helpers import origin_percent_metrics, plot_origin_percent_metrics_bw
 from helpers.counterfactual_reporting import (
@@ -92,6 +98,11 @@ def _rebase_summary_tbl(summary: pd.DataFrame, baseline_label: str) -> pd.DataFr
         b0_raw = summary.loc[row_name, baseline_label]
         if row_name in CS_ROWS:
             d_b0, pct_b0 = _parse_cs(b0_raw)
+            if d_b0 == 0 and pct_b0 == 0:
+                for col in summary.columns:
+                    d_old, pct_old = _parse_cs(summary.loc[row_name, col])
+                    out.loc[row_name, col] = _fmt_cs(_clean_zero(d_old), pct_old)
+                continue
             if pct_b0 == 0:
                 cs_b0_level = np.nan
             else:
@@ -308,7 +319,7 @@ def _rebase_profit_vs_import_share(
     pt = product_tbl.copy()
     if "plant_country" not in pt.columns:
         return
-    m = pt[pt["plant_country"].astype(str).str.strip().eq("United States")].copy()
+    m = pt[normalize_country_series(pt["plant_country"]).eq("United States")].copy()
     if m.empty:
         return
     if "pcUSCA_pct" not in cf_costs_df.columns:

@@ -1,0 +1,22 @@
+quintile,quintile_label,scenario,scenario_label,scenario_plot_label,color,delta_cs_billion_usd,delta_cs_percent
+Q1,"Q1 lowest
+income",C1,Vehicle-only tariff,C1: Vehicle-only tariff,#667085,-0.553,-7.4
+Q1,"Q1 lowest
+income",C2,Vehicle + parts tariff,C2: Vehicle + parts tariff,#B42318,-1.137,-15.2
+Q1,"Q1 lowest
+income",C3,EV subsidy,C3: EV subsidy,#0F766E,0.053,0.7
+Q2,Q2,C1,Vehicle-only tariff,C1: Vehicle-only tariff,#667085,-1.646,-6.0
+Q2,Q2,C2,Vehicle + parts tariff,C2: Vehicle + parts tariff,#B42318,-3.292,-12.0
+Q2,Q2,C3,EV subsidy,C3: EV subsidy,#0F766E,0.746,2.7
+Q3,Q3,C1,Vehicle-only tariff,C1: Vehicle-only tariff,#667085,-2.829,-6.5
+Q3,Q3,C2,Vehicle + parts tariff,C2: Vehicle + parts tariff,#B42318,-5.892,-13.5
+Q3,Q3,C3,EV subsidy,C3: EV subsidy,#0F766E,1.797,4.1
+Q4,Q4,C1,Vehicle-only tariff,C1: Vehicle-only tariff,#667085,-3.873,-5.3
+Q4,Q4,C2,Vehicle + parts tariff,C2: Vehicle + parts tariff,#B42318,-7.997,-11.0
+Q4,Q4,C3,EV subsidy,C3: EV subsidy,#0F766E,2.981,4.1
+Q5,"Q5 highest
+income",C1,Vehicle-only tariff,C1: Vehicle-only tariff,#667085,-6.187,-3.5
+Q5,"Q5 highest
+income",C2,Vehicle + parts tariff,C2: Vehicle + parts tariff,#B42318,-12.716,-7.2
+Q5,"Q5 highest
+income",C3,EV subsidy,C3: EV subsidy,#0F766E,4.477,2.5

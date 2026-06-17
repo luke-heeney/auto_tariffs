@@ -10,7 +10,7 @@
   "counterfactual_solver_mode": "market_by_market",
   "parts_cost_adjustment": {
     "mode": "constant",
-    "constant_pass_through": 0.715,
+    "constant_pass_through": 0.5980,
     "elasticity_path": "data/derived/product_year_elasticities.csv",
     "coefficient_path": "../cost_side/outputs/cost_reg_elas_primary_spec_coeffs.csv",
     "fallback_to_constant": true,

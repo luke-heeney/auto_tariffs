@@ -5,50 +5,50 @@
    \begin{tabular}{lcccc}
       \tabularnewline \midrule \midrule
       Dependent Variables: & \multicolumn{2}{c}{ln\_costs} & \multicolumn{2}{c}{d\_ln\_costs}\\
-      Model:                                                                  & (1)            & (2)           & (3)            & (4)\\  
+      Model:                                                                  & (1)           & (2)           & (3)          & (4)\\
       \midrule
       \emph{Variables}\\
-      $\rho_{j,t-1}\times\log(RER_{jt}) \times \mathbb{1}[car]$               & 1.440$^{***}$  & 1.461$^{***}$ &                &   \\   
-                                                                              & (0.3287)       & (0.2737)      &                &   \\   
-      $\rho_{j,t-1}\times\log(RER_{jt}) \times \mathbb{1}[truck]$             & 0.5793         & -0.1457       &                &   \\   
-                                                                              & (0.5037)       & (0.2594)      &                &   \\   
-      $\rho_{j,t-1}\times\log(RER_{jt}) \times \mathbb{1}[suv]$               & 0.1606         & 0.3193        &                &   \\   
-                                                                              & (0.1893)       & (0.2190)      &                &   \\   
-      $\rho_{j,t-1}\times\log(RER_{jt}) \times \mathbb{1}[van]$               & -0.2372        & -0.1693       &                &   \\   
-                                                                              & (0.5340)       & (0.4539)      &                &   \\   
-      $\ln(\text{size})$                                                      & 0.4394$^{**}$  &               &                &   \\   
-                                                                              & (0.2137)       &               &                &   \\   
-      $\ln(\text{weight})$                                                    & 0.5115$^{*}$   &               &                &   \\   
-                                                                              & (0.2829)       &               &                &   \\   
-      $\ln(\text{hp})$                                                        & 0.2314$^{***}$ &               &                &   \\   
-                                                                              & (0.0807)       &               &                &   \\   
-      $\ln(\text{mpg})$                                                       & -0.0920        &               &                &   \\   
-                                                                              & (0.0673)       &               &                &   \\   
-      $\Delta\log(RER_{jt})\times\rho_{j,t-1} \times \mathbb{1}[car]$         &                &               & 1.018$^{**}$   & 1.368$^{***}$\\   
-                                                                              &                &               & (0.4236)       & (0.4367)\\   
-      $\Delta\log(RER_{jt})\times\rho_{j,t-1} \times \mathbb{1}[truck]$       &                &               & 0.6874$^{**}$  & 0.3030\\   
-                                                                              &                &               & (0.3233)       & (0.4143)\\   
-      $\Delta\log(RER_{jt})\times\rho_{j,t-1} \times \mathbb{1}[suv]$         &                &               & 0.4185         & 0.5766$^{*}$\\   
-                                                                              &                &               & (0.2672)       & (0.3375)\\   
-      $\Delta\log(RER_{jt})\times\rho_{j,t-1} \times \mathbb{1}[van]$         &                &               & -0.5524        & -0.2104\\   
-                                                                              &                &               & (0.4488)       & (0.5530)\\   
-      $\Delta\ln(\text{size})$                                                &                &               & 0.5806$^{***}$ &   \\   
-                                                                              &                &               & (0.2055)       &   \\   
-      $\Delta\ln(\text{weight})$                                              &                &               & 0.7058$^{**}$  &   \\   
-                                                                              &                &               & (0.3382)       &   \\   
-      $\Delta\ln(\text{hp})$                                                  &                &               & 0.2629$^{**}$  &   \\   
-                                                                              &                &               & (0.1034)       &   \\   
-      $\Delta\ln(\text{mpg})$                                                 &                &               & -0.0195        &   \\   
-                                                                              &                &               & (0.0622)       &   \\   
+      $\rho_{j,t-1}\times\log(RER_{jt}) \times \mathbb{1}[car]$               & 1.379$^{***}$ & 1.434$^{***}$ &              &   \\
+                                                                              & (0.2928)      & (0.2463)      &              &   \\
+      $\rho_{j,t-1}\times\log(RER_{jt}) \times \mathbb{1}[truck]$             & 0.5477        & 0.0339        &              &   \\
+                                                                              & (0.4780)      & (0.3444)      &              &   \\
+      $\rho_{j,t-1}\times\log(RER_{jt}) \times \mathbb{1}[suv]$               & -0.0172       & 0.1159        &              &   \\
+                                                                              & (0.1965)      & (0.2200)      &              &   \\
+      $\rho_{j,t-1}\times\log(RER_{jt}) \times \mathbb{1}[van]$               & -0.4396       & -0.2614       &              &   \\
+                                                                              & (0.9156)      & (0.7638)      &              &   \\
+      $\ln(\text{size})$                                                      & 0.4385$^{**}$ &               &              &   \\
+                                                                              & (0.2106)      &               &              &   \\
+      $\ln(\text{weight})$                                                    & 0.5764$^{**}$ &               &              &   \\
+                                                                              & (0.2667)      &               &              &   \\
+      $\ln(\text{hp})$                                                        & 0.1780$^{**}$ &               &              &   \\
+                                                                              & (0.0798)      &               &              &   \\
+      $\ln(\text{mpg})$                                                       & -0.0921       &               &              &   \\
+                                                                              & (0.0715)      &               &              &   \\
+      $\Delta\log(RER_{jt})\times\rho_{j,t-1} \times \mathbb{1}[car]$         &               &               & 0.7629$^{*}$ & 1.012$^{**}$\\
+                                                                              &               &               & (0.4165)     & (0.4125)\\
+      $\Delta\log(RER_{jt})\times\rho_{j,t-1} \times \mathbb{1}[truck]$       &               &               & 0.5513       & 0.4830\\
+                                                                              &               &               & (0.4416)     & (0.4635)\\
+      $\Delta\log(RER_{jt})\times\rho_{j,t-1} \times \mathbb{1}[suv]$         &               &               & 0.0887       & 0.1898\\
+                                                                              &               &               & (0.2866)     & (0.3085)\\
+      $\Delta\log(RER_{jt})\times\rho_{j,t-1} \times \mathbb{1}[van]$         &               &               & -0.1992      & -0.0566\\
+                                                                              &               &               & (1.726)      & (1.501)\\
+      $\Delta\ln(\text{size})$                                                &               &               & 0.5234$^{*}$ &   \\
+                                                                              &               &               & (0.2704)     &   \\
+      $\Delta\ln(\text{weight})$                                              &               &               & 0.5029       &   \\
+                                                                              &               &               & (0.3255)     &   \\
+      $\Delta\ln(\text{hp})$                                                  &               &               & 0.2127$^{*}$ &   \\
+                                                                              &               &               & (0.1116)     &   \\
+      $\Delta\ln(\text{mpg})$                                                 &               &               & -0.0236      &   \\
+                                                                              &               &               & (0.0691)     &   \\
       \midrule
       \emph{Fixed-effects}\\
-      make\_model                                                             & Yes            & Yes           &                & \\  
-      year                                                                    & Yes            & Yes           & Yes            & Yes\\  
+      make\_model                                                             & Yes           & Yes           &              & \\
+      year                                                                    & Yes           & Yes           & Yes          & Yes\\
       \midrule
       \emph{Fit statistics}\\
-      Observations                                                            & 320            & 320           & 206            & 206\\  
-      R$^2$                                                                   & 0.98727        & 0.98272       & 0.37150        & 0.17272\\  
-      Within R$^2$                                                            & 0.38305        & 0.16279       & 0.28222        & 0.05521\\  
+      Observations                                                            & 366           & 366           & 248          & 248\\
+      R$^2$                                                                   & 0.98053       & 0.97696       & 0.15535      & 0.05934\\
+      Within R$^2$                                                            & 0.25267       & 0.11553       & 0.12149      & 0.02163\\
       \midrule \midrule
       \multicolumn{5}{l}{\emph{Clustered (make\_model) standard-errors in parentheses}}\\
       \multicolumn{5}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\

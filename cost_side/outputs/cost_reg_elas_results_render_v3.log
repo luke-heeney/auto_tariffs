@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.1.26)  12 FEB 2026 11:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.1.26)  8 MAR 2026 22:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -152,8 +152,7 @@ File: pdftex.def 2024/04/13 v1.2c Graphics/color driver for pdftex
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count289
 \l__pdf_internal_box=\box54
-)
-No file cost_reg_elas_results_render_v3.aux.
+) (./cost_reg_elas_results_render_v3.aux)
 \openout1 = `cost_reg_elas_results_render_v3.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
@@ -170,6 +169,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -230,38 +230,26 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 LaTeX Font Info:    Trying to load font information for U+msb on input line 5.
  (/Users/lukeheeney/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
+))
 
-LaTeX Warning: Float too large for page by 17.41606pt on input line 46.
-
-)
-
-[1{/Users/lukeheeney/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./cost_reg_elas_fd_table.tex
-
-LaTeX Warning: Float too large for page by 3.81607pt on input line 45.
-
-)
+[1{/Users/lukeheeney/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./cost_reg_elas_fd_table.tex)
 
 [2] (./cost_reg_elas_results_render_v3.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 3123 strings out of 475128
- 46517 string characters out of 5763674
- 454901 words of memory out of 5000000
- 26114 multiletter control sequences out of 15000+600000
+ 3126 strings out of 475128
+ 46637 string characters out of 5763674
+ 443934 words of memory out of 5000000
+ 26115 multiletter control sequences out of 15000+600000
  563831 words of font info for 55 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 57i,12n,65p,292b,311s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,12n,65p,251b,311s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/lukeheeney/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></Users/lukeheeney/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></Users/lukeheeney/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/lukeheeney/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></Users/lukeheeney/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Users/lukeheeney/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></Users/lukeheeney/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on cost_reg_elas_results_render_v3.pdf (2 pages, 82386 bytes).
+Output written on cost_reg_elas_results_render_v3.pdf (2 pages, 81637 bytes).
 PDF statistics:
  46 PDF objects out of 1000 (max. 8388607)
  27 compressed objects within 1 object stream

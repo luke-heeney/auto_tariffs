@@ -1,7 +1,7 @@
 library(dplyr)
 library(fixest)
 
-data_path <- if (file.exists('cost_side_panel_dropped.csv')) 'cost_side_panel_dropped.csv' else 'cost_side/cost_side_panel_dropped.csv'
+data_path <- if (file.exists('cost_side_panel.csv')) 'cost_side_panel.csv' else 'cost_side/cost_side_panel.csv'
 final_df <- read.csv(data_path)
 
 # ---- Build df ----

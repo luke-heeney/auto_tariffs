@@ -4,12 +4,19 @@ import contextlib
 import io
 import json
 import os
+import sys
 from pathlib import Path
 from datetime import datetime
 
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from country_normalization import normalize_country_series, normalize_country_tariffs  # noqa: E402
 
 from helpers.counterfactual_costs_prep import prepare_costs_df2_for_year
 from helpers.counterfactual_reporting import default_scenario_specs, run_scenario_outputs
@@ -38,11 +45,11 @@ INCOME_DEMO_INDEX = 0
 INCOME_TRANSFORM = "log_10k"
 CS_MARKET_ID = 2024
 
-COUNTRY_TARIFFS = {
+COUNTRY_TARIFFS = normalize_country_tariffs({
     "United Kingdom": 0.10,
     "Japan": 0.15,
-    "South Korea": 0.15,
-}
+    "Korea": 0.15,
+})
 
 PARTS_TARIFF = 0.25
 VEHICLE_TARIFF = 0.25
@@ -345,7 +352,7 @@ def _save_profit_change_vs_import_share(
     m = pt.merge(pd_map, on=["market_ids", "product_ids"], how="left")
     if "plant_country" not in m.columns:
         raise KeyError("plant_country not found after merge")
-    m = m[m["plant_country"].astype(str).str.strip().eq("United States")].copy()
+    m = m[normalize_country_series(m["plant_country"]).eq("United States")].copy()
 
     pc_map = costs_df2[["product_ids", "pcUSCA_pct"]].drop_duplicates("product_ids")
     m = m.merge(pc_map, on="product_ids", how="left")
@@ -436,7 +443,7 @@ def _load_parts_cost_adjustment(cfg: dict, cfg_path: Path) -> dict:
     if mode not in {"constant", "elasticity_interaction"}:
         raise ValueError(f"Unsupported parts_cost_adjustment mode: {mode}")
 
-    constant_pass_through = float(pcfg.get("constant_pass_through", 0.715))
+    constant_pass_through = float(pcfg.get("constant_pass_through", 0.5980))
     fallback_to_constant = bool(pcfg.get("fallback_to_constant", True))
     clip_negative = bool(pcfg.get("clip_negative_pass_through", True))
     elasticity_path = _resolve_cfg_path_value(cfg_path, pcfg.get("elasticity_path"))
@@ -556,6 +563,8 @@ def main() -> None:
     if not product_data_path.exists():
         raise FileNotFoundError(f"product_data file not found: {product_data_path}")
     product_data = pd.read_csv(product_data_path)
+    if "plant_country" in product_data.columns:
+        product_data["plant_country"] = normalize_country_series(product_data["plant_country"])
     if "45W" in results_name:
         agent_data_path = cfg.get("agent_data_45W", "data/raw/agent_data_45W.csv")
     else:
@@ -585,6 +594,7 @@ def main() -> None:
         meta_owner_mode = meta.get("ownership_mode", "firm")
         meta_owner_path = meta.get("owner_mapping_path")
         meta_parts_mode = meta.get("parts_pass_through_mode", "constant")
+        meta_parts_pass_through = meta.get("parts_pass_through")
         meta_coeff_path = meta.get("parts_cost_coefficient_path")
         meta_elas_path = meta.get("parts_cost_elasticity_path")
         meta_solver_mode = meta.get("counterfactual_solver_mode", "unified")
@@ -596,6 +606,18 @@ def main() -> None:
                 existing_dir = None
         if existing_dir is not None and meta_parts_mode != parts_cost_adjustment["mode"]:
             existing_dir = None
+        if existing_dir is not None:
+            try:
+                same_parts_pass_through = np.isclose(
+                    float(meta_parts_pass_through),
+                    float(parts_cost_adjustment["parts_pass_through"]),
+                    rtol=0.0,
+                    atol=1e-12,
+                )
+            except (TypeError, ValueError):
+                same_parts_pass_through = False
+            if not same_parts_pass_through:
+                existing_dir = None
         if existing_dir is not None and meta_coeff_path != (
             str(parts_cost_adjustment["coefficient_path"]) if parts_cost_adjustment["coefficient_path"] is not None else None
         ):
@@ -747,6 +769,8 @@ def main() -> None:
             year=2024,
         )
         vehicle_costs_df = pd.read_csv(vehicle_costs_csv)
+        if "plant_country" in vehicle_costs_df.columns:
+            vehicle_costs_df["plant_country"] = normalize_country_series(vehicle_costs_df["plant_country"])
         if ownership_mode == "owner":
             missing_cols = [c for c in ["owner_ids", "pricer_ids"] if c not in vehicle_costs_df.columns]
             if missing_cols:
@@ -882,7 +906,7 @@ def main() -> None:
         m = pt.merge(pd_map, on=["market_ids", "product_ids"], how="left")
         if "plant_country" not in m.columns:
             raise KeyError("plant_country not found after merge; available columns: " + ",".join(m.columns))
-        us_mask_prod = m["plant_country"].astype(str).str.strip().eq("United States")
+        us_mask_prod = normalize_country_series(m["plant_country"]).eq("United States")
 
         ev_share = float(np.nansum(m["s_cf"].to_numpy(dtype=float) * pd.to_numeric(m["ev"], errors="coerce").fillna(0.0).to_numpy(dtype=float)))
         ev_share = np.nan if np.nansum(m["s_cf"].to_numpy(dtype=float)) == 0 else 100.0 * ev_share / float(np.nansum(m["s_cf"].to_numpy(dtype=float)))
