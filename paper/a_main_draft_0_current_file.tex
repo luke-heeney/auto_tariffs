@@ -1486,7 +1486,7 @@ This appendix reports robustness checks for the imported-parts cost channel.
 
 \subsection{Timing Diagnostics}
 
-Tables \ref{tab:cost_reg_placebo_levels} and \ref{tab:cost_reg_placebo_fd} report robustness checks with respect to timing of the exchange rate shock. The first column in each table repeats the contemporaneous \(RER_t\) specification. The second column replaces the contemporaneous exchange rate with \(RER_{t+1}\). The third column includes the contemporaneous and one-year-ahead terms jointly. The fourth column reports the foreign-assembled placebo using the same exposure construction.
+Tables \ref{tab:cost_reg_placebo_levels} and \ref{tab:cost_reg_placebo_fd} report robustness checks with respect to timing of the exchange rate shock. The first column in each table repeats the contemporaneous \(RER_t\) specification. The second column replaces the contemporaneous exchange rate with \(RER_{t+1}\). The third column includes the contemporaneous and one-year-ahead terms jointly. The fourth column reports a foreign-assembly placebo to check that the US to parts-source country exchange rate shock does not affect the cost of foreign assembled vehicles.
 
 The timing checks show that the one-year-ahead exchange-rate term is positive. In levels, the \(RER_{t+1}\) term remains large when entered jointly with \(RER_t\), while the contemporaneous term falls close to zero. In first differences, the future term is still positive, though the contemporaneous term is more similar in magnitude. Table \ref{tab:cost_reg_timing_triplet_levels} and Table \ref{tab:cost_reg_timing_triplet_fd} add lagged exchange-rate terms to the timing diagnostic. Column (2) includes lagged, contemporaneous, and one-year-ahead terms; column (3) includes only lagged and contemporaneous terms. The comparison shows how much of the contemporaneous coefficient is recovered when the lagged term is included without conditioning on the future term.
 
@@ -1507,17 +1507,12 @@ The timing checks show that the one-year-ahead exchange-rate term is positive. I
 \clearpage
 \subsection{Interpreting the One-Year-Ahead Exchange-Rate Coefficient}
 
-The positive \(RER_{t+1}\) coefficient limits the strongest possible interpretation of the cost-side regression. The estimates should not be read as isolating only unanticipated contemporaneous annual exchange-rate shocks. Instead, the evidence is more naturally interpreted as identifying medium-run exposure to persistent foreign input cost conditions.
+The positive \(RER_{t+1}\) implies that future cost shocks have some impact on contemporaneous marginal costs. This is plausible given multi-year contracts for parts that are common in the automotive industry; contract prices may be set in part as a function of expected future exchange rate shifts. 
 
-There are several reasons why this interpretation is economically plausible in the automobile setting. First, real exchange rates are persistent, so \(RER_{t+1}\) can proxy the persistent component of the exchange-rate environment that firms observe or forecast when setting prices and negotiating input costs \citep{rogoff_purchasing_1996}. Second, when market share has future value, current prices can respond to expected future exchange-rate conditions rather than only to current exchange rates \citep{froot_klemperer_1989}. Third, the pass-through literature emphasizes that exchange-rate effects need not be contemporaneous because invoicing currency, nominal rigidities, local costs, and strategic markups generate dynamic and incomplete pass-through \citep{gopinath_currency_2010,burstein_gopinath_2014}. Finally, automobile production involves model-year pricing, supplier contracts, and procurement lags. These features make calendar-year timing an imperfect proxy for the relevant cost window.
+However, this challenges our assumption of 'no anticipation' that allows us to claim that $RER_t$ is exogenous with respect to lagged import exposure $\rho_{t-1}$. If marginal costs respond to future exchange rate shocks through an anticipation channel, parts sourcing may also be responsive to expected future exchange movements.
 
-This interpretation is also consistent with the policy counterfactuals. Tariffs on imported parts are not transitory spot exchange-rate shocks. They are policy wedges that firms are likely to treat as persistent, especially when they affect model-year production and supplier contracts. The timing diagnostics therefore narrow the interpretation of the exchange-rate evidence, but they do not invalidate the use of the estimated coefficient as a medium-run imported-parts cost pass-through parameter.
 
 \subsection{Prices, Marginal Costs, and Markups}
-
-The next set of checks asks whether the exchange-rate exposure term appears in recovered marginal costs, observed prices, or recovered markups. This distinction matters because a coefficient that loaded only on recovered markups would be less consistent with an imported-input cost channel. This decomposition follows the spirit of structural exchange-rate work in automobile markets, which separates price responses into cost and markup components \citep{goldberg_verboven_2001}.
-
-Table \ref{tab:cost_reg_price_markup_decomp} shows that the contemporaneous exposure term is positive for recovered marginal costs and observed prices, while recovered markups move in the opposite direction. These results suggest that the exchange-rate exposure term is visible in prices and recovered costs, which is the pattern one would expect if foreign input costs affect vehicle marginal costs and pricing.
 
 \input{generated/tables/cost_reg_price_markup_decomp_table}
 
@@ -1525,13 +1520,9 @@ Table \ref{tab:cost_reg_price_markup_decomp} shows that the contemporaneous expo
 
 \subsection{Negative-Control Checks}
 
-Table \ref{tab:leave_one_country_out_report} reports leave-one-source-country-out estimates. The levels coefficient remains positive when dropping each of the main observed source countries; the first-difference estimates are generally positive but become near zero when Japan is omitted. This is useful because the identifying variation is not mechanically pinned down by a single country. The foreign-assembled placebo in Tables \ref{tab:cost_reg_placebo_levels} and \ref{tab:cost_reg_placebo_fd} is close to zero, which is reassuring for the interpretation that the main coefficient captures a cost channel specific to domestically assembled vehicles relying on imported parts.
 
 \input{generated/tables/leave_one_country_out_report_table}
 
-\subsection{Summary}
-
-The robustness checks support the imported-parts cost channel. The exposure term appears in observed prices and recovered costs rather than only in recovered markups, the foreign-assembled placebo is close to zero, and the estimates are not driven by a single source country. The main limitation is timing: one-year-ahead exchange rates also predict current recovered costs. [TODO: Write interpretation]
 
 \clearpage
 \section{Appendix Text}
