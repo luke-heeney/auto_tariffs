@@ -881,12 +881,37 @@ def build_division_map(paths: PaperPaths, out_name: str = "div_map.png") -> None
                 showlegend=False,
             )
         )
+    static_rows = []
+    for row in div_map.itertuples(index=False):
+        abbr = str(row.state_abbr)
+        if abbr not in STATE_CENTROIDS:
+            continue
+        lat, lon = STATE_CENTROIDS[abbr]
+        static_rows.append(
+            {
+                "state_abbr": abbr,
+                "category": str(int(row.division_id)),
+                "lat": float(lat),
+                "lon": float(lon),
+            }
+        )
     fig.update_layout(
         title="US regional divisions",
         geo_scope="usa",
         margin={"r": 0, "t": 40, "l": 0, "b": 0},
         width=1100,
         height=700,
+        meta={
+            "replication_static_export": {
+                "type": "state_category_map",
+                "title": "US regional divisions",
+                "categories": [
+                    {"key": str(idx + 1), "label": label, "color": color}
+                    for idx, (label, color) in enumerate(zip(div_labels, palette))
+                ],
+                "rows": static_rows,
+            }
+        },
         legend={
             "x": 0.86,
             "y": 0.98,

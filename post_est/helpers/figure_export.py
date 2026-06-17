@@ -120,6 +120,67 @@ def _plot_coords(row: dict[str, Any]) -> tuple[float, float]:
     return lon, lat
 
 
+def _state_polygon_coords(state: str, lon: float, lat: float) -> tuple[float, float]:
+    """Return lon/lat-like plotting coordinates with AK/HI drawn as insets."""
+    if state == "AK":
+        return (lon + 152.0) * 0.25 - 123.5, (lat - 63.0) * 0.25 + 25.5
+    if state == "HI":
+        return (lon + 157.0) * 1.0 - 116.0, (lat - 20.0) * 1.0 + 24.5
+    return lon, lat
+
+
+def _iter_state_polygon_segments(state: str, lons: list[float], lats: list[float]):
+    segment: list[tuple[float, float]] = []
+    for lon, lat in zip(lons, lats):
+        if not math.isfinite(float(lon)) or not math.isfinite(float(lat)):
+            if len(segment) >= 3:
+                yield segment
+            segment = []
+            continue
+        segment.append(_state_polygon_coords(state, float(lon), float(lat)))
+    if len(segment) >= 3:
+        yield segment
+
+
+def _load_state_shapes() -> dict[str, dict[str, Any]]:
+    try:
+        from bokeh.sampledata.us_states import data as states
+    except Exception as err:  # pragma: no cover - exercised when dependency missing
+        raise RuntimeError("Bokeh us_states data are required for static map fallback.") from err
+    return {abbr.upper(): shape for abbr, shape in states.items()}
+
+
+def _draw_state_polygons(ax: Any, face_lookup: dict[str, Any]) -> None:
+    from matplotlib.patches import Polygon
+
+    states = _load_state_shapes()
+    for state, shape in states.items():
+        lons = [float(x) for x in shape["lons"]]
+        lats = [float(x) for x in shape["lats"]]
+        facecolor = face_lookup.get(state, "#e0e0e0")
+        for segment in _iter_state_polygon_segments(state, lons, lats):
+            ax.add_patch(
+                Polygon(
+                    segment,
+                    closed=True,
+                    facecolor=facecolor,
+                    edgecolor="white",
+                    linewidth=0.45,
+                    zorder=1,
+                )
+            )
+
+
+def _finish_state_axis(ax: Any) -> None:
+    ax.set_xlim(-126.8, -66.2)
+    ax.set_ylim(23.0, 50.3)
+    ax.set_aspect("equal", adjustable="box")
+    ax.set_xticks([])
+    ax.set_yticks([])
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+
+
 def _export_static_state_map(fig: Any, png_path: Path) -> None:
     meta = getattr(getattr(fig, "layout", None), "meta", None) or {}
     if not isinstance(meta, dict):
@@ -132,8 +193,9 @@ def _export_static_state_map(fig: Any, png_path: Path) -> None:
     if not rows:
         raise ValueError("State-map static export payload has no rows.")
 
-    import matplotlib.pyplot as plt
     import matplotlib.colors as mcolors
+    import matplotlib.cm as cm
+    import matplotlib.pyplot as plt
 
     values = [float(row["value"]) for row in rows]
     finite_abs = [abs(value) for value in values if math.isfinite(value)]
@@ -141,19 +203,21 @@ def _export_static_state_map(fig: Any, png_path: Path) -> None:
     if not math.isfinite(zmax) or zmax <= 0:
         zmax = 1.0
 
-    xs: list[float] = []
-    ys: list[float] = []
+    face_lookup: dict[str, Any] = {}
     labels: list[str] = []
+    label_rows: list[dict[str, Any]] = []
+    norm = mcolors.TwoSlopeNorm(vmin=-zmax, vcenter=0.0, vmax=zmax)
+    cmap = cm.get_cmap("RdBu")
     for row in rows:
-        x, y = _plot_coords(row)
-        xs.append(x)
-        ys.append(y)
         value = float(row["value"])
+        if math.isfinite(value):
+            face_lookup[str(row["state_abbr"]).upper()] = cmap(norm(value))
         label = f"{row['state_abbr']}\n{value:+.1f}%"
         units_millions = row.get("units_millions")
         if units_millions is not None and math.isfinite(float(units_millions)):
             label = f"{label}\n{float(units_millions):.2f}M"
         labels.append(label)
+        label_rows.append(row)
 
     width = int(getattr(fig.layout, "width", None) or 1100)
     height = int(getattr(fig.layout, "height", None) or 700)
@@ -162,21 +226,10 @@ def _export_static_state_map(fig: Any, png_path: Path) -> None:
     fig_mpl.patch.set_facecolor("white")
     ax.set_facecolor("#f8f8f8")
 
-    norm = mcolors.TwoSlopeNorm(vmin=-zmax, vcenter=0.0, vmax=zmax)
-    scatter = ax.scatter(
-        xs,
-        ys,
-        c=values,
-        cmap="RdBu",
-        norm=norm,
-        s=360,
-        marker="h",
-        edgecolors="white",
-        linewidths=1.0,
-        zorder=2,
-    )
+    _draw_state_polygons(ax, face_lookup)
 
-    for x, y, label, value in zip(xs, ys, labels, values):
+    for row, label, value in zip(label_rows, labels, values):
+        x, y = _plot_coords(row)
         color = "white" if abs(value) >= 0.6 * zmax else "black"
         ax.text(
             x,
@@ -190,19 +243,103 @@ def _export_static_state_map(fig: Any, png_path: Path) -> None:
             zorder=3,
         )
 
-    ax.set_xlim(-126.5, -66.0)
-    ax.set_ylim(24.0, 50.2)
-    ax.set_xticks([])
-    ax.set_yticks([])
-    for spine in ax.spines.values():
-        spine.set_visible(False)
+    _finish_state_axis(ax)
 
-    colorbar = fig_mpl.colorbar(scatter, ax=ax, fraction=0.035, pad=0.015)
+    scalar = cm.ScalarMappable(norm=norm, cmap=cmap)
+    scalar.set_array([])
+    colorbar = fig_mpl.colorbar(scalar, ax=ax, fraction=0.035, pad=0.015)
     colorbar.set_label(str(payload.get("value_label", "% change")), fontsize=8)
     colorbar.ax.tick_params(labelsize=7)
 
-    fig_mpl.tight_layout(pad=0.2)
-    fig_mpl.savefig(png_path, facecolor="white", bbox_inches="tight")
+    fig_mpl.subplots_adjust(left=0.015, right=0.93, top=0.985, bottom=0.015)
+    fig_mpl.savefig(png_path, facecolor="white")
+    plt.close(fig_mpl)
+
+
+def _export_static_state_category_map(fig: Any, png_path: Path) -> None:
+    meta = getattr(getattr(fig, "layout", None), "meta", None) or {}
+    if not isinstance(meta, dict):
+        raise ValueError("No static map metadata found.")
+    payload = meta.get("replication_static_export") or {}
+    if not isinstance(payload, dict) or payload.get("type") != "state_category_map":
+        raise ValueError("No state-category static export payload found.")
+
+    rows = [row for row in payload.get("rows", []) if isinstance(row, dict)]
+    if not rows:
+        raise ValueError("State-category static export payload has no rows.")
+
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Patch
+
+    color_lookup = {
+        str(item["key"]): str(item["color"])
+        for item in payload.get("categories", [])
+        if isinstance(item, dict) and "key" in item and "color" in item
+    }
+    label_lookup = {
+        str(item["key"]): str(item.get("label", item["key"]))
+        for item in payload.get("categories", [])
+        if isinstance(item, dict) and "key" in item
+    }
+    state_category = {
+        str(row["state_abbr"]).upper(): str(row["category"])
+        for row in rows
+        if row.get("state_abbr")
+    }
+    face_lookup = {
+        state: color_lookup.get(category, "#bdbdbd")
+        for state, category in state_category.items()
+    }
+
+    width = int(getattr(fig.layout, "width", None) or 1100)
+    height = int(getattr(fig.layout, "height", None) or 700)
+    dpi = 160
+    fig_mpl, ax = plt.subplots(figsize=(width / dpi, height / dpi), dpi=dpi)
+    fig_mpl.patch.set_facecolor("white")
+    ax.set_facecolor("#f8f8f8")
+
+    _draw_state_polygons(ax, face_lookup)
+
+    for row in rows:
+        state = str(row["state_abbr"]).upper()
+        lat = row.get("lat")
+        lon = row.get("lon")
+        if lat is None or lon is None:
+            continue
+        x, y = _plot_coords({"state_abbr": state, "lat": lat, "lon": lon})
+        ax.text(
+            x,
+            y,
+            state,
+            ha="center",
+            va="center",
+            fontsize=5.8,
+            color="black",
+            zorder=3,
+        )
+
+    title = str(payload.get("title", "")).strip()
+    if title:
+        ax.set_title(title, fontsize=9, loc="left", pad=2)
+    _finish_state_axis(ax)
+
+    handles = [
+        Patch(facecolor=color_lookup[key], edgecolor="white", label=label_lookup.get(key, key))
+        for key in color_lookup
+    ]
+    if handles:
+        ax.legend(
+            handles=handles,
+            loc="upper right",
+            frameon=True,
+            framealpha=0.88,
+            fontsize=6.5,
+            borderpad=0.4,
+            handlelength=1.0,
+        )
+
+    fig_mpl.subplots_adjust(left=0.015, right=0.985, top=0.955, bottom=0.015)
+    fig_mpl.savefig(png_path, facecolor="white")
     plt.close(fig_mpl)
 
 
@@ -233,6 +370,13 @@ def save_plotly_figure(fig: Any, path_base: Path) -> None:
         return
     except Exception as err:
         print(f"[warn] Failed static state-map fallback at {png_path}: {err}")
+
+    try:
+        _export_static_state_category_map(fig, png_path)
+        print(f"[info] Wrote static state-category-map PNG fallback: {png_path}")
+        return
+    except Exception as err:
+        print(f"[warn] Failed static state-category-map fallback at {png_path}: {err}")
 
     try:
         fig.write_html(str(html_path))
