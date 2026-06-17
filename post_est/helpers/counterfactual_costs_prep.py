@@ -17,8 +17,17 @@ Outputs:
 """
 
 from __future__ import annotations
+from pathlib import Path
+import sys
+
 import numpy as np
 import pandas as pd
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from country_normalization import normalize_country_name, normalize_country_series  # noqa: E402
 
 
 def prepare_costs_df2_for_year(
@@ -44,6 +53,8 @@ def prepare_costs_df2_for_year(
     pd0 = product_data.copy()
     if id_col not in pd0.columns and id_col == "product_ids" and "clustering_ids" in pd0.columns:
         pd0[id_col] = pd0["clustering_ids"].astype(str)
+    if plant_col in pd0.columns:
+        pd0[plant_col] = normalize_country_series(pd0[plant_col])
 
     # --- 1) Load costs/markups from merged vehicle costs file ---
     costs_df = pd.read_csv(vehicle_costs_csv, usecols=[id_col, cost_col, markup_col])
@@ -69,6 +80,7 @@ def prepare_costs_df2_for_year(
         product_data_clean[market_year_col] == year,
         [id_col, firm_col, plant_col, market_year_col, cost_col]
     ].copy()
+    df[plant_col] = normalize_country_series(df[plant_col])
     df[cost_col] = pd.to_numeric(df[cost_col], errors="coerce")
     df = df.merge(rho_y, on=id_col, how="left")
 
@@ -145,7 +157,8 @@ def prepare_costs_df2_for_year(
             carry_forward_firm_fills = int(before - after)
 
     # --- 6) Impute remaining missing pcUSCA_pct for US-assembled only (make_model mean in year, else firm mean) ---
-    us_mask = df[plant_col].astype(str).eq(us_value)
+    canonical_us_value = normalize_country_name(us_value) or us_value
+    us_mask = df[plant_col].eq(canonical_us_value)
     target = us_mask & df[share_col].isna()
 
     # make_model = everything after first underscore in product_ids ("YYYY_...")

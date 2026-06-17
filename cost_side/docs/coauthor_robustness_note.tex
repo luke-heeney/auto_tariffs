@@ -1,0 +1,44 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{parskip}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue
+}
+
+\title{Note to Co-authors: Cost-Side Robustness Checks}
+\date{}
+
+\begin{document}
+\maketitle
+
+This note summarizes the exchange-rate identification robustness checks for the cost-side regression. The imported-parts cost channel remains visible on the canonical domestic panel, the foreign-assembled placebo remains reassuring, and the price/markup decomposition supports a cost-channel interpretation. The unresolved concern is still timing: future exchange rates predict current recovered costs even after the sample-construction fix, the 2025 exchange-rate backfill, and the contemporaneous exposure-weighted exchange-rate control.
+
+\section*{Canonical panel}
+
+The scripted panel builder now produces one canonical domestic regression panel: U.S.-assembled vehicles with a stable primary source country over time and no within-product-year disagreement in the directly observed raw primary source country. Duplicate product-year rows may be collapsed when the raw primary country agrees, even if reported shares differ. Product-years with conflicting raw primary countries are written to \texttt{cost\_side/outputs/primary\_source\_country\_conflicts.csv} and excluded from the canonical domestic panel.
+
+\section*{Robustness checks}
+
+The robustness workflow rebuilds the cost-side panel, runs the foreign-assembled placebo, runs the future-RER and current-plus-future timing diagnostics, estimates the canonical pass-through and RER-main-effect specifications, runs leave-one-country-out checks, estimates alternative exposure definitions, and decomposes the result across recovered costs, observed prices, and recovered markups.
+
+The main generated tables are:
+
+\begin{itemize}
+\item \texttt{cost\_side/outputs/cost\_reg\_placebo\_levels\_table.tex},
+\item \texttt{cost\_side/outputs/cost\_reg\_placebo\_fd\_table.tex},
+\item \texttt{cost\_side/outputs/cost\_reg\_robustness\_canonical\_table.tex},
+\item \texttt{cost\_side/outputs/cost\_reg\_robustness\_rer\_main\_table.tex},
+\item \texttt{cost\_side/outputs/leave\_one\_country\_out\_report\_table.tex}.
+\end{itemize}
+
+\section*{Interpretation}
+
+The paper should present the cost-side evidence as supportive of the imported-parts mechanism, with the strongest interpretation coming from first differences and the foreign placebo. It should avoid claiming that the timing placebo fully validates the design.
+
+\end{document}

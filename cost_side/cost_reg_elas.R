@@ -4,10 +4,10 @@ library(fixest)
 # -----------------------------
 # Paths
 # -----------------------------
-panel_path <- if (file.exists("cost_side_panel_dropped.csv")) {
-  "cost_side_panel_dropped.csv"
+panel_path <- if (file.exists("cost_side_panel.csv")) {
+  "cost_side_panel.csv"
 } else {
-  "cost_side/cost_side_panel_dropped.csv"
+  "cost_side/cost_side_panel.csv"
 }
 
 elas_path <- if (file.exists("post_est/data/derived/product_year_elasticities.csv")) {
@@ -27,7 +27,6 @@ panel <- read.csv(panel_path) %>%
     product_ids = as.character(product_ids),
     market_year = as.integer(market_year),
     year = as.integer(year),
-    assembly1 = as.character(assembly1),
     make_model = as.character(make_model)
   )
 

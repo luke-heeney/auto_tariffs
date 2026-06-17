@@ -1,0 +1,231 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{parskip}
+\usepackage{etoolbox}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue
+}
+
+\newcommand{\CurrentTableNote}{}
+\newcommand{\settablefootnote}[1]{\renewcommand{\CurrentTableNote}{#1}}
+\AfterEndEnvironment{tabular}{%
+  \ifdefempty{\CurrentTableNote}{}{%
+    \par\vspace{0.35em}
+    \begin{minipage}{0.94\textwidth}
+    \footnotesize \emph{Notes:} \CurrentTableNote
+    \end{minipage}
+  }%
+}
+
+\title{Cost-Side Exchange-Rate Robustness Review}
+\author{Luke Heeney}
+\date{June 10, 2026}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\clearpage
+
+\section{Purpose and Main Takeaway}
+
+This note audits the cost-side robustness checks for the imported-parts exchange-rate channel. The estimand is the effect of exposure-weighted source-country exchange-rate movements on recovered vehicle marginal costs after BLP demand estimation. The review covers the datasets, filters, regression specifications, generated robustness outputs, and data-cleaning decisions that affect interpretation.
+
+The baseline cost-side result is positive across several useful checks: the foreign-assembled placebo is close to zero, the canonical panel now excludes product-years with conflicting raw primary source countries, and the exchange-rate term loads on recovered costs and observed prices rather than recovered markups. The important unresolved concern is timing. Future exchange rates predict current recovered costs, especially in levels, so the current design is not yet a clean contemporaneous shock design.
+
+The country-parsing and exchange-rate alignment audit has been repaired in the current build. The production parser now captures multi-word country names, applies the same canonical mapping used in post-estimation code, and writes country-parsing diagnostics. The generated panels no longer contain separate \texttt{UK}, \texttt{GB}, or \texttt{Great Britain} labels, and no parsed raw country token is unmapped. Direct product-level source-country exchange-rate joins now use the full normalized exchange-rate table; the top parts-import-country list is used only for the aggregate trade-weighted RER control. The current build has zero unmatched primary source-country RER rows before the RER sample restriction.
+
+\section{Data, Filters, and Active Checks}
+
+The cost-side panel is built by \texttt{cost\_side/build\_cost\_side\_panel.py}. The inputs are the manufacturer parts-content files for 2016--2024, BLP product data from \texttt{post\_est/data/raw/blpUS0804.csv}, recovered costs and markups from \texttt{post\_est/data/derived/vehicle\_costs\_markups\_chars.csv}, country auto-parts import totals, and bilateral exchange rates normalized to 2015. Country names and source-country codes are normalized through the shared \texttt{country\_normalization.py} helper before exchange-rate joins and before tariff counterfactuals. The direct source-country RER variables are joined from the full normalized exchange-rate table; the top-30 auto-parts-import-country data are retained only for the trade-weighted aggregate RER series.
+
+The active robustness build is \texttt{cost\_side/build\_robustness\_report.sh}. It rebuilds the panel, backfills the 2025 exchange-rate values needed for one-year-ahead placebo terms, runs timing/placebo regressions, canonical-sample robustness checks, leave-one-country-out checks, reduced-form plots, price/markup decompositions, alternative exposure definitions, vehicle-type heterogeneity, and then rebuilds the full and concise robustness notes.
+
+\settablefootnote{Panel rows are product-year observations after matching sourcing data to recovered costs, vehicle characteristics, and exchange rates. Regression rows are smaller because the baseline specifications require lagged exposure, controls, and, for first differences, consecutive-year observations.}
+\input{cost_side/outputs/cost_side_note_sample_table.tex}
+\settablefootnote{}
+
+The canonical domestic sample is U.S.-assembled vehicles with a stable primary foreign source country within make-model and no within-product-year disagreement in the directly observed raw primary source country. Duplicate product-year rows may be collapsed when the raw primary country agrees, even if the reported shares differ.
+
+\section{Regression Design}
+
+Let \(e_{ct}\) denote the source-country exchange-rate series normalized to one in 2015. In the code, the regressor is \(-\log(e_{ct})\), so larger values correspond to a source-country currency appreciation against the dollar and a higher dollar cost of foreign parts. The levels specification is
+\begin{equation}
+\log(mc_{jt}) =
+\eta \rho_{j,t-1}\{-\log(e_{c(j)t})\}
++ X_{jt}'\gamma + \lambda_j + \lambda_t + \varepsilon_{jt}.
+\end{equation}
+The first-difference specification uses consecutive-year changes in log recovered marginal costs, the exchange-rate term, and vehicle controls, with year fixed effects:
+\begin{equation}
+\Delta \log(mc_{jt}) =
+\eta \rho_{j,t-1}\Delta\{-\log(e_{c(j)t})\}
++ \Delta X_{jt}'\gamma + \lambda_t + \Delta\varepsilon_{jt}.
+\end{equation}
+All reported standard errors are clustered by make-model.
+
+\section{Timing and Placebo Evidence}
+
+The timing checks ask whether the cost coefficient loads on contemporaneous exchange-rate movements rather than future exchange rates or broad source-country trends. The future-RER placebo replaces the current exchange-rate term with the one-year-ahead term. The conditional timing diagnostic includes current and future terms in the same regression.
+
+\settablefootnote{Each row reports the exposure-weighted exchange-rate term named in the specification. Domestic specifications use the U.S.-assembled, source-country-stable panel. Foreign placebo specifications use the foreign-assembled, source-country-stable panel. Levels regressions include make-model and year fixed effects and log vehicle controls; first-difference regressions include year fixed effects and differenced controls. Standard errors are clustered by make-model.}
+\input{cost_side/outputs/cost_side_note_timing_table.tex}
+\settablefootnote{}
+
+This is the weakest part of the robustness package. In levels, the future term remains large when current and future exchange rates enter together, while the current term falls near zero. In first differences, the future term is less precise but still positive. The foreign-assembled placebo is reassuring, but it does not solve the timing problem. The appendix includes the lag-current-future triplet regressions, which are useful but do not by themselves remove the concern that source-country trends or persistent exchange-rate movements are driving the levels result.
+
+\section{Exposure and Sample Construction}
+
+The exposure checks ask whether the result is driven by duplicate-row collapsing across source countries, source-country switching, a single country, or the exact definition of foreign-parts exposure. The canonical panel builder now writes \texttt{primary\_source\_country\_conflicts.csv}; those conflict rows are excluded from the domestic regression panel. Same-country duplicate rows remain eligible for share averaging because they preserve the exchange-rate source-country assignment used by the regression.
+
+\settablefootnote{Rows re-estimate the baseline current-RER regression after omitting rows whose primary source country is the country listed. Levels regressions include make-model and year fixed effects and log vehicle controls; first-difference regressions include year fixed effects and differenced controls. Standard errors are clustered by make-model.}
+\input{cost_side/outputs/cost_side_note_exposure_table.tex}
+\settablefootnote{}
+
+The leave-one-country-out check is now generated from every primary source country observed in the baseline domestic regression frame. Dropping Mexico or Japan does not flip the sign, but the magnitudes move, especially when Mexico is dropped. Omitting Korea, Germany, Spain, or Sweden also preserves a positive coefficient. China is present in the broader domestic panel after the parsing fix, but not in the source-stable baseline regression frame, so it is not a leave-one-out row in the current baseline check.
+
+\settablefootnote{Alternative-exposure regressions are first-difference specifications using the baseline domestic sample and year fixed effects. ``Observed foreign share in first content block'' is the lagged sum of \texttt{pcOth1\_pct1} and \texttt{pcOth1\_pct2}; it is not the full foreign-content share from all raw content fields.}
+\input{cost_side/outputs/cost_side_note_alt_exposure_table.tex}
+\settablefootnote{}
+
+The alternative-exposure current estimate is stable when using the observed foreign share in the first content block instead of the primary share. But the forward-RER placebo is also stable, so this check does not address the timing concern. The high-exposure indicator is more encouraging because the current high-exposure differential is positive while the forward high-exposure differential is not; still, this is a coarse split and should be treated as diagnostic.
+
+\section{Mechanism Diagnostics}
+
+The mechanism checks ask whether the exchange-rate exposure term appears in recovered marginal costs, observed prices, or recovered markups. If the coefficient primarily loaded on markups, the result would look more like pricing conduct or residual demand variation than an imported-parts cost mechanism.
+
+\settablefootnote{Each cell re-estimates the same exposure-weighted exchange-rate specification with the outcome shown in the row. Current columns use the contemporaneous exchange-rate term; forward columns use the one-year-ahead term. Levels regressions include make-model and year fixed effects and controls; first-difference regressions include year fixed effects and differenced controls. Standard errors are clustered by make-model.}
+\input{cost_side/outputs/cost_side_note_decomp_table.tex}
+\settablefootnote{}
+
+The exposure term is positive for recovered marginal costs and observed prices, while recovered markups move in the opposite direction. This is consistent with a cost-side channel rather than a markup-only story. The limitation is that costs and markups are both recovered objects from the demand and pricing model, so this decomposition is a useful diagnostic rather than independent evidence.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{cost_side/outputs/high_exposure_series_mc_price_rer.png}
+\caption{Indexed year-series for high-exposure domestic vehicles}
+\label{fig:cost_side_note_high_exposure_series}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{cost_side/outputs/high_exposure_fd_decomp.png}
+\caption{Residualized first-difference patterns for high-exposure domestic vehicles}
+\label{fig:cost_side_note_high_exposure_fd}
+\end{figure}
+
+\section{Data-Cleaning Audit Findings}
+
+\begin{itemize}
+  \item The earlier one-word parser has been replaced with a parser that captures multi-word countries after percentage strings. Rows such as \texttt{65\% United Kingdom} now map to \texttt{United Kingdom}, not to \texttt{United States}.
+  \item \texttt{UK}, \texttt{GB}, and \texttt{Great Britain} now canonicalize to \texttt{United Kingdom}; \texttt{Korea} and \texttt{South Korea} canonicalize to \texttt{Korea}; and literal \texttt{China}, \texttt{CH}, and \texttt{CHN} canonicalize to \texttt{China}.
+  \item Ambiguous raw source codes are documented in the canonical map. In particular, the AALA-style raw files use \texttt{G} and observed \texttt{DE} rows as Germany, \texttt{A}/\texttt{AU}/\texttt{AT} as Austria, and \texttt{CN} as Canada. The current diagnostics report zero unmapped raw country tokens.
+  \item The fixed parser and exchange-rate lookup now produce matched all-panel rows after the foreign-content filter, with zero missing primary source-country RER rows before the RER drop. The canonical domestic panel has 476 rows in the current build, and the preferred levels pass-through coefficient rounds to 0.5980.
+  \item The duplicate-collapse rule averages all observed foreign-country shares and then re-ranks countries by average share. The canonical panel prevents cross-country primary-source conflicts before this collapsed exposure enters the cost-side regressions.
+  \item The alternative ``observed total'' exposure check uses \texttt{pcOth1\_pct1 + pcOth1\_pct2}; it excludes second content-block fields because those are dropped before the saved analysis panels. A true total-foreign-content check should use all raw foreign slots or \(1-\texttt{pcUSCA\_pct}\).
+  \item The panel builder multiplies recovered costs by 10 before taking logs. This does not affect the pass-through coefficients in the current log specifications, but the scale conversion should be documented because the same cost objects are also used in dollar-valued counterfactual outputs.
+\end{itemize}
+
+\section{Assessment and Missing Checks}
+
+As an identification package, the robustness checks are directionally useful but not yet complete. The most persuasive pieces are the foreign-assembled placebo, the canonical source-country consistency rule, and the price/markup decomposition. The main result is not obviously an artifact of cross-country duplicate-row construction or markup recovery.
+
+The timing evidence is the binding weakness. A credible final version should either explain why future exchange rates predict current costs in this setting or adopt a specification where the contemporaneous coefficient survives richer timing controls. The lag-current-future triplet is a start, but it should be part of the main diagnostic discussion, not a stale side output.
+
+The missing checks I would want before presenting this as final are:
+\begin{itemize}
+  \item Keep the country-normalization diagnostics and downstream consistency checker in the default pipeline, since tariff incidence is sensitive to whether country-specific vehicle tariffs are applied to canonical plant-country labels.
+  \item Investigate why China appears in the broader domestic panel after parsing repair but not in the current source-stable baseline regression frame; if those observations are economically important, report them as a separate unstable-source-country diagnostic.
+  \item Add a true total foreign-content exposure measure using all raw foreign-content fields or \(1-\texttt{pcUSCA\_pct}\).
+  \item Add sales-weighted versions of the levels and first-difference regressions, since the counterfactual implications are market-share weighted.
+  \item Report two-way or alternative inference checks, such as make-model plus source-country clustering, source-country wild bootstrap, or source-country-year shock clustering where feasible.
+  \item Add richer timing diagnostics: lag, current, and multiple future leads; pre-trend plots by high and low exposure; and a discussion of exchange-rate persistence.
+  \item Re-run the core checks excluding EVs/hybrids and separately for high-volume versus low-volume models, because the recovered-cost objects and imported-parts exposure may behave differently in those segments.
+\end{itemize}
+
+\appendix
+
+\section{Detailed Timing Tables}
+
+\settablefootnote{Levels placebo regressions use log recovered marginal costs as the outcome. Domestic columns use the U.S.-assembled source-stable panel; foreign columns use the foreign-assembled source-stable panel. Controls are log size, weight, horsepower, and miles per gallon, with make-model and year fixed effects. Standard errors are clustered by make-model.}
+\input{cost_side/outputs/cost_reg_placebo_levels_table.tex}
+\settablefootnote{}
+
+\clearpage
+
+\settablefootnote{First-difference placebo regressions use one-year changes in log recovered marginal costs. Exchange-rate and vehicle-control variables are differenced over the same interval, and the regressions include year fixed effects. Standard errors are clustered by make-model.}
+\input{cost_side/outputs/cost_reg_placebo_fd_table.tex}
+\settablefootnote{}
+
+\clearpage
+
+\settablefootnote{Triplet regressions compare current-plus-future timing specifications to specifications that also include lagged exchange-rate terms. Levels regressions include make-model and year fixed effects; first-difference regressions include year fixed effects. Standard errors are clustered by make-model.}
+\input{cost_side/outputs/cost_reg_timing_triplet_levels_table.tex}
+\settablefootnote{}
+
+\clearpage
+
+\settablefootnote{First-difference triplet regressions compare current-plus-future timing specifications to specifications that also include lagged exchange-rate terms. Standard errors are clustered by make-model.}
+\input{cost_side/outputs/cost_reg_timing_triplet_fd_table.tex}
+\settablefootnote{}
+
+\clearpage
+
+\section{Detailed Exposure Tables}
+
+\settablefootnote{The baseline domestic regression is re-estimated with an unrestricted exchange-rate main effect and the exposure-weighted interaction in the same model. Column 1 is the levels specification with make-model and year fixed effects; column 2 is the first-difference specification with year fixed effects. Standard errors are clustered by make-model.}
+\input{cost_side/outputs/cost_reg_robustness_rer_main_table.tex}
+\settablefootnote{}
+
+\clearpage
+
+\settablefootnote{The canonical current-RER regression is estimated in levels and first differences. Standard errors are clustered by make-model.}
+\input{cost_side/outputs/cost_reg_robustness_canonical_table.tex}
+\settablefootnote{}
+
+\clearpage
+
+\settablefootnote{The elasticity-interaction specification is re-estimated on the canonical domestic panel. This documents the heterogeneity pattern used by optional counterfactual paths. Standard errors are clustered by make-model.}
+\input{cost_side/outputs/cost_reg_robustness_elas_table.tex}
+\settablefootnote{}
+
+\clearpage
+
+\settablefootnote{The baseline current-RER regression is re-estimated after omitting rows whose primary source country is the country listed. Standard errors are clustered by make-model.}
+\input{cost_side/outputs/leave_one_country_out_report_table.tex}
+\settablefootnote{}
+
+\clearpage
+
+\settablefootnote{Alternative exposure definitions are estimated in first differences. Standard errors are clustered by make-model.}
+\input{cost_side/outputs/cost_reg_alt_exposure_table.tex}
+\settablefootnote{}
+
+\clearpage
+
+\settablefootnote{Vehicle-type heterogeneity estimates allow the exchange-rate pass-through coefficient to differ across cars, trucks, SUVs, and vans. Several cells are small, especially vans, so these estimates should be read as diagnostics. The full controls and fit-statistics table is generated separately as \texttt{cost\_side/outputs/cost\_reg\_vehicle\_type\_table.tex}.}
+\input{cost_side/outputs/cost_side_note_vehicle_type_table.tex}
+\settablefootnote{}
+
+\clearpage
+
+\section{Detailed Mechanism Tables}
+
+\settablefootnote{The baseline current-RER exposure term is re-estimated with recovered marginal cost, observed price, and recovered markup as outcomes. Levels specifications include make-model and year fixed effects; first-difference specifications include year fixed effects. Standard errors are clustered by make-model.}
+\input{cost_side/outputs/cost_reg_price_markup_decomp_table.tex}
+\settablefootnote{}
+
+\clearpage
+
+\settablefootnote{The same decomposition is estimated with the one-year-ahead exchange-rate term. Standard errors are clustered by make-model.}
+\input{cost_side/outputs/cost_reg_price_markup_forward_placebo_table.tex}
+\settablefootnote{}
+
+\end{document}

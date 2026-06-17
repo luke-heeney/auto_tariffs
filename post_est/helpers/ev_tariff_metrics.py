@@ -24,16 +24,25 @@ swap out the "base_value" terms below.
 
 from __future__ import annotations
 
+from pathlib import Path
+import sys
+
 import numpy as np
 import pandas as pd
 
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
-_US_TOKENS = {"united states", "united states of america", "usa", "us", "u.s."}
+from country_normalization import (  # noqa: E402
+    normalize_country_name,
+    normalize_country_series,
+    normalize_country_tariffs,
+)
 
 
 def _is_us_country(series: pd.Series) -> pd.Series:
-    s = series.astype(str).str.strip().str.lower()
-    return s.isin(_US_TOKENS)
+    return normalize_country_series(series).eq("United States")
 
 
 def _get_market_block(product_table: pd.DataFrame, market_id) -> pd.DataFrame:
@@ -68,6 +77,7 @@ def _attach_ev_and_pcshare(
     out["plant_country"] = _coalesce(out["plant_country"], out.get("plant_country_pd"))
     out["plant_country"] = _coalesce(out["plant_country"], out.get("plant_location"))
     out["plant_country"] = _coalesce(out["plant_country"], out.get("plant_location_pd"))
+    out["plant_country"] = normalize_country_series(out["plant_country"])
 
     # Drop helper columns if present
     for c in ("plant_country_pd", "plant_location_pd"):
@@ -129,7 +139,8 @@ def tariff_revenue_percap(
     # vehicles: foreign-assembled only, base = c0
     if country_tariffs:
         # map per-country rates, fallback to vehicle_tariff
-        country = df["plant_country"].astype(str).str.strip()
+        country_tariffs = normalize_country_tariffs(country_tariffs)
+        country = normalize_country_series(df["plant_country"])
         rates = country.map(country_tariffs).fillna(vehicle_tariff).to_numpy(dtype=float)
         rates = np.where(us_assembled, 0.0, rates)
         vehicle_rev = float(np.nansum(rates * c0 * s_cf))

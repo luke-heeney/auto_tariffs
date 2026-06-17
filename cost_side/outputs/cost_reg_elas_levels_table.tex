@@ -2,46 +2,38 @@
 \begin{table}[htbp]
    \caption{\label{tab:cost_reg_elas_levels} Cost-side regressions with elasticity interactions (levels, domestic vehicles)}
    \centering
-   \begin{tabular}{lccccccc}
+   \begin{tabular}{lccc}
       \tabularnewline \midrule \midrule
-      Dependent Variable: & \multicolumn{7}{c}{ln\_costs}\\
-      Model:                                                                  & (1)            & (2)            & (3)           & (4)            & (5)            & (6)            & (7)\\  
+      Dependent Variable: & \multicolumn{3}{c}{ln\_costs}\\
+      Model:                                                                  & (1)            & (2)            & (3)\\
       \midrule
       \emph{Variables}\\
-      $\ln(\text{size})$                                                      & 0.5184$^{***}$ & 0.4933$^{**}$  & 0.5052$^{**}$ & 0.4617$^{**}$  & 0.4854$^{**}$  & 0.4515$^{**}$  & 0.4789$^{**}$\\   
-                                                                              & (0.1904)       & (0.1985)       & (0.1962)      & (0.1901)       & (0.1903)       & (0.1900)       & (0.1902)\\   
-      $\ln(\text{weight})$                                                    & 0.4592$^{*}$   & 0.4700$^{*}$   & 0.4769$^{*}$  & 0.4375         & 0.4649$^{*}$   & 0.4227         & 0.4579$^{*}$\\   
-                                                                              & (0.2724)       & (0.2556)       & (0.2603)      & (0.2640)       & (0.2663)       & (0.2632)       & (0.2673)\\   
-      $\ln(\text{hp})$                                                        & 0.2233$^{**}$  & 0.2192$^{**}$  & 0.2221$^{**}$ & 0.2272$^{***}$ & 0.2298$^{***}$ & 0.2345$^{***}$ & 0.2350$^{***}$\\   
-                                                                              & (0.0867)       & (0.0882)       & (0.0870)      & (0.0861)       & (0.0838)       & (0.0837)       & (0.0827)\\   
-      $\ln(\text{mpg})$                                                       & -0.0878        & -0.0697        & -0.0779       & -0.0382        & -0.0595        & -0.0437        & -0.0628\\   
-                                                                              & (0.0736)       & (0.0722)       & (0.0728)      & (0.0671)       & (0.0706)       & (0.0664)       & (0.0692)\\   
-      $\rho_{j,t-1}\times\log(RER_{jt})$                                      & 0.7148$^{***}$ & 1.474$^{***}$  & 1.294$^{***}$ & 2.546$^{***}$  & 2.051$^{***}$  & 4.488$^{***}$  & 3.477$^{***}$\\   
-                                                                              & (0.2577)       & (0.3926)       & (0.4028)      & (0.7657)       & (0.6867)       & (1.402)        & (1.268)\\   
-      $\varepsilon_{j,t}\times\log(RER_{jt})$                                 &                & 0.0382$^{***}$ &               & 0.0199         &                & 0.0158         &   \\   
-                                                                              &                & (0.0131)       &               & (0.0138)       &                & (0.0130)       &   \\   
-      $\varepsilon_{j,t-1}\times\log(RER_{jt})$                               &                &                & 0.0291$^{**}$ &                & 0.0167         &                & 0.0134\\   
-                                                                              &                &                & (0.0132)      &                & (0.0133)       &                & (0.0130)\\   
-      $\rho_{j,t-1}\times\varepsilon_{j,t}\times\log(RER_{jt})$               &                &                &               & 0.2035$^{*}$   &                &                &   \\   
-                                                                              &                &                &               & (0.1112)       &                &                &   \\   
-      $\rho_{j,t-1}\times\varepsilon_{j,t-1}\times\log(RER_{jt})$             &                &                &               &                & 0.1415         &                &   \\   
-                                                                              &                &                &               &                & (0.0891)       &                &   \\   
-      $\rho_{j,t-1}\times\log|\varepsilon_{j,t}|\times\log(RER_{jt})$         &                &                &               &                &                & -1.817$^{**}$  &   \\   
-                                                                              &                &                &               &                &                & (0.7477)       &   \\   
-      $\rho_{j,t-1}\times\log|\varepsilon_{j,t-1}|\times\log(RER_{jt})$       &                &                &               &                &                &                & -1.308$^{*}$\\   
-                                                                              &                &                &               &                &                &                & (0.6604)\\   
+      $\ln(\text{size})$                                                      & 0.5452$^{***}$ & 0.4363$^{**}$  & 0.4895$^{**}$\\
+                                                                              & (0.2007)       & (0.1879)       & (0.1941)\\
+      $\ln(\text{weight})$                                                    & 0.3021$^{*}$   & 0.2169         & 0.2777\\
+                                                                              & (0.1749)       & (0.1648)       & (0.1710)\\
+      $\ln(\text{hp})$                                                        & 0.1890$^{**}$  & 0.1897$^{**}$  & 0.2028$^{**}$\\
+                                                                              & (0.0825)       & (0.0727)       & (0.0786)\\
+      $\ln(\text{mpg})$                                                       & -0.0945        & -0.0488        & -0.0720\\
+                                                                              & (0.0758)       & (0.0689)       & (0.0727)\\
+      $\rho_{j,t-1}\times\log(RER_{jt})$                                      & 0.5980$^{**}$  & 7.058$^{***}$  & 4.511$^{***}$\\
+                                                                              & (0.2292)       & (1.644)        & (1.336)\\
+      $\rho_{j,t-1}\times\log|\varepsilon_{j,t}|\times\log(RER_{jt})$         &                & -3.374$^{***}$ &   \\
+                                                                              &                & (0.8640)       &   \\
+      $\rho_{j,t-1}\times\log|\varepsilon_{j,t-1}|\times\log(RER_{jt})$       &                &                & -2.031$^{***}$\\
+                                                                              &                &                & (0.6799)\\
       \midrule
       \emph{Fixed-effects}\\
-      make\_model                                                             & Yes            & Yes            & Yes           & Yes            & Yes            & Yes            & Yes\\  
-      year                                                                    & Yes            & Yes            & Yes           & Yes            & Yes            & Yes            & Yes\\  
+      make\_model                                                             & Yes            & Yes            & Yes\\
+      year                                                                    & Yes            & Yes            & Yes\\
       \midrule
       \emph{Fit statistics}\\
-      Observations                                                            & 323            & 323            & 323           & 323            & 323            & 323            & 323\\  
-      R$^2$                                                                   & 0.98572        & 0.98644        & 0.98612       & 0.98695        & 0.98639        & 0.98711        & 0.98648\\  
-      Within R$^2$                                                            & 0.30631        & 0.34167        & 0.32580       & 0.36622        & 0.33894        & 0.37407        & 0.34343\\  
+      Observations                                                            & 374            & 374            & 374\\
+      R$^2$                                                                   & 0.97850        & 0.98172        & 0.97961\\
+      Within R$^2$                                                            & 0.18083        & 0.30359        & 0.22295\\
       \midrule \midrule
-      \multicolumn{8}{l}{\emph{Clustered (make\_model) standard-errors in parentheses}}\\
-      \multicolumn{8}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
+      \multicolumn{4}{l}{\emph{Clustered (make\_model) standard-errors in parentheses}}\\
+      \multicolumn{4}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
    \end{tabular}
 \end{table}
 

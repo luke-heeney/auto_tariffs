@@ -14,3 +14,5 @@ cost_side/outputs/
 post_est/outputs/
 post_est/saved_outputs/
 saved_outputs/
+paper/build/
+paper/generated/

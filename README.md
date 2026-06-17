@@ -18,17 +18,25 @@ If you are new to the repo, read these in order:
 
 ## Recommended entry points
 
+- Full downstream replication after estimation:
+  ```bash
+  bash make.sh
+  ```
 - BLP estimation:
   ```bash
   python estimation/blp_estimation/blp_run.py
   ```
 - Cost-side elasticity regressions:
   ```bash
-  Rscript cost_side/cost_reg_elas.R
+  bash cost_side/make.sh
   ```
 - Counterfactual batch run:
   ```bash
-  python post_est/run_cf_batch.py
+  bash post_est/make.sh
+  ```
+- Downstream consistency checks:
+  ```bash
+  python post_est/check_downstream_consistency.py
   ```
 
 ## Repository layout
@@ -40,11 +48,15 @@ If you are new to the repo, read these in order:
 
 ## Important files
 
+- `make.sh` — one-command downstream replication wrapper.
 - `post_est/run_cf_batch.py` — main scripted entry point for counterfactual simulations.
+- `post_est/check_downstream_consistency.py` — validates configs, metadata, scenarios, generated outputs, and B0 rebasing invariants.
 - `post_est/results_config.json` — default run configuration.
 - `post_est/results_config_constant_market_by_market.json` — market-by-market solver with constant parts pass-through.
 - `post_est/results_config_elasticity_interaction.json` — market-by-market solver with elasticity-dependent parts pass-through.
 - `cost_side/cost_reg_elas.R` — primary cost-side regression script used to estimate elasticity interaction terms.
+- `docs/downstream_replication.md` — downstream one-command replication workflow.
+- `docs/downstream_assumptions_registry.md` — registry of outcome-relevant downstream assumptions.
 
 ## Generated outputs
 

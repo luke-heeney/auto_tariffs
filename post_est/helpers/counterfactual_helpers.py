@@ -14,12 +14,33 @@ No "detect column" logic, no extra validation. NaN pcUSCA_pct => ignored for par
 
 from __future__ import annotations
 
+from pathlib import Path
+import sys
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import pyblp
 from helpers.consumer_surplus import cs_manual_all_markets
 from helpers.ownership import add_owner_ids, build_owner_ownership, attach_ownership_columns
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from country_normalization import (  # noqa: E402
+    normalize_country_name,
+    normalize_country_series,
+    normalize_country_tariffs,
+)
+
+
+def _normalize_plant_country(df: pd.DataFrame, plant_col: str = "plant_country") -> pd.DataFrame:
+    if plant_col not in df.columns:
+        return df
+    out = df.copy()
+    out[plant_col] = normalize_country_series(out[plant_col])
+    return out
 
 
 def build_counterfactual_costs(
@@ -51,8 +72,10 @@ def build_counterfactual_costs(
     extra_cols = [c for c in [parts_elasticity_col, parts_log_abs_elasticity_col] if c in costs_df2.columns]
     df = costs_df2[base_cols + extra_cols].copy()
     df[id_col] = df[id_col].astype(str)
+    df[plant_col] = normalize_country_series(df[plant_col])
 
-    us = df[plant_col].astype(str).eq(us_value)
+    canonical_us_value = normalize_country_name(us_value) or us_value
+    us = df[plant_col].eq(canonical_us_value).to_numpy(dtype=bool)
     base_cost = pd.to_numeric(df[cost_col], errors="coerce").to_numpy(dtype=float)
 
     infl = np.ones(len(df), dtype=float)
@@ -111,7 +134,8 @@ def build_counterfactual_costs(
 
     if vehicle_tariff or country_tariffs:
         if country_tariffs:
-            country = df[plant_col].astype(str).str.strip()
+            country_tariffs = normalize_country_tariffs(country_tariffs)
+            country = df[plant_col]
             rates = country.map(country_tariffs).fillna(vehicle_tariff).to_numpy(dtype=float)
             infl_foreign = 1.0 + vehicle_pass_through * rates
             infl = np.where(~us, infl_foreign, infl)
@@ -335,6 +359,8 @@ def run_unified_counterfactual(
     if id_col not in product_data.columns and "clustering_ids" in product_data.columns:
         product_data = product_data.copy()
         product_data[id_col] = product_data["clustering_ids"].astype(str)
+    product_data = _normalize_plant_country(product_data, plant_col)
+    costs_df2 = _normalize_plant_country(costs_df2, plant_col)
 
     if price_x2_index is None or beta_price_index is None:
         raise ValueError("price_x2_index and beta_price_index are required to compute manual CS.")
@@ -617,6 +643,8 @@ def run_cf(
     if id_col not in product_data.columns and "clustering_ids" in product_data.columns:
         product_data = product_data.copy()
         product_data[id_col] = product_data["clustering_ids"].astype(str)
+    product_data = _normalize_plant_country(product_data, "plant_country")
+    costs_df2 = _normalize_plant_country(costs_df2, "plant_country")
 
     aligned_pd = align_product_data_for_sim(results, product_data, id_col=id_col, market_col=market_col)
     if ownership_mode == "owner":
@@ -735,6 +763,8 @@ def run_cf_and_summarize(
     if id_col not in product_data.columns and "clustering_ids" in product_data.columns:
         product_data = product_data.copy()
         product_data[id_col] = product_data["clustering_ids"].astype(str)
+    product_data = _normalize_plant_country(product_data, plant_col)
+    costs_df2 = _normalize_plant_country(costs_df2, plant_col)
 
     if price_x2_index is None or beta_price_index is None:
         raise ValueError("price_x2_index and beta_price_index are required to compute manual CS.")
@@ -960,7 +990,9 @@ def origin_percent_metrics(
     us_value: str = "United States",
 ):
     df = product_tbl.copy()
-    df["origin"] = np.where(df[plant_col].astype(str).eq(us_value), "US-assembled", "Foreign-assembled")
+    plant_country = normalize_country_series(df[plant_col])
+    canonical_us_value = normalize_country_name(us_value) or us_value
+    df["origin"] = np.where(plant_country.eq(canonical_us_value), "US-assembled", "Foreign-assembled")
 
     def wavg(x, w):
         den = float(np.nansum(w))

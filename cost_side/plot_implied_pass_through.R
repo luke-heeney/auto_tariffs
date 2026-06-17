@@ -1,10 +1,10 @@
 library(dplyr)
 library(fixest)
 
-panel_path <- if (file.exists("cost_side_panel_dropped.csv")) {
-  "cost_side_panel_dropped.csv"
+panel_path <- if (file.exists("cost_side_panel.csv")) {
+  "cost_side_panel.csv"
 } else {
-  "cost_side/cost_side_panel_dropped.csv"
+  "cost_side/cost_side_panel.csv"
 }
 
 out_dir <- "cost_side/outputs"
